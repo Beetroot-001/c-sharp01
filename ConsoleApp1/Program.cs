@@ -30,7 +30,8 @@ namespace ConsoleApp1
             Console.WriteLine("/////*** 5/////");
             Console.WriteLine(leftFromNY());            
             Console.WriteLine("/////Extra/////");
-            Console.WriteLine(leftToNY2("01.01.2022", "12.05.2022"));
+            Console.WriteLine(mondays1("02.15.1999", "03.05.2299"));
+            Console.WriteLine(mondays2("02.15.1999", "03.05.2299"));
 		}
 
         static double calc1(double x) => -6 * Math.Pow(x, 3) + 5 * Math.Pow(x, 2) - 10 * x + 15;
@@ -39,11 +40,11 @@ namespace ConsoleApp1
         static double calc4(double x, double y) => Math.Max(x,y);
         static int leftToNY() => DateTime.Now.DayOfYear;
         static int leftFromNY() => DateTime.IsLeapYear(DateTime.Now.Year) ? 366 : 365 - leftToNY();
-        static int leftToNY2(string startDate, string endDate)
+        static int mondays1(string startDate, string endDate)
         {
             var sDate = DateTime.Parse(startDate);
             var eDate = DateTime.Parse(endDate);
-            var mondaysCount = 0;
+            int mondaysCount = 0;
             while(sDate <= eDate)
             {
                 if((int)sDate.DayOfWeek == 1)
@@ -54,6 +55,14 @@ namespace ConsoleApp1
             }
 
             return mondaysCount;
+        }
+        static int mondays2(string startDate, string endDate)
+        {
+            var sDate = DateTime.Parse(startDate);
+            var eDate = DateTime.Parse(endDate);
+            int res = Math.Abs((sDate - eDate).Days) / 7;
+            if((int)sDate.DayOfWeek == 1) res++;
+            return res;
         }
 
     }
