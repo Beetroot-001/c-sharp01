@@ -45,7 +45,27 @@ namespace Hometask2_DataTypes
         {
 
             //////////////Homework 1/////////////
+
             Console.WriteLine("/////////////Homework 1/////////////");
+           
+            byte age = 30;
+            short salary = 1200;
+            int population = 350_000;
+            long distance = 3_000_000;
+            bool check = true;
+            char grade = 'A';
+            float radius = 3.57f;
+            decimal money = 12.57m;
+            string greeting = "Hello there";
+
+            Console.WriteLine(population + distance);
+            Console.WriteLine(salary*age);
+            Console.WriteLine(salary/radius);
+            Console.WriteLine(greeting+grade);
+            
+
+            Console.WriteLine("/////////////Homework 1.1/////////////");
+
             int x = 5;
             int y = 12;
 
