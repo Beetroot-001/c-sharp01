@@ -1,4 +1,7 @@
-﻿namespace Hometask2_DataTypes
+﻿using System.ComponentModel;
+using System;
+
+namespace Hometask2_DataTypes
 {
     internal class Program
     {
@@ -53,17 +56,55 @@
             //Console.WriteLine(daysLeft);
 
 
-            DateTime startDate = DateTime.Today;
-            DateTime endDate = new DateTime(2022, 9, 21);
+
+
+            //////////////Homework 1/////////////
+            Console.WriteLine("/////////////Homework 1/////////////");
+            int x = 5;
+            int y = 12;
+
+            int result1 = -6 * x ^ 3 + 5 * x ^ 2 - 10 * x + 15;
+            Console.WriteLine("-6 * x ^ 3 + 5 * x ^ 2 - 10 * x + 15");
+            Console.WriteLine($"Result1: {result1}\n");
+
+            Console.WriteLine("abs(x) * sin(x)");
+            double result2 = Math.Abs(x) * Math.Sin(x);
+            Console.WriteLine($"Result2: {result2}\n");
+
+            Console.WriteLine("2 * pi * x");
+            double result3 = 2 * Math.PI * x;
+            Console.WriteLine($"Result3: {result3}\n");
+
+            Console.WriteLine("max(x, y)");
+            int result4 = Math.Max(x, y);
+            Console.WriteLine($"Result4: {result4}\n");
 
 
 
 
 
-            int result = CountMondays(startDate, endDate, "tuesday");
 
-            Console.WriteLine(result);
 
+
+
+            ///////////SUPER EXTRA HOMEWORK//////////////
+            Console.WriteLine("///////////SUPER EXTRA HOMEWORK//////////////");
+
+            Console.WriteLine("Find out the number of days of week witihn the required period of time");
+            
+            Console.WriteLine("\nEnter the start date");
+            DateTime startDate = Convert.ToDateTime(Console.ReadLine());
+
+            Console.WriteLine("\nEnter the end date");
+            DateTime endDate = Convert.ToDateTime(Console.ReadLine());
+
+            Console.WriteLine($"\nEnter the day of the week you want to count from {startDate.ToShortDateString()} till {endDate.ToShortDateString()}");
+            string searchDay = Console.ReadLine();
+
+            int result = CountMondays(startDate, endDate, searchDay);
+
+            Console.WriteLine($"\nThe number of {searchDay}s from {startDate.ToShortDateString()} till {endDate.ToShortDateString()} equals {result}");
+            
 
         }
     }
