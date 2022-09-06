@@ -7,7 +7,7 @@ namespace Hometask2_DataTypes
     {
 
         /// <summary>
-        /// 
+        /// Count the number of days of the week within the mentiond period.
         /// </summary>
         /// <param name="startDate">The start date</param>
         /// <param name="endDate">The end day</param>
@@ -41,22 +41,8 @@ namespace Hometask2_DataTypes
         }
 
 
-
         static void Main(string[] args)
         {
-            //DateTime newYear = new DateTime(2022, 12, 31);
-            //DateTime today = DateTime.Today;
-
-            //Console.WriteLine(today);
-
-            //Console.WriteLine($"Осталось дней до НГ: {(newYear - today).Days}"); 
-            //Console.WriteLine($"Прошло дней после НГ: {(today - new DateTime(2022,1,1)).Days}");
-
-            //TimeSpan daysLeft = newYear - today;
-            //Console.WriteLine(daysLeft);
-
-
-
 
             //////////////Homework 1/////////////
             Console.WriteLine("/////////////Homework 1/////////////");
@@ -80,11 +66,16 @@ namespace Hometask2_DataTypes
             Console.WriteLine($"Result4: {result4}\n");
 
 
+            ////////////Extra Homework/////////////////
+            Console.WriteLine("////////////Extra Homework/////////////////");
+            DateTime newYear = new DateTime(2022, 12, 31);
+            DateTime today = DateTime.Today;
 
+            TimeSpan daysLeft = newYear - today;
+            TimeSpan daysPassed = today - newYear.AddYears(-1);
 
-
-
-
+            Console.WriteLine($"{daysLeft.Days} days left to New Year");
+            Console.WriteLine($"{daysPassed.Days} days passed from New Year\n");
 
 
             ///////////SUPER EXTRA HOMEWORK//////////////
@@ -98,7 +89,7 @@ namespace Hometask2_DataTypes
             Console.WriteLine("\nEnter the end date");
             DateTime endDate = Convert.ToDateTime(Console.ReadLine());
 
-            Console.WriteLine($"\nEnter the day of the week you want to count from {startDate.ToShortDateString()} till {endDate.ToShortDateString()}");
+            Console.WriteLine($"\nEnter the day of the week you want to count from {startDate.ToShortDateString()} till {endDate.ToShortDateString()}, for example, friday");
             string searchDay = Console.ReadLine();
 
             int result = CountMondays(startDate, endDate, searchDay);
