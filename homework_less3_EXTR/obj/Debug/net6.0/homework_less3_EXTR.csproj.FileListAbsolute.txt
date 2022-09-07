@@ -1,0 +1,15 @@
+C:\Users\Coffee\source\repos\homework_less3_EXTR\bin\Debug\net6.0\homework_less3_EXTR.exe
+C:\Users\Coffee\source\repos\homework_less3_EXTR\bin\Debug\net6.0\homework_less3_EXTR.deps.json
+C:\Users\Coffee\source\repos\homework_less3_EXTR\bin\Debug\net6.0\homework_less3_EXTR.runtimeconfig.json
+C:\Users\Coffee\source\repos\homework_less3_EXTR\bin\Debug\net6.0\homework_less3_EXTR.dll
+C:\Users\Coffee\source\repos\homework_less3_EXTR\bin\Debug\net6.0\homework_less3_EXTR.pdb
+C:\Users\Coffee\source\repos\homework_less3_EXTR\obj\Debug\net6.0\homework_less3_EXTR.csproj.AssemblyReference.cache
+C:\Users\Coffee\source\repos\homework_less3_EXTR\obj\Debug\net6.0\homework_less3_EXTR.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Coffee\source\repos\homework_less3_EXTR\obj\Debug\net6.0\homework_less3_EXTR.AssemblyInfoInputs.cache
+C:\Users\Coffee\source\repos\homework_less3_EXTR\obj\Debug\net6.0\homework_less3_EXTR.AssemblyInfo.cs
+C:\Users\Coffee\source\repos\homework_less3_EXTR\obj\Debug\net6.0\homework_less3_EXTR.csproj.CoreCompileInputs.cache
+C:\Users\Coffee\source\repos\homework_less3_EXTR\obj\Debug\net6.0\homework_less3_EXTR.dll
+C:\Users\Coffee\source\repos\homework_less3_EXTR\obj\Debug\net6.0\refint\homework_less3_EXTR.dll
+C:\Users\Coffee\source\repos\homework_less3_EXTR\obj\Debug\net6.0\homework_less3_EXTR.pdb
+C:\Users\Coffee\source\repos\homework_less3_EXTR\obj\Debug\net6.0\homework_less3_EXTR.genruntimeconfig.cache
+C:\Users\Coffee\source\repos\homework_less3_EXTR\obj\Debug\net6.0\ref\homework_less3_EXTR.dll
