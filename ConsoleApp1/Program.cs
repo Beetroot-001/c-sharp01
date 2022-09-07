@@ -71,6 +71,29 @@
             DateTime dateTime = new DateTime(DateTime.Now.Year,12,31);
             Console.WriteLine($"{dateTime.DayOfYear - DateTime.Now.DayOfYear} days left to New Year\n{DateTime.Now.DayOfYear} days passed from New Year");
             Console.ReadLine();
+
+            // 
+            // super extra
+            //
+
+            Console.WriteLine("************Extra***********");
+                        int mondaysCount = 0;
+            int difference = 0;
+
+            var startDate = DateTime.Now;
+
+            var endDate = startDate.AddDays(204);
+
+            if (endDate.Year>startDate.Year)
+            {
+                difference=(endDate.Year - startDate.Year)*new DateTime(endDate.Year,12,31).DayOfYear;
+            }
+
+            mondaysCount = (endDate.DayOfYear - startDate.DayOfYear+difference)/7;
+
+            Console.WriteLine("count of mandays {0} from period {1} - {2}",mondaysCount,startDate,endDate);
+            Console.ReadLine();
+
         }
 	}
 }
