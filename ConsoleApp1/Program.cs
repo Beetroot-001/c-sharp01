@@ -68,7 +68,7 @@
 
             Console.WriteLine("**********Part3**********\n");
 
-            DateTime dateTime = new DateTime(DateTime.Now.Year,31,12);
+            DateTime dateTime = new DateTime(DateTime.Now.Year,12,31);
             Console.WriteLine($"{dateTime.DayOfYear - DateTime.Now.DayOfYear} days left to New Year\n{DateTime.Now.DayOfYear} days passed from New Year");
             Console.ReadLine();
         }
