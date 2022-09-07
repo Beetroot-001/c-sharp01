@@ -37,8 +37,10 @@
             int x = 5;
 
             Console.WriteLine("-6*x^3+5*x^2-10*x+15 : " + 
-				(- 6 * Math.Pow(x, 3) + Math.Pow(5, x) - 
-				Math.Pow(10, x) + 15) + 
+				(-6 * Math.Pow(x, 3) + 5 * Math.Pow(x, 2) -
+                10 * x + 15)
+				/*(- 6 * Math.Pow(x, 3) + Math.Pow(5, x) - 
+				Math.Pow(10, x) + 15)*/ + 
 				'\n');
 
 			x = -1;
