@@ -1,13 +1,13 @@
 ﻿namespace ConsoleApp1
 {
-	internal class Program
-	{
-		static void Main(string[] args)
-		{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
             int a = 0;
             int b = 0;
             int res_cycle = 0;
-            int res_formula = 0; 
+            int res_formula = 0;
 
             //input numbers(extra 0)
             Program.input(out a, out b);
@@ -15,7 +15,7 @@
             Console.WriteLine("your input: a - " + a + " b - " + b);
 
             //extra 1
-            if(a > b)
+            if (a > b)
             {
                 // example
                 // a = 8, b = 3
@@ -50,8 +50,8 @@
             bool exist = false; // flag to check existence of prime numbers
             //if a = 1, then start with 2, because 1 isn`t prime
             //if a > 2 and evenm, then start with next odd
-            for (a = a <= 2 ? 2: a + ( a % 2 == 0 ? 1 : 0);
-                a <= b; 
+            for (a = a <= 2 ? 2 : a + (a % 2 == 0 ? 1 : 0);
+                a <= b;
                 a += a != 2 ? 2 : 1) //skip all even nums exept 2
             {
                 if (is_prime(a))
@@ -67,8 +67,8 @@
         }
 
         //input method
-		static void input(out int a, out int b) 
-		{
+        static void input(out int a, out int b)
+        {
             string? input_str = null;
             Console.WriteLine("input two numbers");
             Console.WriteLine("input first number:");
@@ -108,5 +108,5 @@
                     return false;
             return true;
         }
-	}
+    }
 }
