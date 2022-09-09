@@ -5,12 +5,27 @@
         static void Main(string[] args)
         {
             //без 3 змінної обміняти місцями значення 2 інтів
+            //more funny
             int x = 53;
             int y = 1;
+
+            
             Console.WriteLine($"x = {x}\ny = {y}");
             intSwitcher(ref x, ref y);
+        
             Console.WriteLine($"x = {x}\ny = {y}");
             //---//
+
+            //*** v2 more simple //
+            int x1 = 110;
+            int y1 = 15;
+            x1 = x1 + y1;
+            y1 = x1 - y1;
+            x1 = x1 - y1;
+
+            Console.WriteLine($"x1 = {x1}\ny1 = {y1}");
+            //**//
+
 
             string input = "";
             while (true)
@@ -49,6 +64,13 @@
                         summ += i;
                     }
                 }
+
+                //** without loop **//
+                int summ2 = 0;
+                summ2 = ((x + y) * (y - x + 1)) / 2;
+                Console.WriteLine($"Результат: {summ2}");
+                //**//
+
                 Console.WriteLine($"Результат: {summ}");
             }
             Console.WriteLine("ну всьо... приїхали!");
