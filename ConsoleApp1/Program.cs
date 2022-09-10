@@ -1,143 +1,213 @@
-﻿namespace ConsoleApp1
+﻿using System.Reflection.Metadata.Ecma335;
+
+namespace ConsoleApp1
 {
 	internal class Program
 	{
 		static void Main(string[] args)
 		{
-			// if
-			int number = 6;
+			Console.WriteLine(string.Join(',', args));
 
-			if (number > 5 && number < 10 && number < 2)
+			Console.WriteLine("*************");
+			Console.WriteLine("*		   *");
+			Console.WriteLine("*		   *");
+			Console.WriteLine("*		   *");
+			Console.WriteLine("*		   *");
+			Console.WriteLine("*		   *");
+			Console.WriteLine("*		   *");
+			Console.WriteLine("*		   *");
+			Console.WriteLine("*		   *");
+			Console.WriteLine("*		   *");
+			Console.WriteLine("*************");
+
+			int b;
+			int c = 0;
+
+			string s = "origin";
+			var t = Method1(out b, ref c, s);
+
+			Console.WriteLine("Out>: " + b);
+			Console.WriteLine("Ref>: " + c);
+			Console.WriteLine("Str ref>: " + s);
+			Console.WriteLine("Res> " + t);
+
+			int qw1 = 0;
+			int qw2 = 5;
+			MethodWithinRef(ref qw1);
+			MethodWithoutRef(qw2);
+
+			Console.WriteLine("MethodWithinRef " + qw1);
+			Console.WriteLine("MethodWithoutRef " + qw2);
+
+			int.TryParse("7", out qw2);
+
+			int y;
+			var result = TryParse("asv", out y);
+
+			var result1 = TryParse("x", out int u);
+
+			Console.WriteLine($"Result: {result}, x: {y}");
+			Console.WriteLine($"Result: {result1}, x: {u}");
+
+
+			Empty();
+
+			int number = 1;
+			NonEmpty(number,
+				includeRequired: true);
+
+			Params("", true, 1, 2, 3, 4, 5, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4);
+
+
+			dynamic a = (short)5;
+
+			Overloaded("asd");
+			Overloaded(4);
+			Overloaded(a);
+
+			Console.WriteLine("---");
+			Console.WriteLine(8);
+			Console.WriteLine("---");
+
+			//Recursion(1);
+
+
+			Console.WriteLine("factorial");
+			var res = GetFactorialOf(100);
+			Console.WriteLine(res);
+
+			Console.WriteLine("rec factorial");
+			var res2 = GetFactorialRecursionOf(1);
+			Console.WriteLine(res2);
+
+			var resObj = new object();
+			var newObj = MethodObj(resObj);
+
+			Console.WriteLine($"Equals : {newObj == resObj}");
+
+			Console.ReadLine();
+		}
+
+		static int Method1(out int b, ref int x, string str)
+		{
+			b = 7;
+			x = 10;
+
+			str += " changed";
+			return 45;
+		}
+
+		static int MethodWithinRef(ref int x)
+		{
+			//x = 10;
+
+			return 45;
+		}
+
+		static int MethodWithoutRef(int x)
+		{
+			x = 10;
+
+			return 45;
+		}
+
+		static bool TryParse(string str, out int x)
+		{
+			x = -1;
+
+			if (str == "x")
 			{
-				Console.WriteLine("number between 5 and 10");
-			}
-			else if (number < 5)
-			{
-				Console.WriteLine("number < 5");
-			}
-			else
-			{
-				Console.WriteLine("number  = 5");
-			}
-
-			// switch
-
-			number = 8;
-			int newNumber = 0;
-			switch (number)
-			{
-				default:
-					newNumber = 0;
-					break;
-				case 5:
-				case 8:
-					newNumber = 5;
-					break;
-			}
-
-			newNumber = 0;
-
-			object dateTime = DateTime.Now;
-			newNumber = dateTime switch
-			{
-				DateTime => 3,
-				int => 4,
-				_ => 0
-			};
-
-			Console.WriteLine(newNumber);
-
-			// ternary operator
-			int num = 5;
-			int res = 0;
-			if (num > 3)
-			{
-				res = num * 2;
-			}
-			else
-			{
-				res = num + 2;
-			}
-			Console.WriteLine("IF res = " + res);
-
-			res = num > 3 ? num * 2 : num + 2;
-			Console.WriteLine("??? res = " + res);
-
-			// null coalescing operator
-			object obj1 = null;
-			if (obj1 == null)
-			{
-				obj1 = new object();
-			}
-
-			obj1 = null;
-			obj1 = obj1 ?? new object();
-
-
-			// loops
-			Console.WriteLine("----loops-----");
-			for (int i = 0; i < 10; i++)
-			{
-				Console.WriteLine($"Index: {i}");
-			}
-
-			int j = 0;
-			while (j < 10)
-			{
-				Console.WriteLine($" WHILE Index: {j}");
-
-				j++;
-			}
-
-			int x = 0;
-
-			do
-			{
-				Console.WriteLine($"Do WHILE Index: {x}");
-				x++;
-			} while (x < 10);
-
-			Console.WriteLine("break//////////////");
-			for (int i = 0; i < 10; i++)
-			{
-				if (i > 5)
-				{
-					Console.WriteLine($"Before continue index: {i}");
-					break;
-					Console.WriteLine($"After continue index: {i}");
-
-				}
-
-				if (i > 5)
-				{
-					break;
-				}
-
-				Console.WriteLine($"index: {i}");
-			}
-
-			for (int i = 0; i <= 100; i = i + 2)
-			{
-				Console.WriteLine("Ok ??");
+				x = 10;
+				return true;
 			}
 
+			return false;
+		}
 
-			//int number2;
-			//while (!int.TryParse(@string, out number2))
-			//{
-			//	Console.WriteLine("Can not parse try again");
-			//	@string = Console.ReadLine();
-			//}
+		static void Empty()
+		{
+			Console.WriteLine("Empty");
+		}
 
-			bool parseResult;
-			int number2;
-			do
+		static void NonEmpty(int d1, bool includeRequired = false)
+		{
+			Console.WriteLine($"D: {d1}");
+		}
+
+		static void Params(string s, bool includeRequired = false, params object[] arra)
+		{
+			for (int i = 0; i < arra.Length; i++)
 			{
-				string @string = Console.ReadLine();
-				parseResult = int.TryParse(@string, out number2);
-				Console.WriteLine("Can not parse try again");
-			} while (!parseResult);
-			Console.WriteLine("Parsed " + number2);
+				Console.WriteLine(arra[i]);
+			}
+		}
+
+		static void Overloaded(int a)
+		{
+			Console.WriteLine("Int a");
+		}
+
+		static void Overloaded(double a)
+		{
+			Console.WriteLine("Double a");
+		}
+
+		static void Overloaded(string a)
+		{
+			Console.WriteLine("String a");
+		}
+
+		static void Overloaded(object a)
+		{
+			Console.WriteLine("Object a");
+		}
+
+		static void Overloaded(int a, string b)
+		{
+			Console.WriteLine("int a, string b");
+		}
+
+		static void Recursion(int b)
+		{
+			if (b == 10)
+				return;
+
+			Console.WriteLine("WELCOME");
+
+			Recursion(b);
+		}
+
+		static long GetFactorialOf(int n)
+		{
+			long res = 1;
+			for (int i = 1; i <= n; i++)
+			{
+				res = res * i;
+			}
+
+			object a = new object();
+			var ob = a ?? new object();
+
+			return res;
+		}
+
+		static long GetFactorialRecursionOf(int n)
+		{
+			if (n == 1)
+				return 1;
+
+			return n * GetFactorialRecursionOf(n - 1);
+		}
+
+		static int Method(int num)
+		{
+			return num > 0 ? num + Method(num - 1) : 0;
+		}
+		static object MethodObj(object num)
+		{
+			num = new object();
+
+			return num;
 		}
 	}
 }
