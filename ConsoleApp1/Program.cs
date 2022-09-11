@@ -1,46 +1,51 @@
 ﻿namespace ConsoleApp1
 {
-	internal class Program
-	{
-		static void Main(string[] args)
-		{
-
-            int[,] array2d = new int[,] 
-            { 
-                { 10, 5, 10 }, 
-                { 12, 2, 10 }
-            };
-
-            for (int element = 0; element < 3; element++)
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("Input first number:");
+            var inputA = Console.ReadLine();
+            int convertedAValue;
+            bool isInt1 = Int32.TryParse(inputA, out convertedAValue);
+            if (!isInt1)
             {
-                int x = (array2d[0, element]);
-                int y = (array2d[1, element]);
-
-                Console.WriteLine(x);
-                Console.WriteLine(y);
-                Console.WriteLine("---");
-
-                List<int> list = new List<int>();
-
-                for (int s = Math.Min(x,y); s <= Math.Max(x, y); s++)
-                {
-                    list.Add(s);
-                    continue;
-                }
-                list.ForEach(Console.WriteLine);
-                Console.WriteLine("--------");
-                Console.WriteLine("sum of all values: " + list.Sum());
-                Console.WriteLine("-------------------------------------");
+                Console.WriteLine("Invalid input");
+                Environment.Exit(-1);
             }
 
-            int c = 7;
-            int t = 5;
-            Console.WriteLine(c);
-            Console.WriteLine(t);
+            Console.WriteLine("Input second number:");
+            var inputB = Console.ReadLine();
+            int convertedBValue;
+            bool isInt2 = Int32.TryParse(inputB, out convertedBValue);
+            if (!isInt2)
+            {
+                Console.WriteLine("Invalid input");
+                Environment.Exit(-1);
+            }
 
-            (c, t) = (t, c);
-            Console.WriteLine(c);
-            Console.WriteLine(t);
+            var minValue = Math.Min(convertedAValue, convertedBValue);
+            var maxValue= Math.Max(convertedAValue, convertedBValue);
+
+            List<int> list = new List<int>();
+
+
+                for (int s = minValue; s <= maxValue; s++)
+                {
+                    list.Add(s);
+                }
+            Console.WriteLine("List of values:");
+            list.ForEach(Console.WriteLine);
+            Console.WriteLine("---------------");
+
+            if (minValue != maxValue)
+            {
+                Console.WriteLine("sum of all values: " + list.Sum());
+            }
+            else if (maxValue == minValue)
+            {
+                Console.WriteLine("sum of all values: " + minValue);
+            }
         }
     }
 }
