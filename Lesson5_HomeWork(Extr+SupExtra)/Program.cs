@@ -28,11 +28,12 @@
             var result4 = Str(str, a2);
             Console.WriteLine(result4);
 
-            // Prints a square & cross figure
+            // Fibo
             for (long i = 0; i <= a; i++)
             {
                 Console.Write(Fibo(i) + " ");
             }
+            // Prints a square & cross figure
             int horiz = 10;
             long vert = 10;
             PrintsSquareAndCrossFigure(horiz);
