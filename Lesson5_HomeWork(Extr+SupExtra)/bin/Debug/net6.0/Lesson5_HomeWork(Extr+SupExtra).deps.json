@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v6.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v6.0": {
+      "Lesson5_HomeWork(Extr+SupExtra)/1.0.0": {
+        "runtime": {
+          "Lesson5_HomeWork(Extr+SupExtra).dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Lesson5_HomeWork(Extr+SupExtra)/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
