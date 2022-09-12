@@ -15,24 +15,31 @@ public static class StringConversion
             int y = Convert.ToInt32(Console.ReadLine());
             
             { 
-            int sum = x + y;
-                if (x == y)
+            int sum = 0;
+                if (x != y)
                 {
-                    Console.WriteLine($"The Sum = {x}\n>>To left Enter L\n >>To continue PRESS --enter--");
-                    if (Console.ReadLine() == "L")
+                 for(int i =x;i<=y;i++)
+                    {
+                        sum += i;
+
+                    }
+                    Console.WriteLine($"The sum between {x} and {y} is {sum}");
+                    Console.WriteLine(">> Press the L to left the program\n>> Press Enter to continue");
+                    if(Console.ReadLine() == "L")
                     {
                         break;
                     }
-
                 }
                 else
                 {
-                    Console.WriteLine($"The Sum = {sum=x+y}\n>>To left Enter L\n>>To continue PRESS --enter--");
+                    Console.WriteLine($"The sum between {x} and {y} is {x}");
+                    Console.WriteLine(">> Press the L to left the program\n>> Press Enter to continue");
                     if (Console.ReadLine() == "L")
                     {
                         break;
                     }
                 }
+                
 
             }
         }
