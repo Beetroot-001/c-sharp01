@@ -10,10 +10,12 @@ namespace ConsoleApp1
 			Console.WriteLine(max(a, b));
 			Console.WriteLine(max(a, b, c));
 			Console.WriteLine(max(a, b, c, d));
+			Console.WriteLine(max(a, b, c, d, 5 ,5 ,6 , 6 ,7 ,4 ,12,13));
 
 			Console.WriteLine(min(a, b));
 			Console.WriteLine(min(a, b, c));
 			Console.WriteLine(min(a, b, c, d));
+			Console.WriteLine(min(a, b, c, d, 5, 5, 6, 6, 7, 4, 12, 13));
 
 			int sum;
             Console.WriteLine("? = "+ TrySumIfOdd( a, d,out sum) + "  Sum - "+ sum);
@@ -32,15 +34,21 @@ namespace ConsoleApp1
         }
 		static int max(int a, int b, int c)
 		{
-			return max(Math.Max(a, b), c);
+			return max(max(a, b), c);
 		}
 		static int max(int a, int b, int c, int d)
 		{
-			return max(Math.Max(Math.Max(a, b), c), d);
+			return max(max(max(a, b), c), d);
 		}
-		static int maxOver(int a, int b, int c, params int[] values)
+		static int max(params int[] values)
 		{
-			return max(Math.Max(Math.Max(a, b), c), values[0]);
+			int t = 0;
+            for (int i = 1; i < values.Length; i++)
+            {
+				t = max(values[i-1], values[i]);
+            }
+
+			return t;
 		}
 
 		static int min(int a, int b)
@@ -54,6 +62,16 @@ namespace ConsoleApp1
 		static int min(int a, int b, int c, int d)
 		{
 			return min(min(min(a, b), c), d);
+		}
+		static int min(params int[] values)
+		{
+			int t = 0;
+			for (int i = 1; i < values.Length; i++)
+			{
+				t = min(values[i - 1], values[i]);
+			}
+
+			return t;
 		}
 
 
