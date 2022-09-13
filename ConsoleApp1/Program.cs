@@ -28,6 +28,10 @@
 
             Console.Write("str x3: ");
             Repeat("str", 3);
+            Console.WriteLine();
+            Console.Write("Fibonacci sequence of 15: ");
+            FiboNum(15);
+            DrawSqr();
         }
         static int MaxVal(int a, int b, int c)
         {
@@ -45,7 +49,7 @@
             return trueMin;
         }
 
-        static double MinVal(double a, double b, double c, double d) 
+        static double MinVal(double a, double b, double c, double d)
         {
             double min = Math.Min(a, b);
             double trueMin = Math.Min(min, c);
@@ -63,22 +67,71 @@
         }
         static bool TrySumIfOdd(int a, int b, out bool isOdd)
         {
-           isOdd = (a+b)%2 == 0 ? true : false;
+            isOdd = (a + b) % 2 == 0 ? true : false;
             return isOdd;
-             
+
         }
         static void Repeat(string str, int x)
         {
             for (int i = 0; i < x; i++)
-            Console.Write(str);
+                Console.Write(str);
         }
         static void FiboNum(int x)
         {
             int x1 = 0;
             int x2 = 1;
-            if (x > 2)
-                Console.WriteLine("0, 1");
 
+
+            for (int i = 0; i < x; i++)
+            {
+                int fibb = x1;
+                x1 = x2;
+                x2 = fibb + x2;
+                Console.Write(fibb + " ");
+
+            }
+
+
+
+        }
+        static void DrawSqr(int n = 10)
+        {
+            Console.WriteLine();
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < n; j++)
+                {
+                    if (i == n-1 || i == 0|| j == n-1 || j == 0 || j == n-1)
+                    Console.Write('*');
+                    else Console.Write(' ');
+                }
+                Console.WriteLine();
+
+            }
+            Console.WriteLine();
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < n; j++)
+                {
+                    if (i == j || n - 1 - i == j)
+                        Console.Write('*');
+                    else Console.Write(' ');
+                }
+                Console.WriteLine();
+
+            }
+            Console.WriteLine();
+            int halfOfN = n / 2;
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < n; j++)
+                {
+                    if (i == halfOfN || j == halfOfN)
+                        Console.Write("*");
+                    else Console.Write(" ");
+                }
+                Console.WriteLine();
+            }
         }
 
     }
