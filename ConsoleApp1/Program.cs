@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Reflection.Metadata.Ecma335;
 
 namespace ConsoleApp1
 {
@@ -15,8 +16,6 @@ namespace ConsoleApp1
             Console.WriteLine($"Min of {x_i} and {y_i} is: {Min(x_i, y_i)}");
             Console.WriteLine($"Max of {x_f} and {y_f} is: {Max(x_f, y_f)}");
             Console.WriteLine($"Max of {x_d} and {y_d} is: {Max(x_d, y_d)}");
-            Console.WriteLine($"Max of {x_i} and {y_i} is: {Max(x_i, y_i)}\n");
-
 
             Console.WriteLine("Enter size for square: ");
             int size = Input();
@@ -49,6 +48,8 @@ namespace ConsoleApp1
             x = x ?? String.Empty;
             if (number == 0) return String.Empty;
             else return x + Repeat(x, --number);
+
+            Console.WriteLine($"{x}");
         }
         static int Max(params int[] values)
         {
@@ -73,55 +74,34 @@ namespace ConsoleApp1
 
         static int Max(int x, int y)
         {
-            if (x < y)
-                return y;
-            else return x;
+            return x < y ? y : x;
         }
 
         static float Max(float x, float y)
         {
-            if (x < y)
-                return y;
-            else return x;
+            return x < y ? y : x;
         }
         static double Max(double x, double y)
         {
-            if (x < y)
-                return y;
-            else return x;
+            return x < y ? y : x;
         }
         static int Min(int x, int y)
         {
-            if (x > y)
-                return y;
-            else return x;
+            return x > y ? y : x;
         }
         static float Min(float x, float y)
         {
-            if (x > y)
-                return y;
-            else return x;
+            return x > y ? y : x;
         }
         static double Min(double x, double y)
         {
-            if (x > y)
-                return y;
-            else return x;
+            return x > y ? y : x;
         }
 
         static bool TrySumIfOdd(int x, int y, out int z)
         {
-            int sum = x + y;
-            if (sum % 2 == 0)
-            {
-                z = -1;
-                return false;
-            }
-            else
-            {
-                z = sum;
-                return true;
-            };
+            z = (x + y) % 2 == 0 ? -1 : x + y;
+            return (x + y) % 2 == 0;
         }
 
         static void Fibonacchi(int first, int second, int final)
@@ -155,67 +135,33 @@ namespace ConsoleApp1
         {
             for (int i = 0; i < n; i++)
             {
-                Console.Write('*');
-            }
-            Console.WriteLine();
-            for (int i = 0; i < n - 2; i++)
-            {
-                Console.Write('*');
-                for (int j = 0; j < n - 2; j++)
+                for (int j = 0; j < n; j++)
                 {
-                    Console.Write(' ');
+                    if (i == 0 || j == 0 || i == n-1 || j == n-1)
+                    {
+                        Console.Write('*');
+                    }
+                    else
+                    {
+                        Console.Write(' ');
+                    }
                 }
-                Console.Write('*');
                 Console.WriteLine();
             }
-            for (int i = 0; i < n; i++)
-            {
-                Console.Write('*');
-            }
-            Console.WriteLine();
         }
         static void DrawX(int n = 10)
         {
-            for (int i = 0; i <= n / 2; i++)
+            for (int i = 0; i < n; i++)
             {
-                for (int j = 0; j <= n / 2; j++)
+                for (int j = 0; j < n; j++)
                 {
-                    if (j == i)
-                    {
+                    if(i == j || n-1-i == j)
                         Console.Write('*');
-                    }
-                    else Console.Write(' ');
-                }
-                for (int k = n / 2; k >= 0; k--)
-                {
-                    if (k == i)
-                    {
-                        Console.Write('*');
-                    }
                     else Console.Write(' ');
                 }
                 Console.WriteLine();
             }
-            for (int i = n / 2; i >= 0; i--)
-            {
-                for (int j = 0; j <= n / 2; j++)
-                {
-                    if (j == i)
-                    {
-                        Console.Write('*');
-                    }
-                    else Console.Write(' ');
-                }
-                for (int k = n / 2; k >= 0; k--)
-                {
-                    if (k == i)
-                    {
-                        Console.Write('*');
-                    }
-                    else Console.Write(' ');
-                }
-                Console.WriteLine();
-            }
+            
         }
     }
 }
