@@ -19,7 +19,7 @@ namespace ConsoleApp1
 
         }
 
-
+     
         public static int MaxValue(int a, int b, int c)
 		{
 
@@ -269,7 +269,7 @@ namespace ConsoleApp1
                 for (int k = 0; k <= counter2; k++)
                 {
 
-                    if (k == i || k == counter2 - i)
+                    if (k == i || k == counter2 - i-1)
                     {
                         Console.Write("*");
                     }
