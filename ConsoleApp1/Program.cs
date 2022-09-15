@@ -1,4 +1,6 @@
-﻿namespace ConsoleApp1
+﻿using System;
+
+namespace ConsoleApp1
 {
 	internal class Program
 	{
@@ -6,7 +8,7 @@
         /// SelectionSort algorithm in direct order
         /// </summary>
         /// <param name="array">sort this array in direct order</param>
-        public static void SelectionSortAsc(int[] array)
+        static void SelectionSortAsc(int[] array)
         {
             for (int i = 0; i < array.Length; i++)
             {
@@ -57,7 +59,7 @@
         /// </summary>
         /// <param name="array">sort this array in direct order</param>
 
-        public static void BubbleSortAsc(int[] array)
+         static void BubbleSortAsc(int[] array)
         {
             for (int i = 0; i < array.Length; i++)
             {
@@ -79,7 +81,7 @@
         /// </summary>
         /// <param name="array">sort this array in reverse order</param>
 
-        public static void BubbleSortDesc(int[] array)
+         static void BubbleSortDesc(int[] array)
         {
             for (int i = 0; i < array.Length; i++)
             {
@@ -100,7 +102,7 @@
         /// InsertionSort algorithm in direct order
         /// </summary>
         /// <param name="array">sort this array in direct order</param>
-        public static void InsertionSortAsc(int[] array)
+         static void InsertionSortAsc(int[] array)
         {
            
             for (int i = 1; i < array.Length; i++)
@@ -120,7 +122,7 @@
         /// InsertionSort algorithm in reverse order
         /// </summary>
         /// <param name="array">sort this array in reverse order</param>
-        public static void InsertionSortDesc(int[] array)
+         static void InsertionSortDesc(int[] array)
         {
 
             for (int i = 1; i < array.Length; i++)
@@ -193,19 +195,49 @@
         static void Main(string[] args)
 		{
 
-            int[] array = {1, 9, 2, 8, 7,1, 5, 4, 0, 6, 3 };
-           
+            int[] array0 = { 3, 6, 1, 6, 4, 9, 2, 0 };
+            SortArray(array0, SortAlgorithmType.SelectionSort, OrderBy.Desc);
 
-            SortArray(array,SortAlgorithmType.SelectionSort, OrderBy.Desc);
-
-            foreach (var item in array)
+            foreach (var item in array0)
             {
                 Console.Write(item + " ");
             }
 
-          
+
+            //Extra Task
+            Console.WriteLine();
+            double[] array = { 23,4,46,23,1,4 };
+
+            static double UniqueNum(double[] array )
+            {
+                for (int i = 0; i < array.Length; i++)
+                {
+                    bool numMatch = false;
+                    int index = array.Length - 1 - i;
+                    double num = array[index];
+                    
+                    for (int j = 0; j < array.Length; j++)
+                    {
+                        if (array[index] == array[j] && index != j)
+                        {
+                            numMatch = true;
+                            break;
+                        }
+                    }
+
+                    if (!numMatch)
+                    {
+                        return num;
+                    }
+                }
+                return 47;
+            }
+
+            Console.WriteLine(UniqueNum(array));
 
 
+       
+           
 
         }
 	}
