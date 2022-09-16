@@ -122,47 +122,18 @@
             switch (typeOfSort)
             {
                 case SortType.Selection:
-                    for (int i = 0; i < array.Length - 1; i++)
-                    {
-                        int minValue = i;
-                        for (int j = i + 1; j < array.Length; j++)
-                        {
-                            if (j < array[minValue])
-                                minValue = j;
-                        }
-                        int temp = array[minValue];
-                        array[minValue] = array[i];
-                        array[i] = temp;
-                    }
+                    SelectionAlgorithms(array);
                     break;
                 case SortType.Bubble:
-                    for (int i = 0; i < array.Length - 1; i++)
-                        for (int j = 0; j < array.Length - i - 1; j++)
-                            if (array[j] > array[j + 1])
-                            {
-                                int temp = array[j];
-                                array[j] = array[j + 1];
-                                array[j + 1] = temp;
-                            }
+                    BubbleAlgorithms(array);
                     break;
                 case SortType.Insertion:
-                    for (int i = 1; i < array.Length; ++i)
-                    {
-                        int key = array[i];
-                        int j = i - 1;
-                        while (j >= 0 && array[j] > key)
-                        {
-                            array[j + 1] = array[j];
-                            j = j - 1;
-                        }
-                        array[j + 1] = key;
-                    }
+                    InsertionAlgorithms(array);
                     break;
                 default:
                     Console.WriteLine("Error type Of Sort");
                     break;
             }
-
         }
     }
 }
