@@ -44,30 +44,15 @@ namespace ConsoleApp1
             int[] tr5 = { 4, 5, 6, 7 };
             int unique;
             bool found = FindUnique(tr1, out unique);
-            if (found) 
-                Console.WriteLine($"Unique test 1: {unique}");
-            else 
-                Console.WriteLine("Unique test 1: Unique not found");
+            Console.WriteLine($"Unique test 1: {unique}");
             found = FindUnique(tr2, out unique);
-            if (found) 
-                Console.WriteLine($"Unique test 2: {unique}");
-            else 
-                Console.WriteLine("Unique test 2: Unique not found");
+            Console.WriteLine($"Unique test 2: {unique}");
             found = FindUnique(tr3, out unique);
-            if (found) 
-                Console.WriteLine($"Unique test 3: {unique}");
-            else
-                Console.WriteLine("Unique test 3: Unique not found");   
+            Console.WriteLine($"Unique test 3: {unique}");
             found = FindUnique(tr4, out unique);
-            if (found) 
-                Console.WriteLine($"Unique test 4: {unique}");
-            else
-                Console.WriteLine("Unique test 4: Unique not found");
+            Console.WriteLine($"Unique test 4: {unique}");
             found = FindUnique(tr5, out unique);
-            if (found)
-                Console.WriteLine($"Unique test 5: {unique}");
-            else
-                Console.WriteLine("Unique test 5: Unique not found");
+            Console.WriteLine($"Unique test 5: {unique}");
 
         }
 
@@ -92,7 +77,7 @@ namespace ConsoleApp1
         {
             bool[] repeaters = new bool[array.Length];
             unique = -1;
-            
+
             for (int i = 0; i < array.Length; i++)
             {
                 unique = array[i];
@@ -105,7 +90,7 @@ namespace ConsoleApp1
                     }
                 }
             }
-            for(int i = 0; i < repeaters.Length; i++)
+            for (int i = 0; i < repeaters.Length; i++)
             {
                 if (!repeaters[i])
                 {
@@ -113,6 +98,7 @@ namespace ConsoleApp1
                     return true;
                 }
             }
+            unique = 47;
             return false;
         }
 
