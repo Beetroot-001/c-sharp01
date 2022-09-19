@@ -7,137 +7,61 @@ namespace ConsoleApp1
 	{
         public static int MaxValue(int a, int b)
         {
-            if (a > b )
-            {
-                return a;
-            }
-          
-            else
-            {
-                return b;
-            }
+            int result = a > b ? a : b;
 
+            return result; 
         }
 
      
         public static int MaxValue(int a, int b, int c)
 		{
+            int maxResult = MaxValue(a, b);
 
-			if (a > b && a >c)
-			{
-				return a;
-			}
-			else if (b >a && b > c)
-			{
-                return b;
-            }
-			else
-			{
-				return c;
-			}
-
+            return MaxValue(maxResult, c);         
         }
 
         public static int MaxValue(int a, int b, int c, int d)
         {
+            int maxResult = MaxValue(a, b,c);
 
-            if (a > b && a > c && a >d)
-            {
-                return a;
-            }
-            else if (b > a && b > c && b > d)
-            {
-                return b;
-            }
-			else if (c >a && c > b && c > d)
-			{
-				return c;
-			}
-            else
-            {
-                return d;
-            }
+            return MaxValue(maxResult, d);
         }
 
 
         public static int MinValue(int a, int b)
         {
-            if (a < b)
-            {
-                return a;
-            }
+            int result = a < b ? a : b;
 
-            else
-            {
-                return b;
-            }
-
+            return result;
         }
 
 
         public static int MinValue(int a, int b, int c)
         {
+            int minResult = MaxValue(a, b);
 
-            if (a < b && a < c)
-            {
-                return a;
-            }
-            else if (b < a && b < c)
-            {
-                return b;
-            }
-            else
-            {
-                return c;
-            }
-
+            return MaxValue(minResult, c);
         }
 
         public static int MinValue(int a, int b, int c, int d)
         {
+            int minResult = MaxValue(a, b,c);
 
-            if (a < b && a < c && a < d)
-            {
-                return a;
-            }
-            else if (b < a && b < c && b < d)
-            {
-                return b;
-            }
-            else if (c < a && c < b && c < d)
-            {
-                return c;
-            }
-            else
-            {
-                return d;
-            }
+            return MaxValue(minResult, d);
         }
 
-
-
-
-        public static bool TrySumIfOdd(int a, int b, out int result)
+        public static bool TrySumIfOdd(int a, int b, out int sum)
         {
-            
-            int sum = 0;
-            
+            sum = 0;
+
             for (int i = a; i < b; i++)
             {
                 sum += i;
             }
 
-            if (sum%2 != 0)
-            {
-                result = sum;
-                return true;
-            }
-            else
-            {
-                result = 0;
-                return false;
-            }
+           bool result = sum % 2 != 0 ? true : false;
 
+           return result;
         }
 
 
@@ -160,20 +84,15 @@ namespace ConsoleApp1
             {
                 return;
             }
-
         }
-
-
-
 
         static void Main(string[] args)
 		{
 
             Console.WriteLine("/////////////Homework 1.1.Max Value Method//////////////");
 
-            int resultMaxValue = MaxValue(2, 5);
+            int resultMaxValue = MaxValue(91, 118,6,12);
             Console.WriteLine(resultMaxValue);
-
 
             Console.WriteLine("/////////////Homework 1.2. Min Value Method//////////////");
 
@@ -182,13 +101,12 @@ namespace ConsoleApp1
 
             Console.WriteLine("/////////////Homework 1.3. TrySumIfOdd Method//////////////");
 
-            int result = 0;
-
-            TrySumIfOdd(3, 5, out result);
-            Console.WriteLine(result);
+            int sum;
+            Console.WriteLine(TrySumIfOdd(3, 6, out sum));
+            
+            Console.WriteLine(sum);
 
             Console.WriteLine("/////////////Homework Extra. Repeat Method//////////////");
-
 
             Repeat("vasia", 3);  ///Loop method
             Console.WriteLine();
@@ -196,10 +114,7 @@ namespace ConsoleApp1
             Repeat2("123", 3); ///recursion method 
             Console.WriteLine();
 
-
-
             Console.WriteLine("/////////////Homework Super Extra 1. Fibonacci Method//////////////");
-
 
             static void Fibonacci(int counter)
             {
@@ -212,7 +127,6 @@ namespace ConsoleApp1
                     num2 += num1;
                     num1 = num2 - num1;
                 }
-
             }
 
             Fibonacci(12);
@@ -220,7 +134,6 @@ namespace ConsoleApp1
             Console.WriteLine();
 
             static void Fibonacci2(int counter, int num1 = 0, int num2 = 1)
-
             {
                 if (counter == 0)
                 {
@@ -241,7 +154,6 @@ namespace ConsoleApp1
 
             Console.WriteLine("/////////////Homework Super Extra 2. Print Figures//////////////");
 
-         
             int counter = 10;
 
             for (int i = 0; i < counter; i++)
@@ -262,13 +174,12 @@ namespace ConsoleApp1
 
             Console.WriteLine();          
             
-            int counter2 = 10;          ////This one is not as it should be yet. I'm still working on the solution. By now I've got the result like this 
+            int counter2 = 10;          
 
             for (int i = 0; i < counter2; i++)
             {
                 for (int k = 0; k <= counter2; k++)
                 {
-
                     if (k == i || k == counter2 - i-1)
                     {
                         Console.Write("*");
@@ -280,34 +191,6 @@ namespace ConsoleApp1
                 }
                 Console.WriteLine();
             }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
         }
