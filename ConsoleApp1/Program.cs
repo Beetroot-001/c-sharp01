@@ -110,23 +110,18 @@ namespace ConsoleApp1
             {
                 case SortAlgorithmType.Insertion:
                     Console.WriteLine("Insertion sort");
-                    InsertionSort(array);
+                    InsertionSort(array, order);
                     break;
                 case SortAlgorithmType.Selection:
                     Console.WriteLine("Selection sort");
-                    SelectionSort(array);
+                    SelectionSort(array, order);
                     break;
                 case SortAlgorithmType.Bubble:
                     Console.WriteLine("Bubble sort");
-                    BubbleSort(array);
+                    BubbleSort(array, order);
                     break;
                 default:
                     break;
-            }
-            if (order == OrderBy.Descending)
-            {
-                Console.WriteLine("In descending");
-                Reverse(ref array);
             }
             Console.WriteLine("Array after soring: ");
             PrintArray(array);
@@ -141,13 +136,14 @@ namespace ConsoleApp1
             }
             array = reversed;
         }
-        public static void BubbleSort(int[] array)
+        public static void BubbleSort(int[] array, OrderBy order)
         {
             for (int i = 0; i < array.Length; i++)
             {
                 for (int j = 0; j < array.Length - 1; j++)
                 {
-                    if (array[j] > array[j + 1])
+                    if ((array[j] > array[j + 1] && order == OrderBy.Ascending) ||
+                        (array[j] < array[j + 1] && order == OrderBy.Descending))
                     {
                         int t = array[j];
                         array[j] = array[j + 1];
@@ -157,27 +153,28 @@ namespace ConsoleApp1
             }
         }
 
-        public static void SelectionSort(int[] array)
+        public static void SelectionSort(int[] array, OrderBy order)
         {
-            int min;
+            int changer;
             for (int i = 0; i < array.Length - 1; i++)
             {
-                min = i;
+                changer = i;
                 for (int j = i + 1; j < array.Length; j++)
                 {
-                    if (array[j] < array[min])
-                        min = j;
+                    if ((array[j] < array[changer] && order == OrderBy.Ascending) ||
+                        array[j] > array[changer] && order == OrderBy.Descending)
+                        changer = j;
                 }
-                if (min != i)
+                if (changer != i)
                 {
-                    int t = array[min];
-                    array[min] = array[i];
+                    int t = array[changer];
+                    array[changer] = array[i];
                     array[i] = t;
                 }
             }
         }
 
-        public static void InsertionSort(int[] array)
+        public static void InsertionSort(int[] array, OrderBy order)
         {
             int pos;
             int value;
@@ -187,7 +184,8 @@ namespace ConsoleApp1
                 value = array[i];
                 pos = i;
 
-                while (pos > 0 && array[pos - 1] > value)
+                while (pos > 0 && ((array[pos - 1] > value && order == OrderBy.Ascending) 
+                    || (array[pos - 1] < value && order == OrderBy.Descending)) )
                 {
                     array[pos] = array[pos - 1];
                     pos = pos - 1;
