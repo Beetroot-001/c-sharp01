@@ -13,6 +13,7 @@ namespace ConsoleApp1
             string fifth = "Hello and hi";
 
 
+
             Console.WriteLine(Compare(first, second));
             Analyze(third);
             Console.WriteLine(Sort(fourth));
@@ -49,6 +50,8 @@ namespace ConsoleApp1
             int alphabetic = 0;
             int digit = 0;
             int special = 0;
+
+
             for (int i = 0; i < a.Length; i++)
             {
                 char c = a[i];
@@ -79,28 +82,45 @@ namespace ConsoleApp1
             stringBuilder.Append(array);
             return stringBuilder.ToString();
 
+            
         }
 
         static char[] Duplicate(string a)
         {
-
+            
 
             //
             StringBuilder ab1 = new StringBuilder();
-
-            string aLower = a.ToLowerInvariant();
-
             
-            for (int i = 0; i < aLower.Length; i++)
-            {
-                for (int j = 0; j < aLower.Length; j++)
-                {
-                    var checkVariable = aLower[i];
-                    aLower
 
+            string a_l = a.ToLowerInvariant();
+            Char[] chArray = new Char[a_l.Length];
+
+            for (int i = 0; i < a_l.Length; i++)
+            {
+                char checkSymbol = a_l[i];
+
+                for (int j = 0; j < a_l.Length; j++)
+                {
+                    
+                    if (checkSymbol == a_l[j])
+                    {
+                        if (chArray.Contains(checkSymbol))
+                        {
+                            continue;
+
+                        }
+                        else
+                        {
+                            chArray = ab1.Append(checkSymbol).ToString().ToCharArray();
+                        }
+                        
+                    }
+                    
                 }
             }
-            Char[] chArray = new Char[aLower.Length];
+            
+            
             return chArray;
         }
     }
