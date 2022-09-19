@@ -4,6 +4,7 @@ namespace ConsoleApp1
 {
 	internal class Program
 	{
+
         /// <summary>
         /// SelectionSort algorithm in direct order
         /// </summary>
@@ -27,31 +28,15 @@ namespace ConsoleApp1
             }
         }
 
-
         /// <summary>
         /// SelectionSort algorithm in reverse order
         /// </summary>
         /// <param name="array">sort this array in reverse order</param>
         static void SelectionSortDesc(int[] array)
         {
-
-            for (int i = 0; i < array.Length; i++)
-            {
-                int minIndex = i;
-
-                for (int j = i + 1; j < array.Length; j++)
-                {
-                    if (array[j] > array[minIndex])
-                    {
-                        minIndex = j;
-                    }
-                }
-                int tempValue = array[minIndex];
-                array[minIndex] = array[i];
-                array[i] = tempValue;
-            }
+            SelectionSortAsc(array);
+            Array.Reverse(array);
         }
-
 
 
         /// <summary>
@@ -59,7 +44,7 @@ namespace ConsoleApp1
         /// </summary>
         /// <param name="array">sort this array in direct order</param>
 
-         static void BubbleSortAsc(int[] array)
+        static void BubbleSortAsc(int[] array)
         {
             for (int i = 0; i < array.Length; i++)
             {
@@ -83,18 +68,8 @@ namespace ConsoleApp1
 
          static void BubbleSortDesc(int[] array)
         {
-            for (int i = 0; i < array.Length; i++)
-            {
-                for (int j = 0; j < array.Length - i - 1; j++)
-                {
-                    if (array[j] < array[j + 1])
-                    {
-                        int temp = array[j + 1];
-                        array[j + 1] = array[j];
-                        array[j] = temp;
-                    }
-                }
-            }
+            SelectionSortAsc(array);
+            Array.Reverse(array);
         }
 
 
@@ -125,17 +100,8 @@ namespace ConsoleApp1
          static void InsertionSortDesc(int[] array)
         {
 
-            for (int i = 1; i < array.Length; i++)
-            {
-                int key = i;
-                while (key > 0 && array[key] > array[key - 1])
-                {
-                    int temp = array[key - 1];
-                    array[key - 1] = array[key];
-                    array[key] = temp;
-                    key--;
-                }
-            }
+            SelectionSortAsc(array);
+            Array.Reverse(array);
         }
 
         enum SortAlgorithmType
@@ -149,6 +115,11 @@ namespace ConsoleApp1
             Asc,
             Desc
         }
+
+
+
+
+
 
 
         /// <summary>
@@ -236,9 +207,15 @@ namespace ConsoleApp1
             Console.WriteLine(UniqueNum(array));
 
 
-       
-           
+            Console.WriteLine("test");
+            int [] array8 = { 5, 8, 3, 1, 9, 6, 4, 0, 7 };
 
+            SelectionSortDesc(array8);
+
+            foreach (var item in array8)
+            {
+                Console.Write($"{item}, ");
+            }
         }
 	}
 }
