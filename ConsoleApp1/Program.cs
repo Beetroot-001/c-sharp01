@@ -11,11 +11,10 @@ namespace ConsoleApp1
 			string b = "hello,*%";
 			string forSorting = "DCBaz";
 
-			//Compare(a, b);//#1
-			//Analyze(b);//#2
-			//Sort(forSorting);//#3
-			Duplicate("Hellooo");//#4 - I have a question here
-
+			Compare(a, b);//#1
+			Analyze(b);//#2
+			Sort(forSorting);//#3
+			Duplicate("mHellooomm");//#4 
         }
 
 		//#1
@@ -82,7 +81,7 @@ namespace ConsoleApp1
 
 		public static char[] Duplicate(string inputString)
 		{
-			//make array rom string
+			//make array from string
 			char[] forWork = new char[inputString.Length];
 			inputString.ToLower().CopyTo(0, forWork, 0 , inputString.Length);
 
@@ -95,8 +94,8 @@ namespace ConsoleApp1
                 for (int j = 0; j < forWork.Length - i - 1; j++)
 				{
 					if (forWork[j] == forWork[j + 1])
-						if (resultString.Contains(forWork[j]) == false)// I have a question here
-							resultString = string.Join("", forWork[j]);        		
+						if (resultString.Contains(forWork[j]) == false)
+							resultString += (forWork[j]);
 				}
             }
 
