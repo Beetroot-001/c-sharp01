@@ -1,131 +1,292 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Numerics;
+using System.Security.Cryptography;
+using System.Text.RegularExpressions;
 
 namespace ConsoleApp1
 {
-	internal class Program
-	{
-		static void Main(string[] args)
-		{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            while (true)
+            {
+                DisplayMenu();
+            }
+        }
 
-			string record = "Anatolii,Levchenko,023232323";
-
-			var res = Regex.Matches(record, @"\W+");
-
-			foreach (var match in res)
-			{
-				Console.WriteLine(match.ToString());
-			}
-
-
-			while (true)
-			{
-				DisplayMenu();
-			}
-		}
-
-		static void DisplayMenu()
-		{
-			var path = Path.Combine(Directory.GetCurrentDirectory(), "phonebook.csv");
+        static void DisplayMenu()
+        {
+            var path = Path.Combine(Directory.GetCurrentDirectory(), "phonebook.csv");
 
 
-			Console.WriteLine("\tThis is phonebook app");
+            Console.WriteLine("\tThis is phonebook app");
 
-			Console.WriteLine("\t1. Display phone book records");
-			Console.WriteLine("\t2. Add new record");
-			Console.WriteLine("\t3. Search records");
-			Console.WriteLine("\t0. Exit app");
+            Console.WriteLine("\t1. Display phone book records");
+            Console.WriteLine("\t2. Add new record");
+            Console.WriteLine("\t3. Search records");
+            Console.WriteLine("\t4. Edit a record");
+            Console.WriteLine("\t5. Delete a record");
+            Console.WriteLine("\t0. Exit app");
 
-			var pressedKey = Console.ReadKey();
-			switch (pressedKey.Key)
-			{
-				case ConsoleKey.D1:
-					var records = ReadPhoneBookRecords(path);
+            var pressedKey = Console.ReadKey();
+            switch (pressedKey.Key)
+            {
+                case ConsoleKey.D1:
+                    var records = ReadPhoneBookRecords(path);
 
-					DisplayPhoneBook(records);
-					break;
-				case ConsoleKey.D2:
-					AddNewRecord(path);
-					break;
-				case ConsoleKey.D3:
-					SearchRecords(path);
-					break;
-				case ConsoleKey.D0:
-				default:
-					Environment.Exit(0);
-					break;
-			}
+                    DisplayPhoneBook(records);
+                    Sort(path);
+                    break;
+                case ConsoleKey.D2:
+                    AddNewRecord(path);
+                    break;
+                case ConsoleKey.D3:
+                    SearchRecords(path);
+                    break;
+                case ConsoleKey.D4:
+                    EditRecord(path);
+                    break;
+                case ConsoleKey.D5:
+                    DeleteRecord(path);
+                    break;
+                case ConsoleKey.D0:
+                default:
+                    Environment.Exit(0);
+                    break;
+            }
+            Console.WriteLine("Press any key to continue");
+            Console.ReadKey();
+            Console.Clear();
+        }
 
-			Console.ReadKey();
-			//Console.Clear();
+        static (string, string, string)[] ReadPhoneBookRecords(string path)
+        {
+            Console.WriteLine();
+            string[] records = File.ReadAllLines(path);
+            (string, string, string)[] phoneBookRecords = new (string, string, string)[records.Length - 1];
 
-		}
+            for (int i = 1; i < records.Length; i++)
+            {
+                var itemProperties = records[i].Split(',');
 
-		static (string, string, string)[] ReadPhoneBookRecords(string path)
-		{
-			Console.WriteLine();
-			string[] records = File.ReadAllLines(path);
-			(string, string, string)[] phoneBookRecords = new (string, string, string)[records.Length - 1];
+                phoneBookRecords[i - 1] = (itemProperties[0], itemProperties[1], itemProperties[2]);
+            }
 
-			for (int i = 1; i < records.Length; i++)
-			{
-				var itemProperties = records[i].Split(',');
+            return phoneBookRecords;
+        }
 
-				phoneBookRecords[i - 1] = (itemProperties[0], itemProperties[1], itemProperties[2]);
-			}
+        static void DisplayPhoneBook((string firstName, string lastName, string phone)[] records)
+        {
+            Console.WriteLine();
+            Console.WriteLine($"{"First Name",-15} {"Last Name",-15} {"Phone",-15}");
 
-			return phoneBookRecords;
-		}
+            foreach (var record in records)
+            {
+                Console.WriteLine($"{record.firstName,-15} {record.lastName,-15} {record.phone,-15}");
+            }
+        }
 
-		static void DisplayPhoneBook((string firstName, string lastName, string phone)[] records)
-		{
-			Console.WriteLine();
-			Console.WriteLine($"{"First Name",-15} {"Last Name",-15} {"Phone",-15}");
+        static void AddNewRecord(string path)
+        {
+            Console.Write("First Name: ");
+            var firstName = Console.ReadLine();
 
-			foreach (var record in records)
-			{
-				Console.WriteLine($"{record.firstName,-15} {record.lastName,-15} {record.phone,-15}");
-			}
-		}
+            Console.Write("Last Name: ");
+            var lastName = Console.ReadLine();
 
-		static void AddNewRecord(string path)
-		{
-			Console.Write("First Name: ");
-			var firstName = Console.ReadLine();
+            Console.Write("Phone: ");
+            var phone = Console.ReadLine();
 
-			Console.Write("Last Name: ");
-			var lastName = Console.ReadLine();
+            string[] newRecords = new[] { string.Join(',', new[] { firstName, lastName, phone }) };
 
-			Console.Write("Phone: ");
-			var phone = Console.ReadLine();
+            File.AppendAllLines(path, newRecords);
+        }
 
-			string[] newRecords = new[] { string.Join(',', new[] { firstName, lastName, phone }) };
+        static void SearchRecords(string path)
+        {
+            Console.WriteLine();
+            Console.WriteLine("Enter search string: ");
+            string searchText = Console.ReadLine() ?? "";
 
-			File.AppendAllLines(path, newRecords);
-		}
+            (string firstName, string lastName, string phone)[] phoneBookRecords = ReadPhoneBookRecords(path);
 
-		static void SearchRecords(string path)
-		{
-			Console.WriteLine();
-			Console.WriteLine("Enter search string: ");
-			string searchText = Console.ReadLine() ?? "";
+            Console.WriteLine($"{"First Name",-15} {"Last Name",-15} {"Phone",-15}");
+            foreach (var record in phoneBookRecords)
+            {
+                if (record.lastName.Contains(searchText, StringComparison.OrdinalIgnoreCase) ||
+                    record.firstName.Contains(searchText, StringComparison.OrdinalIgnoreCase) ||
+                    record.phone.Contains(searchText, StringComparison.OrdinalIgnoreCase))
+                {
+                    Console.WriteLine($"{record.firstName,-15} {record.lastName,-15} {record.phone,-15}");
+                }
+            }
+        }
 
-			(string firstName, string lastName, string phone)[] phoneBookRecords = ReadPhoneBookRecords(path);
+        static int IdInput(int sizeLimit)
+        {
+            int input;
+            bool succes = true;
+            Console.WriteLine("Enter id of record: ");
+            do
+            {
+                succes = int.TryParse(Console.ReadLine(), out input);
+                string message = succes && (input < sizeLimit) ? "Id get successfully input" : "Invalid input Try again";
+                Console.WriteLine(message);
+            }
+            while (!succes);
 
+            return input;
+        }
 
-			//(string firstName, string lastName, string phone)[] searchedRecords = new (string firstName, string lastName, string phone)[phoneBookRecords.Length];
+        static void DeleteSwap(string[] records, int id)
+        {
+            if (id == records.Length)
+                return;
+            string swap = records[^1];
+            records[^1] = records[id];
+            records[id] = swap;
+        }
+        public enum OrderBy
+        {
+            Ascending,
+            Descending
+        }
 
-			Console.WriteLine($"{"First Name",-15} {"Last Name",-15} {"Phone",-15}");
-			foreach (var record in phoneBookRecords)
-			{
-				if (record.lastName.Contains(searchText, StringComparison.OrdinalIgnoreCase) ||
-					record.firstName.Contains(searchText, StringComparison.OrdinalIgnoreCase) ||
-					record.phone.Contains(searchText, StringComparison.OrdinalIgnoreCase))
-				{
-					Console.WriteLine($"{record.firstName,-15} {record.lastName,-15} {record.phone,-15}");
-				}
-			}
+        public enum SortBy
+        {
+            Name,
+            Surname,
+            Phone
+        }
+        static void Sort(string path)
+        {
+            Console.WriteLine("Enter sorting order: ");
+            Console.WriteLine("1. Ascending");
+            Console.WriteLine("2. Descending");
+            ConsoleKey pressed = Console.ReadKey().Key;
+            OrderBy order = (pressed == ConsoleKey.D2) ? OrderBy.Descending : OrderBy.Ascending;
 
-			//DisplayPhoneBook(searchedRecords);
-		}
-	}
+            Console.WriteLine("Sorting by: ");
+            Console.WriteLine("1. Name");
+            Console.WriteLine("2. Surname");
+            Console.WriteLine("3. Phone");
+            pressed = Console.ReadKey().Key;
+
+            SortBy sort;
+            if(pressed == ConsoleKey.D3)
+            {
+                sort = SortBy.Phone;
+            }
+            else if (pressed == ConsoleKey.D2)
+            {
+                sort = SortBy.Surname;
+            }
+            else
+            {
+                sort = SortBy.Name;
+            }
+            var records = ReadPhoneBookRecords(path);
+
+            BubbleSort(records, order, sort);
+            string[] recordsToWrite = new string[records.Length + 1];
+            recordsToWrite[0] = "FirstName,LastName,PhoneNumber";
+            for (int i = 1; i < recordsToWrite.Length; i++)
+            {
+                recordsToWrite[i] = records[i - 1].Item1 + "," + records[i - 1].Item2 + "," + records[i - 1].Item3;
+            }
+            File.WriteAllLines(path, recordsToWrite);
+        }
+
+        public static void BubbleSort((string name, string surname, string phone)[] array, OrderBy order, SortBy criteria)
+        {   
+            switch (criteria)
+            {
+                case SortBy.Name:
+                    for (int i = 0; i < array.Length; i++)
+                    {
+                        for (int j = 0; j < array.Length - 1; j++)
+                        {
+
+                            if ((array[j].name.CompareTo(array[j + 1].name) >= 1 && order == OrderBy.Ascending) ||
+                                ((array[j].name.CompareTo(array[j + 1].name) <= -1 && order == OrderBy.Descending)))
+                            {
+                                (string name, string surname, string phone) t = array[j];
+                                array[j] = array[j + 1];
+                                array[j + 1] = t;
+                            }
+                        }
+                    }
+                    break;
+                case SortBy.Surname:
+                    for (int i = 0; i < array.Length; i++)
+                    {
+                        for (int j = 0; j < array.Length - 1; j++)
+                        {
+                            if ((array[j].surname.CompareTo(array[j + 1].surname) >= 1 && order == OrderBy.Ascending) ||
+                                ((array[j].surname.CompareTo(array[j + 1].surname) <= -1 && order == OrderBy.Descending)))
+                            {
+                                (string name, string surname, string phone) t = array[j];
+                                array[j] = array[j + 1];
+                                array[j + 1] = t;
+                            }
+
+                        }
+                    }
+                    break;
+                case SortBy.Phone:
+                    for (int i = 0; i < array.Length; i++)
+                    {
+                        for (int j = 0; j < array.Length - 1; j++)
+                        {
+                            if ((array[j].phone.CompareTo(array[j + 1].phone) >= 1 && order == OrderBy.Ascending) ||
+                                ((array[j].phone.CompareTo(array[j + 1].phone) <= -1 && order == OrderBy.Descending)))
+                            {
+                                (string name, string surname, string phone) t = array[j];
+                                array[j] = array[j + 1];
+                                array[j + 1] = t;
+                            }
+
+                        }
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        static void EditRecord(string path)
+        {
+
+            var records = File.ReadAllLines(path);
+            int input = IdInput(records.Length);
+
+            Console.WriteLine("Founded record: ");
+            Console.WriteLine(records[input]);
+
+            Console.Write("Enter new firstname: ");
+            string newName = Console.ReadLine();
+
+            Console.Write("Enter new lastname: ");
+            string newLast = Console.ReadLine();
+
+            Console.Write("Enter new phone: ");
+            string newPhone = Console.ReadLine();
+
+            string newRecord = string.Join(',', newName, newLast, newPhone);
+            records[input] = newRecord;
+            File.WriteAllLines(path, records);
+        }
+
+        static void DeleteRecord(string path)
+        {
+            var records = File.ReadAllLines(path);
+            int input = IdInput(records.Length);
+
+            DeleteSwap(records, input);
+            Array.Resize(ref records, records.Length - 1);
+            DeleteSwap(records, input);
+
+            File.WriteAllLines(path, records);
+        }
+    }
 }
