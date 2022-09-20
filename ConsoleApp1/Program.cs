@@ -52,12 +52,12 @@ namespace ConsoleApp1
             return flag;
         }
 
-        static int Analize(string str, AnalizeOut out_type = AnalizeOut.ALPHABETIC)
+        static int Analize(string str, AnalizeOut outType = AnalizeOut.ALPHABETIC)
         {
             int result = 0;
-            Func<char, bool> func = c => out_type == AnalizeOut.ALPHABETIC ?
-                char.IsLetter(c) : out_type == AnalizeOut.DIGITS ?
-                    char.IsDigit(c) : (!char.IsLetter(c) && !char.IsDigit(c));
+            Func<char, bool> func = c => outType == AnalizeOut.ALPHABETIC ?
+                char.IsLetter(c) : outType == AnalizeOut.DIGITS ?
+                    char.IsDigit(c) : !char.IsLetterOrDigit(c);
 
             for (int i = 0; i < str.Length; i++)
             {
@@ -72,21 +72,21 @@ namespace ConsoleApp1
 
         static string Sort(string str)
         {
-            char[] cstr = str.ToLower().ToCharArray();
+            char[] cStr = str.ToLower().ToCharArray();
 
-            for (int i = 1; i < cstr.Length; i++)
+            for (int i = 1; i < cStr.Length; i++)
             {
                 int j = i;
-                while (j > 0 && (int)cstr[j] < (int)cstr[j - 1])
+                while (j > 0 && (int)cStr[j] < (int)cStr[j - 1])
                 {
-                    char temp = cstr[j - 1];
-                    cstr[j - 1] = cstr[j];
-                    cstr[j] = temp;
+                    char temp = cStr[j - 1];
+                    cStr[j - 1] = cStr[j];
+                    cStr[j] = temp;
                     j--;
                 }
             }
 
-            string res = new string(cstr);
+            string res = new string(cStr);
 
             return res;
         }
@@ -99,17 +99,17 @@ namespace ConsoleApp1
         static char[] Duplicate(string str)
         {
             char[,] temp = new char[str.Length, 2];
-            char[] cstr = str.ToLower().ToCharArray();
-            int temp_count = 0;
+            char[] cStr = str.ToLower().ToCharArray();
+            int tempCount = 0;
             StringBuilder res = new StringBuilder();
 
-            for (int i = 0; i < cstr.Length; i++)
+            for (int i = 0; i < cStr.Length; i++)
             {
                 bool flag = true;
 
-                for (int j = 0; j < temp_count; j++)
+                for (int j = 0; j < tempCount; j++)
                 {
-                    if (temp[j, 0] == cstr[i])
+                    if (temp[j, 0] == cStr[i])
                     {
                         temp[j, 1]++;
                         flag = false;
@@ -119,13 +119,13 @@ namespace ConsoleApp1
 
                 if (flag)
                 {
-                    temp[temp_count, 0] = str[i];
-                    temp[temp_count, 1] = (char)1;
-                    temp_count++;
+                    temp[tempCount, 0] = str[i];
+                    temp[tempCount, 1] = (char)1;
+                    tempCount++;
                 }
             }
 
-            for (int i = 0; i < temp_count; i++)
+            for (int i = 0; i < tempCount; i++)
             {
                 if ((int)temp[i, 1] > 1)
                 {
@@ -138,7 +138,7 @@ namespace ConsoleApp1
 
         static void LoremIpsum()
         {
-            string loremipsum = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam non ligula eget ligula imperdiet" +
+            string loremIpsum = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam non ligula eget ligula imperdiet" +
                                 " tincidunt aliquam in ex. Aenean malesuada sollicitudin lacus, vel consequat justo facilisis non" +
                                 ". Etiam vel mauris egestas, tempus enim non, mollis ligula. Duis hendrerit ligula sed nunc feugi" +
                                 "at, ut condimentum elit fermentum. Nam in porta urna. Quisque posuere tellus nunc, vel imperdiet" +
@@ -176,39 +176,39 @@ namespace ConsoleApp1
                                 "s leo porta. Fusce id mauris.";
 
             char[] punctuations = { ' ', ',', '.', ';', ':' };
-            string[] LI_arr = loremipsum.Split(punctuations, StringSplitOptions.RemoveEmptyEntries);
+            string[] loremIpsumArr = loremIpsum.Split(punctuations, StringSplitOptions.RemoveEmptyEntries);
 
-            int lorem_cnt = 0;
-            int pulvinar_index = -1;
+            int loremCnt = 0;
+            int pulvinarIndex = -1;
             bool temp = true;
 
-            for (int i = 0; i < LI_arr.Length; i++)
+            for (int i = 0; i < loremIpsumArr.Length; i++)
             {
-                if (string.Compare("lorem", LI_arr[i], StringComparison.OrdinalIgnoreCase) == 0)
+                if (string.Compare("lorem", loremIpsumArr[i], StringComparison.OrdinalIgnoreCase) == 0)
                 {
-                    lorem_cnt++;
+                    loremCnt++;
                 }
             }
 
-            for (int i = 0; i < LI_arr.Length; i++)
+            for (int i = 0; i < loremIpsumArr.Length; i++)
             {
-                if (string.Compare("pulvinar", LI_arr[i], StringComparison.OrdinalIgnoreCase) == 0)
+                if (string.Compare("pulvinar", loremIpsumArr[i], StringComparison.OrdinalIgnoreCase) == 0)
                 {
                     temp = !temp;
 
                     if (temp)
                     {
-                        pulvinar_index = i;
+                        pulvinarIndex = i;
                         break;
                     }
                 }
 
             }
 
-            Console.WriteLine(String.Format("lorem count: {0}\npulvinar second index: {1}", lorem_cnt, pulvinar_index));
+            Console.WriteLine(String.Format("lorem count: {0}\npulvinar second index: {1}", loremCnt, pulvinarIndex));
 
             Console.WriteLine();
-            Console.WriteLine(loremipsum.Insert(loremipsum.Length / 2, "\n\n" + loremipsum + "\n\n"));
+            Console.WriteLine(loremIpsum.Insert(loremIpsum.Length / 2, "\n\n" + loremIpsum + "\n\n"));
         }
     }
 }
