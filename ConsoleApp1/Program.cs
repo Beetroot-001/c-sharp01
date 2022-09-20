@@ -1,5 +1,5 @@
-﻿using System;
-using System.Linq;
+﻿
+using System.Text.RegularExpressions;
 
 namespace ConsoleApp1
 {
@@ -11,10 +11,13 @@ namespace ConsoleApp1
 			string b = "hello,*%";
 			string forSorting = "DCBaz";
 
-			Compare(a, b);//#1
-			Analyze(b);//#2
-			Sort(forSorting);//#3
-			Duplicate("mHellooomm");//#4 
+			//Compare(a, b);//#1
+
+			int counterForChars, counterForDigits, counterForSpecialChars;
+            Analyze("st1", out counterForChars,  out counterForDigits, out  counterForSpecialChars);//#2
+
+			//Sort(forSorting);//#3
+			//Duplicate("yroma roma rota ta wwy y");//#4 
         }
 
 		//#1
@@ -43,11 +46,33 @@ namespace ConsoleApp1
 		//Analyze that will return number of alphabetic chars in string,
 		//digits and another special characters
 
-		public static int Analyze(string s)
+		//TODO
+		public static void Analyze(string s, out int counterForChars, out int counterForDigits, out int counterForSpecialChars)
 		{
-			Console.WriteLine($"String is '{s}', length is {s.Length}");
-			return s.Length;
-		}
+			string forTest = s.ToLower();
+
+            counterForChars = 0;
+			counterForDigits = 0;
+			counterForSpecialChars = 0;
+
+			//TODO: prepare correct pattern
+            string pattern = @"\d[a-z]";
+			string pattern2 = @"\d";
+			string pattern3 = @"\w";
+
+            foreach (Match match in Regex.Matches(forTest, pattern))
+				counterForChars += counterForChars;
+                Console.WriteLine($"counterForChars {counterForChars}");
+
+            foreach (Match match in Regex.Matches(forTest, pattern2))
+                counterForDigits += counterForDigits;
+            Console.WriteLine($"counterForDigits {counterForDigits}");
+
+
+            foreach (Match match in Regex.Matches(forTest, pattern3))
+                counterForSpecialChars += counterForSpecialChars;
+            Console.WriteLine($"counterForSpecialChars {counterForSpecialChars}");
+        }
 
 		//#3
         //Sort that will return string that contains all
@@ -88,14 +113,14 @@ namespace ConsoleApp1
 			//prepare new string to same result
 			string resultString = String.Empty;
 
-			//find iw there are any duplicates
-			for(int i = 0; i < forWork.Length; i++)
+			//find if there are any duplicates
+			for(int i = 0; i < forWork.Length-1; i++)
 			{
-                for (int j = 0; j < forWork.Length - i - 1; j++)
+                for (int j = i + 1; j < forWork.Length - 1; j++)
 				{
-					if (forWork[j] == forWork[j + 1])
-						if (resultString.Contains(forWork[j]) == false)
-							resultString += (forWork[j]);
+					if (forWork[i] == forWork[j])
+						if (resultString.Contains(forWork[i]) == false)
+							resultString += (forWork[i]);
 				}
             }
 
