@@ -17,7 +17,7 @@ namespace ConsoleApp1
             Console.WriteLine(Compare(first, second));
             Analyze(third);
             Console.WriteLine(Sort(fourth));
-            StringBuilder stringBuilder = new StringBuilder();
+            StringBuilder stringBuilder = new();
             Console.WriteLine(stringBuilder.Append(Duplicate(fifth)));
         }
 
@@ -74,12 +74,16 @@ namespace ConsoleApp1
 
         static string Sort(string a)
         {
-            StringBuilder stringBuilder = new StringBuilder();
+            StringBuilder stringBuilder = new();
 
             a = a.ToLowerInvariant();
+
             char[] array = a.ToCharArray(0, a.Length);
+
             Array.Sort(array);
+
             stringBuilder.Append(array);
+
             return stringBuilder.ToString();
 
             
@@ -87,41 +91,32 @@ namespace ConsoleApp1
 
         static char[] Duplicate(string a)
         {
-            
+            StringBuilder ab1 = new();
 
-            //
-            StringBuilder ab1 = new StringBuilder();
-            
+            string str = RemoveWhiteSpace(a).ToLowerInvariant();
+            Char[] chArray = new Char[str.Length];
+            char checkSymbol = str[0]; ;
 
-            string a_l = a.ToLowerInvariant();
-            Char[] chArray = new Char[a_l.Length];
 
-            for (int i = 0; i < a_l.Length; i++)
+            for (int i = 0; i < str.Length; i++)
             {
-                char checkSymbol = a_l[i];
-
-                for (int j = 0; j < a_l.Length; j++)
+                char checkIndexSymbol = str[i];
+                if (checkIndexSymbol == checkSymbol)
                 {
-                    
-                    if (checkSymbol == a_l[j])
-                    {
-                        if (chArray.Contains(checkSymbol))
-                        {
-                            continue;
-
-                        }
-                        else
-                        {
-                            chArray = ab1.Append(checkSymbol).ToString().ToCharArray();
-                        }
-                        
-                    }
-                    
+                    chArray = ab1.Append(checkSymbol).ToString().ToCharArray();
                 }
+                else
+                {
+                    checkSymbol = checkIndexSymbol;
+                }
+
             }
-            
-            
             return chArray;
+        }
+
+        static string RemoveWhiteSpace(string str)
+        {
+            return string.Join("", str.Split(default(string[]), StringSplitOptions.RemoveEmptyEntries));
         }
     }
 }
