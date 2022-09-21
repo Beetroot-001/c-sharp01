@@ -1,6 +1,7 @@
 ﻿using System.Numerics;
 using System.Security.Cryptography;
 using System.Text.RegularExpressions;
+using static ConsoleApp1.Program;
 
 namespace ConsoleApp1
 {
@@ -26,6 +27,8 @@ namespace ConsoleApp1
             Console.WriteLine("\t3. Search records");
             Console.WriteLine("\t4. Edit a record");
             Console.WriteLine("\t5. Delete a record");
+            Console.WriteLine("\t6. Sort records by anything");
+            Console.WriteLine("\t7. Binary search records by surname");
             Console.WriteLine("\t0. Exit app");
 
             var pressedKey = Console.ReadKey();
@@ -35,7 +38,7 @@ namespace ConsoleApp1
                     var records = ReadPhoneBookRecords(path);
 
                     DisplayPhoneBook(records);
-                    Sort(path);
+
                     break;
                 case ConsoleKey.D2:
                     AddNewRecord(path);
@@ -48,6 +51,15 @@ namespace ConsoleApp1
                     break;
                 case ConsoleKey.D5:
                     DeleteRecord(path);
+                    break;
+                case ConsoleKey.D6:
+                    Sort(path);
+                    break;
+                case ConsoleKey.D7:
+                    // binary search
+                    int id;
+                    string message = BinarySearch(path, out id) ? $"Surname is in phonebook! Id: {id + 1}" : "Surname was not found";
+                    Console.WriteLine(message);
                     break;
                 case ConsoleKey.D0:
                 default:
@@ -173,7 +185,7 @@ namespace ConsoleApp1
             pressed = Console.ReadKey().Key;
 
             SortBy sort;
-            if(pressed == ConsoleKey.D3)
+            if (pressed == ConsoleKey.D3)
             {
                 sort = SortBy.Phone;
             }
@@ -198,7 +210,7 @@ namespace ConsoleApp1
         }
 
         public static void BubbleSort((string name, string surname, string phone)[] array, OrderBy order, SortBy criteria)
-        {   
+        {
             switch (criteria)
             {
                 case SortBy.Name:
@@ -208,7 +220,7 @@ namespace ConsoleApp1
                         {
 
                             if ((array[j].name.CompareTo(array[j + 1].name) >= 1 && order == OrderBy.Ascending) ||
-                                ((array[j].name.CompareTo(array[j + 1].name) <= -1 && order == OrderBy.Descending)))
+                                (array[j].name.CompareTo(array[j + 1].name) <= -1 && order == OrderBy.Descending))
                             {
                                 (string name, string surname, string phone) t = array[j];
                                 array[j] = array[j + 1];
@@ -223,7 +235,7 @@ namespace ConsoleApp1
                         for (int j = 0; j < array.Length - 1; j++)
                         {
                             if ((array[j].surname.CompareTo(array[j + 1].surname) >= 1 && order == OrderBy.Ascending) ||
-                                ((array[j].surname.CompareTo(array[j + 1].surname) <= -1 && order == OrderBy.Descending)))
+                                (array[j].surname.CompareTo(array[j + 1].surname) <= -1 && order == OrderBy.Descending))
                             {
                                 (string name, string surname, string phone) t = array[j];
                                 array[j] = array[j + 1];
@@ -239,7 +251,7 @@ namespace ConsoleApp1
                         for (int j = 0; j < array.Length - 1; j++)
                         {
                             if ((array[j].phone.CompareTo(array[j + 1].phone) >= 1 && order == OrderBy.Ascending) ||
-                                ((array[j].phone.CompareTo(array[j + 1].phone) <= -1 && order == OrderBy.Descending)))
+                                (array[j].phone.CompareTo(array[j + 1].phone) <= -1 && order == OrderBy.Descending))
                             {
                                 (string name, string surname, string phone) t = array[j];
                                 array[j] = array[j + 1];
@@ -254,6 +266,42 @@ namespace ConsoleApp1
             }
         }
 
+        static bool BinarySearch(string path, out int id)
+        {
+            // get the info to search
+            Console.WriteLine("Enter surname to search: ");
+            string search = Console.ReadLine() ?? "";
+            // get the info u need 
+            (string firstname, string lastname, string phone)[] records = ReadPhoneBookRecords(path);
+            // sort at first
+            BubbleSort(records, OrderBy.Ascending, SortBy.Surname);
+
+            records = ReadPhoneBookRecords(path);
+            // search 
+            int l = 0;
+            int r = records.Length - 1;
+            int mid;
+            while (l <= r)
+            {
+                mid = (l + r) / 2;
+                if(search == records[mid].lastname)
+                {
+                    id = mid;
+                    return true;
+                }
+                else if (search.CompareTo(records[mid].lastname) <= -1)
+                {
+                    r = mid - 1; 
+                }
+                else
+                {
+                    l = mid + 1;
+                }
+            }
+            id = -1;
+            return false;
+        }
+
         static void EditRecord(string path)
         {
 
@@ -264,13 +312,13 @@ namespace ConsoleApp1
             Console.WriteLine(records[input]);
 
             Console.Write("Enter new firstname: ");
-            string newName = Console.ReadLine();
+            string newName = Console.ReadLine() ?? "";
 
             Console.Write("Enter new lastname: ");
-            string newLast = Console.ReadLine();
+            string newLast = Console.ReadLine() ?? "";
 
             Console.Write("Enter new phone: ");
-            string newPhone = Console.ReadLine();
+            string newPhone = Console.ReadLine() ?? "";
 
             string newRecord = string.Join(',', newName, newLast, newPhone);
             records[input] = newRecord;
