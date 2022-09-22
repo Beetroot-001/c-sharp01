@@ -1,4 +1,6 @@
-﻿using System.Numerics;
+﻿using System.IO;
+using System.Net.Http.Headers;
+using System.Numerics;
 using System.Text.RegularExpressions;
 
 namespace ConsoleApp1
@@ -174,7 +176,11 @@ namespace ConsoleApp1
 			}
 		}
 
-
+        /// <summary>
+        /// Update the record in PhoneBook
+        /// </summary>
+        /// <param name="path">path to the file where the PhoneBook stores</param>
+        /// <param name="phoneBookRecords">array of PhoneBook</param>
 		static void RecordUpdate(string path, ref (string firstName, string lastName, string phoneNumber)[] phoneBookRecords)
 		{
 			PrintPhoneBook(phoneBookRecords);
@@ -275,101 +281,192 @@ namespace ConsoleApp1
             Array.Resize(ref array, array.Length - 1);
         }
 
-
-       enum SortOption
-		{
-			firstName,
-			lastName,
-			phoneNumber
-		}
-
-		enum SortOrder
-		{
-			Asc,
-			Desc
-		}
-
-             /// <summary>
-             /// Sort array in direct order
-             /// </summary>
-             /// <param name="array">sort this array in direct order</param>
-        static void SortAsc((string firstName, string lastName, string phoneNumber)[] phoneBookRecords, SortOption sortOption, SortOrder sortOrder)
+        /// <summary>
+        /// sort PhoneBook by one of its parametrs
+        /// </summary>
+        enum SortOption
         {
+            firstName,
+            lastName,
+            phoneNumber
+        }
+        /// <summary>
+        /// Direct or reverse sort order
+        /// </summary>
+        enum SortOrder
+        {
+            Asc,
+            Desc
+        }
 
-			//switch (sortOption)
-			//{
-			//	case SortOption.firstName:
-
-			//		break;
-			//	case SortOption.lastName:
-			//		break;
-			//	case SortOption.phoneNumber:
-			//		break;				
-			//}
-
-			
-		
-
-			for (int i = 0; i < phoneBookRecords.Length; i++)
+     /// <summary>
+     /// Sort PhoneBook in the chosen order 
+     /// </summary>
+     /// <param name="phoneBookRecords">array of records to sort</param>
+     /// <param name="sortOption">sort records by item</param>
+     /// <param name="sortOrder">direct or reverse order</param>
+        static void SortPhoneBook((string firstName, string lastName, string phoneNumber)[] phoneBookRecords, SortOption sortOption, SortOrder sortOrder, string path)
+        {
+            switch (sortOption)
             {
-                int minIndex = i;
+                case SortOption.firstName:
 
-                for (int j = i + 1; j < phoneBookRecords.Length; j++)
-                {
+                    for (int i = 0; i < phoneBookRecords.Length; i++)
+                    {
+                        int minIndex = i;
 
-					if (sortOrder == SortOrder.Asc)
-					{
-                        if (string.Compare(phoneBookRecords[j].firstName, phoneBookRecords[minIndex].firstName, true) > 0)
+                        for (int j = i + 1; j < phoneBookRecords.Length; j++)
                         {
-                            minIndex = j;
+                            if (sortOrder == SortOrder.Asc)
+                            {
+                                if (string.Compare(phoneBookRecords[j].firstName, phoneBookRecords[minIndex].firstName, true) < 0)
+                                {
+                                    minIndex = j;
+                                }
+                            }
+                            else
+                            {
+                                if (string.Compare(phoneBookRecords[j].firstName, phoneBookRecords[minIndex].firstName, true) > 0)
+                                {
+                                    minIndex = j;
+                                }
+                            }
                         }
+
+                        (string, string, string) tempValue = phoneBookRecords[minIndex];
+                        phoneBookRecords[minIndex] = phoneBookRecords[i];
+                        phoneBookRecords[i] = tempValue;
                     }
-					else
-					{
-                        if (string.Compare(phoneBookRecords[j].firstName, phoneBookRecords[minIndex].firstName, true) < 0)
+                    break;
+
+                case SortOption.lastName:
+
+                    for (int i = 0; i < phoneBookRecords.Length; i++)
+                    {
+                        int minIndex = i;
+
+                        for (int j = i + 1; j < phoneBookRecords.Length; j++)
                         {
-                            minIndex = j;
+                            if (sortOrder == SortOrder.Asc)
+                            {
+                                if (string.Compare(phoneBookRecords[j].lastName, phoneBookRecords[minIndex].lastName, true) < 0)
+                                {
+                                    minIndex = j;
+                                }
+                            }
+                            else
+                            {
+                                if (string.Compare(phoneBookRecords[j].lastName, phoneBookRecords[minIndex].lastName, true) > 0)
+                                {
+                                    minIndex = j;
+                                }
+                            }
                         }
+
+                        (string, string, string) tempValue = phoneBookRecords[minIndex];
+                        phoneBookRecords[minIndex] = phoneBookRecords[i];
+                        phoneBookRecords[i] = tempValue;
                     }
-					
-					
-                }
-                string tempValue = phoneBookRecords[minIndex].firstName;
-                phoneBookRecords[minIndex] = phoneBookRecords[i];
-                phoneBookRecords[i].firstName = tempValue;
+                    break;
+
+                case SortOption.phoneNumber:
+                    for (int i = 0; i < phoneBookRecords.Length; i++)
+                    {
+                        int minIndex = i;
+
+                        for (int j = i + 1; j < phoneBookRecords.Length; j++)
+                        {
+                            if (sortOrder == SortOrder.Asc)
+                            {
+                                if (string.Compare(phoneBookRecords[j].phoneNumber, phoneBookRecords[minIndex].phoneNumber, true) < 0)
+                                {
+                                    minIndex = j;
+                                }
+                            }
+                            else
+                            {
+                                if (string.Compare(phoneBookRecords[j].phoneNumber, phoneBookRecords[minIndex].phoneNumber, true) > 0)
+                                {
+                                    minIndex = j;
+                                }
+                            }
+                        }
+
+                        (string, string, string) tempValue = phoneBookRecords[minIndex];
+                        phoneBookRecords[minIndex] = phoneBookRecords[i];
+                        phoneBookRecords[i] = tempValue;
+                    }
+                    break;
+            }
+
+            string[] newRec = new string[phoneBookRecords.Length + 1];
+
+            newRec[0] = "FirstName,LastName,PhoneNumber";
+
+            for (int i = 0; i < phoneBookRecords.Length; i++)
+            {
+                newRec[i + 1] = string.Join(',', new[] { phoneBookRecords[i].firstName, phoneBookRecords[i].lastName, phoneBookRecords[i].phoneNumber });
+            }
+
+            File.WriteAllLines(path, newRec);
+
+           
+            PrintPhoneBook(phoneBookRecords);
+
+
+        }
+
+
+        /// <summary>
+        /// Requests sort parametrs and then sort PhoneBook by chosen parametrs
+        /// </summary>
+        /// <param name="phoneBookRecords"></param>
+        /// <param name="path"></param>
+        static void SortParameters((string firstName, string lastName, string phoneNumber)[] phoneBookRecords, string path)
+        {
+            Console.WriteLine("Choose sort filter\n" +
+                "1 - Sort by first name direct order\n" +
+                "2 - Sort by first name reverse order\n" +
+                "3 - Sort by last name direct order\n" +
+                "4 - Sort by last name reverse order\n" +
+                "5 - Sort by phone number direct order\n" +
+                "6 - Sort by phone number reverse order\n" +
+                "0 - Return to Main Menu");
+
+            var option = Console.ReadKey();
+            
+            Console.Clear();
+            switch (option.Key)
+            {              
+                case ConsoleKey.D0:
+                    Console.Clear();
+                    DisplayMenu();
+                    break;
+                case ConsoleKey.D1:
+                    SortPhoneBook(phoneBookRecords, SortOption.firstName, SortOrder.Asc, path);
+                    break;
+                case ConsoleKey.D2:
+                    SortPhoneBook(phoneBookRecords, SortOption.firstName, SortOrder.Desc, path);
+                    break;
+                case ConsoleKey.D3:
+                    SortPhoneBook(phoneBookRecords, SortOption.lastName, SortOrder.Asc, path);
+                    break;
+                case ConsoleKey.D4:
+                    SortPhoneBook(phoneBookRecords, SortOption.lastName, SortOrder.Desc, path);
+                    break;
+                case ConsoleKey.D5:
+                    SortPhoneBook(phoneBookRecords, SortOption.phoneNumber, SortOrder.Asc, path);
+                    break; 
+                case ConsoleKey.D6:
+                    SortPhoneBook(phoneBookRecords, SortOption.phoneNumber, SortOrder.Desc, path);
+                    break;
             }
         }
 
 
-
-
-
-
-
-
-        ///// <summary>
-        ///// Sort array in direct order
-        ///// </summary>
-        ///// <param name="array">sort this array in direct order</param>
-        //static void SortAsc(int[] array)
-        //{
-        //    for (int i = 0; i < array.Length; i++)
-        //    {
-        //        int minIndex = i;
-
-        //        for (int j = i + 1; j < array.Length; j++)
-        //        {
-        //            if (array[j] < array[minIndex])
-        //            {
-        //                minIndex = j;
-        //            }
-        //        }
-        //        int tempValue = array[minIndex];
-        //        array[minIndex] = array[i];
-        //        array[i] = tempValue;
-        //    }
-        //}
-
+        /// <summary>
+        /// Print to console PhoneBook menu
+        /// </summary>
 
         static void DisplayMenu()
 		{
@@ -378,7 +475,8 @@ namespace ConsoleApp1
                 "\n2 - Search in PhoneBook" +
                 "\n3 - Add a new record in PhoneBook" +
                 "\n4 - Delete record" +
-                "\n5 - Update record");
+                "\n5 - Update record" +
+                "\n6 - Sort PhoneBook");
         }
 
 
@@ -398,7 +496,6 @@ namespace ConsoleApp1
 			{
 			   var option = Console.ReadKey();
 
-				
 				switch (option.Key)
 				{
 					case ConsoleKey.D0:
@@ -431,15 +528,19 @@ namespace ConsoleApp1
                         Console.Clear();
 						RecordUpdate(path, ref phoneBookRecords);///Update a particular record from the list in PhoneBook				
 						break;
+                   
+                    case ConsoleKey.D6:
+                        Console.Clear();
+                        SortParameters(phoneBookRecords, path);
+                        break;
 
-
-                    default:
-						Console.Clear();
-						DisplayMenu();
-						Console.ForegroundColor = ConsoleColor.Red;
-						Console.WriteLine($"Enter the valid option. {option.KeyChar} doesn't exist among the possible options.");
-						Console.ResetColor();
-						break;
+      //              default:
+						//Console.Clear();
+						//DisplayMenu();
+						//Console.ForegroundColor = ConsoleColor.Red;
+						//Console.WriteLine($"Enter the valid option. {option.KeyChar} doesn't exist among the possible options.");
+						//Console.ResetColor();
+						//break;
 
                 }
 
