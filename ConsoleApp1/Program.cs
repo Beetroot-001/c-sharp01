@@ -228,7 +228,7 @@ namespace ConsoleApp1
                 string phoneNumber = Console.ReadLine() ?? string.Empty;
                 int.TryParse(phoneNumber, out exit);
 
-                if (exit == 0)
+                if (exit != 0)
                 {
                     phoneBookRecords[updateRecord].phoneNumber = phoneNumber;
                     
@@ -261,10 +261,10 @@ namespace ConsoleApp1
 
 
 		/// <summary>
-		/// Remove the indicated index of array. The size of array decreases by 1.
+		/// Remove the indicated element of array. The size of array decreases by 1.
 		/// </summary>
-		/// <param name="index">index of array to remove</param>
-		/// <param name="array">array where to remove index</param>
+		/// <param name="index">index of array to remove an element</param>
+		/// <param name="array">array where to remove element</param>
 		static void RemoveArrayIndex(int index, ref (string, string, string)[] array)
         {
             for (int i = index-1; i < array.Length - 1; i++)
@@ -274,6 +274,13 @@ namespace ConsoleApp1
 
             Array.Resize(ref array, array.Length - 1);
         }
+
+
+		static void Sort()
+		{
+
+		}
+
 
 
         static void DisplayMenu()
@@ -361,7 +368,7 @@ namespace ConsoleApp1
 			
 
 
-
+			
 
         }
 	}
