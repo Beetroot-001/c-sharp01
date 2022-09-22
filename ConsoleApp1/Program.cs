@@ -208,6 +208,19 @@ namespace ConsoleApp1
             }
             File.WriteAllLines(path, recordsToWrite);
         }
+        static void SortBinary(string path)
+        {
+            var records = ReadPhoneBookRecords(path);
+
+            BubbleSort(records, OrderBy.Ascending, SortBy.Surname);
+            string[] recordsToWrite = new string[records.Length + 1];
+            recordsToWrite[0] = "FirstName,LastName,PhoneNumber";
+            for (int i = 1; i < recordsToWrite.Length; i++)
+            {
+                recordsToWrite[i] = records[i - 1].Item1 + "," + records[i - 1].Item2 + "," + records[i - 1].Item3;
+            }
+            File.WriteAllLines(path, recordsToWrite);
+        }
 
         public static void BubbleSort((string name, string surname, string phone)[] array, OrderBy order, SortBy criteria)
         {
@@ -272,11 +285,11 @@ namespace ConsoleApp1
             Console.WriteLine("Enter surname to search: ");
             string search = Console.ReadLine() ?? "";
             // get the info u need 
-            (string firstname, string lastname, string phone)[] records = ReadPhoneBookRecords(path);
-            // sort at first
-            BubbleSort(records, OrderBy.Ascending, SortBy.Surname);
-
+            (string firstname, string lastname, string phone)[] records;
+            SortBinary(path);
             records = ReadPhoneBookRecords(path);
+            // sort at first
+
             // search 
             int l = 0;
             int r = records.Length - 1;
@@ -284,14 +297,14 @@ namespace ConsoleApp1
             while (l <= r)
             {
                 mid = (l + r) / 2;
-                if(search == records[mid].lastname)
+                if (search == records[mid].lastname)
                 {
                     id = mid;
                     return true;
                 }
                 else if (search.CompareTo(records[mid].lastname) <= -1)
                 {
-                    r = mid - 1; 
+                    r = mid - 1;
                 }
                 else
                 {
