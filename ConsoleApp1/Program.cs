@@ -276,11 +276,99 @@ namespace ConsoleApp1
         }
 
 
-		static void Sort()
+       enum SortOption
 		{
-
+			firstName,
+			lastName,
+			phoneNumber
 		}
 
+		enum SortOrder
+		{
+			Asc,
+			Desc
+		}
+
+             /// <summary>
+             /// Sort array in direct order
+             /// </summary>
+             /// <param name="array">sort this array in direct order</param>
+        static void SortAsc((string firstName, string lastName, string phoneNumber)[] phoneBookRecords, SortOption sortOption, SortOrder sortOrder)
+        {
+
+			//switch (sortOption)
+			//{
+			//	case SortOption.firstName:
+
+			//		break;
+			//	case SortOption.lastName:
+			//		break;
+			//	case SortOption.phoneNumber:
+			//		break;				
+			//}
+
+			
+		
+
+			for (int i = 0; i < phoneBookRecords.Length; i++)
+            {
+                int minIndex = i;
+
+                for (int j = i + 1; j < phoneBookRecords.Length; j++)
+                {
+
+					if (sortOrder == SortOrder.Asc)
+					{
+                        if (string.Compare(phoneBookRecords[j].firstName, phoneBookRecords[minIndex].firstName, true) > 0)
+                        {
+                            minIndex = j;
+                        }
+                    }
+					else
+					{
+                        if (string.Compare(phoneBookRecords[j].firstName, phoneBookRecords[minIndex].firstName, true) < 0)
+                        {
+                            minIndex = j;
+                        }
+                    }
+					
+					
+                }
+                string tempValue = phoneBookRecords[minIndex].firstName;
+                phoneBookRecords[minIndex] = phoneBookRecords[i];
+                phoneBookRecords[i].firstName = tempValue;
+            }
+        }
+
+
+
+
+
+
+
+
+        ///// <summary>
+        ///// Sort array in direct order
+        ///// </summary>
+        ///// <param name="array">sort this array in direct order</param>
+        //static void SortAsc(int[] array)
+        //{
+        //    for (int i = 0; i < array.Length; i++)
+        //    {
+        //        int minIndex = i;
+
+        //        for (int j = i + 1; j < array.Length; j++)
+        //        {
+        //            if (array[j] < array[minIndex])
+        //            {
+        //                minIndex = j;
+        //            }
+        //        }
+        //        int tempValue = array[minIndex];
+        //        array[minIndex] = array[i];
+        //        array[i] = tempValue;
+        //    }
+        //}
 
 
         static void DisplayMenu()
