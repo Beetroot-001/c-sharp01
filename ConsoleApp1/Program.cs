@@ -7,18 +7,15 @@ namespace ConsoleApp1
         static void Main(string[] args)
         {
             string first = "abcde";
-            string second = "abcse";
+            string second = "abcde ";
             string third = "What a \n gr8 park 4 sk8 ;-+=*";
             string fourth = "HelloDDaa";
-            string fifth = "Hello and hi";
-
-
+            string fifth = "Hello and hi and i and hh44";
 
             Console.WriteLine(Compare(first, second));
             Analyze(third);
             Console.WriteLine(Sort(fourth));
-            StringBuilder stringBuilder = new();
-            Console.WriteLine(stringBuilder.Append(Duplicate(fifth)));
+            Console.WriteLine(String.Join(", ", Duplicate(fifth)));  
         }
 
         static bool Compare(string a, string b)
@@ -26,7 +23,6 @@ namespace ConsoleApp1
             if (a.Length != b.Length)
             {
                 return false;
-
             }
             else
             {
@@ -39,12 +35,9 @@ namespace ConsoleApp1
                         result = false;
                     }
                 }
-
                 return result;
-
             }
         }
-
         static void Analyze(string a)
         {
             int alphabetic = 0;
@@ -66,54 +59,39 @@ namespace ConsoleApp1
                 else
                 {
                     special++;
-
                 }
             }
             Console.WriteLine($"\"{a}\" consists of {alphabetic} alphabetic, {digit} digit and {special} special chars.");
         }
-
         static string Sort(string a)
         {
-            StringBuilder stringBuilder = new();
-
-            a = a.ToLowerInvariant();
-
-            char[] array = a.ToCharArray(0, a.Length);
-
+            char[] array = a.ToLowerInvariant().ToCharArray(0, a.Length);
             Array.Sort(array);
-
-            stringBuilder.Append(array);
-
-            return stringBuilder.ToString();
-
-            
+            return String.Join("", array);
         }
-
         static char[] Duplicate(string a)
         {
-            StringBuilder ab1 = new();
-
             string str = RemoveWhiteSpace(a).ToLowerInvariant();
-            Char[] chArray = new Char[str.Length];
-            char checkSymbol = str[0]; ;
-
+            string outStr = "";
 
             for (int i = 0; i < str.Length; i++)
             {
                 char checkIndexSymbol = str[i];
-                if (checkIndexSymbol == checkSymbol)
-                {
-                    chArray = ab1.Append(checkSymbol).ToString().ToCharArray();
-                }
-                else
-                {
-                    checkSymbol = checkIndexSymbol;
-                }
 
+                if (str.IndexOf(checkIndexSymbol) != str.LastIndexOf(checkIndexSymbol))
+                {
+                    if (outStr.Contains(checkIndexSymbol))
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        outStr += checkIndexSymbol;
+                    }
+                }
             }
-            return chArray;
+            return outStr.ToCharArray();
         }
-
         static string RemoveWhiteSpace(string str)
         {
             return string.Join("", str.Split(default(string[]), StringSplitOptions.RemoveEmptyEntries));
