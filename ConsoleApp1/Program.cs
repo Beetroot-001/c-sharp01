@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Linq;
 using System.Net.Http.Headers;
 using System.Numerics;
 using System.Text.RegularExpressions;
@@ -418,6 +419,74 @@ namespace ConsoleApp1
 
 
         /// <summary>
+        /// Binary search of Last Name 
+        /// </summary>
+        /// <param name="phoneBookRecords"></param>
+        /// <param name="query"></param>
+        /// <returns>returns the index of the lastname in the PhoneBook if it matches or -1 if there is no match </returns>
+        static int BinarySearch((string firstName, string lastName, string phoneNumber)[] phoneBookRecords, string query, string path)
+        {
+
+            SortPhoneBook(phoneBookRecords, SortOption.lastName, SortOrder.Asc, path);
+           
+            int min = 0;
+            int max = phoneBookRecords.Length;
+
+            while (min <= max)
+            {
+                int midValue = (max + min) / 2;
+
+                int result = string.Compare(query, phoneBookRecords[midValue].lastName, true);
+
+                switch (result)
+                {
+                    case 0:
+                        return midValue;
+                        break;
+
+                    case -1:
+                        max = midValue;
+                        break;
+
+                    case 1:
+                        min = midValue;
+                        break;
+                }
+                
+                if (min == max) ///if the string has no match, returns -1
+                {
+                    return -1;
+                }
+              
+            }
+            return 0;
+        }
+
+
+
+        static void SearchLastName((string firstName, string lastName, string phoneNumber)[] phoneBookRecords, string path)
+        {
+            Console.WriteLine("Enter the last name");
+            string query = Console.ReadLine() ?? String.Empty;
+
+            int lastNameIndx = BinarySearch(phoneBookRecords, query, path);
+           
+            Console.Clear();
+            DisplayMenu();
+            if (lastNameIndx >= 0)
+            {
+                Console.WriteLine($"{"First Name",-20} {"Last Name",-20} {"Phone",-20}");
+                Console.WriteLine($"{phoneBookRecords[lastNameIndx].Item1,-20} {phoneBookRecords[lastNameIndx].Item2,-20} {phoneBookRecords[lastNameIndx].Item3,-20}");
+            }
+            else
+            {
+                Console.WriteLine("No match");
+            }
+
+        }
+            
+
+        /// <summary>
         /// Requests sort parametrs and then sort PhoneBook by chosen parametrs
         /// </summary>
         /// <param name="phoneBookRecords"></param>
@@ -476,7 +545,8 @@ namespace ConsoleApp1
                 "\n3 - Add a new record in PhoneBook" +
                 "\n4 - Delete record" +
                 "\n5 - Update record" +
-                "\n6 - Sort PhoneBook");
+                "\n6 - Sort PhoneBook" +
+                "\n7 - Search last name");
         }
 
 
@@ -534,13 +604,20 @@ namespace ConsoleApp1
                         SortParameters(phoneBookRecords, path);
                         break;
 
-      //              default:
-						//Console.Clear();
-						//DisplayMenu();
-						//Console.ForegroundColor = ConsoleColor.Red;
-						//Console.WriteLine($"Enter the valid option. {option.KeyChar} doesn't exist among the possible options.");
-						//Console.ResetColor();
-						//break;
+                    case ConsoleKey.D7:
+                        Console.Clear();
+                        SearchLastName(phoneBookRecords,path);
+
+
+                        break;
+
+                        //              default:
+                        //Console.Clear();
+                        //DisplayMenu();
+                        //Console.ForegroundColor = ConsoleColor.Red;
+                        //Console.WriteLine($"Enter the valid option. {option.KeyChar} doesn't exist among the possible options.");
+                        //Console.ResetColor();
+                        //break;
 
                 }
 
