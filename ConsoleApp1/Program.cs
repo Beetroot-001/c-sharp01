@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Linq;
 using System.Net.Http.Headers;
 using System.Numerics;
@@ -426,21 +427,42 @@ namespace ConsoleApp1
         /// <returns>returns the index of the lastname in the PhoneBook if it matches or -1 if there is no match </returns>
         static int BinarySearch((string firstName, string lastName, string phoneNumber)[] phoneBookRecords, string query, string path)
         {
-
-            SortPhoneBook(phoneBookRecords, SortOption.lastName, SortOrder.Asc, path);
            
+            string [] s = new string [phoneBookRecords.Length];
+            bool stringExists = false;
+
+            for (int i = 0; i < phoneBookRecords.Length; i++)
+            {
+                s[i] = phoneBookRecords[i].lastName;
+                if (string.Compare(query, s[i], true) == 0)
+                {
+                    stringExists = true;
+                }
+
+            }
+
+            if (!stringExists)
+            {
+                return -1;
+            }
+
+            Array.Sort(s);
+         
+
             int min = 0;
             int max = phoneBookRecords.Length;
 
             while (min <= max)
             {
+
                 int midValue = (max + min) / 2;
 
-                int result = string.Compare(query, phoneBookRecords[midValue].lastName, true);
+                int result = string.Compare(query, s[midValue], true);
 
                 switch (result)
                 {
                     case 0:
+
                         return midValue;
                         break;
 
@@ -452,14 +474,10 @@ namespace ConsoleApp1
                         min = midValue;
                         break;
                 }
-                
-                if (min == max) ///if the string has no match, returns -1
-                {
-                    return -1;
-                }
-              
+
             }
-            return 0;
+            return -1;
+
         }
 
 
