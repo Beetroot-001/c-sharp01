@@ -7,48 +7,48 @@
             int[] exOne = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
             int[] exTwo = { 3, 1, 2, 4, 5, 6, 7, 8, 10, 9 };
             Console.WriteLine("Selection sort: ");
-            
-            Select(exOne);
+
+            Select(exOne, SortedBy.Asc);
             Print(exOne);
-            
+
             Console.WriteLine();
-            
-            Select(exTwo);
-            Print(exTwo);
-            
+
+            Select(exOne, SortedBy.Desc);
+            Print(exOne);
+
             Console.WriteLine();
-            
+
             Console.WriteLine("Bubble sort: ");
-            Bubble(exOne);
+            Bubble(exOne, SortedBy.Asc);
             Print(exOne);
-            
+
             Console.WriteLine();
-            
-            Bubble(exTwo);
-            Print(exTwo);
-            
+
+            Bubble(exOne, SortedBy.Desc);
+            Print(exOne);
+
             Console.WriteLine();
-            
+
             Console.WriteLine("Insert sort: ");
-            
-            Insert(exOne);
+
+            Insert(exOne, SortedBy.Asc);
             Print(exOne);
 
             Console.WriteLine();
 
-            Insert(exTwo);
-            Print(exTwo);
+            Insert(exOne, SortedBy.Desc);
+            Print(exOne);
 
             Console.WriteLine();
 
             Console.WriteLine("Enums: ");
 
-            
+
 
             Sort(exTwo, SortAlgorithmType.Select, SortedBy.Asc);
             Sort(exTwo, SortAlgorithmType.Select, SortedBy.Desc);
             Console.WriteLine();
-            
+
             Sort(exTwo, SortAlgorithmType.Bubble, SortedBy.Asc);
             Sort(exTwo, SortAlgorithmType.Bubble, SortedBy.Desc);
             Console.WriteLine();
@@ -57,20 +57,42 @@
             Sort(exTwo, SortAlgorithmType.Insert, SortedBy.Desc);
             Console.WriteLine();
         }
-        static void Select(int[] ints)
+        static void Select(int[] ints, SortedBy sortedBy)
         {
             int x = ints.Length;
-            for (int i = 0; i < x - 1; i++)
+            switch (sortedBy)
             {
-                int min = i;
-                for (int j = i + 1; j < x; j++)
-                {
-                    if (ints[j] < ints[min])
-                        min = j;
-                }
-                int temp = ints[min];
-                ints[min] = ints[i];
-                ints[i] = temp;
+                case SortedBy.Asc:
+
+                    for (int i = 0; i < x - 1; i++)
+                    {
+                        int min = i;
+                        for (int j = i + 1; j < x; j++)
+                        {
+                            if (ints[j] < ints[min])
+                                min = j;
+                        }
+                        int temp = ints[min];
+                        ints[min] = ints[i];
+                        ints[i] = temp;
+                    }
+
+                    break;
+                case SortedBy.Desc:
+                    for (int i = 0; i < x - 1; i++)
+                    {
+                        int min = i;
+                        for (int j = i + 1; j < x; j++)
+                        {
+                            if (ints[j] > ints[min])
+                                min = j;
+                        }
+                        int temp = ints[min];
+                        ints[min] = ints[i];
+                        ints[i] = temp;
+
+                    }
+                    break;
             }
         }
         static void Print(int[] ints)
@@ -80,35 +102,73 @@
                 Console.Write(ints[i] + " ");
             }
         }
-        static void Bubble(int[] ints)
+        static void Bubble(int[] ints, SortedBy sortedBy)
         {
             int x = ints.Length - 1;
-            for (int i = 0; i < x; i++)
+            switch (sortedBy)
             {
-                for (int j = 0; j < x; j++)
-                {
-                    if (ints[j] > ints[j + 1])
+                case SortedBy.Asc:
+                    for (int i = 0; i < x; i++)
                     {
-                        int temp = ints[j];
-                        ints[j] = ints[j + 1];
-                        ints[j + 1] = temp;
+                        for (int j = 0; j < x; j++)
+                        {
+                            if (ints[j] > ints[j + 1])
+                            {
+                                int temp = ints[j];
+                                ints[j] = ints[j + 1];
+                                ints[j + 1] = temp;
+                            }
+                        }
                     }
-                }
+                    break;
+                case SortedBy.Desc:
+                    for (int i = 0; i < x; i++)
+                    {
+                        for (int j = 0; j < x; j++)
+                        {
+                            if (ints[j] < ints[j + 1])
+                            {
+                                int temp = ints[j];
+                                ints[j] = ints[j + 1];
+                                ints[j + 1] = temp;
+                            }
+                        }
+                    }
+                    break;
             }
         }
-        static void Insert(int[] ints)
+        static void Insert(int[] ints, SortedBy sortedBy)
         {
             int x = ints.Length;
-            for (int i = 0; i < x; i++)
+            switch (sortedBy)
             {
-                int key = ints[i];
-                int value = i - 1;
-                while (value >= 0 && ints[value] > key)
-                {
-                    ints[value + 1] = ints[value];
-                    value--;
-                }
-                ints[value + 1] = key;
+                case SortedBy.Asc:
+
+                    for (int i = 0; i < x; i++)
+                    {
+                        int key = ints[i];
+                        int value = i - 1;
+                        while (value >= 0 && ints[value] > key)
+                        {
+                            ints[value + 1] = ints[value];
+                            value--;
+                        }
+                        ints[value + 1] = key;
+                    }
+                    break;
+                case SortedBy.Desc:
+                    for (int i = 0; i < x; i++)
+                    {
+                        int key = ints[i];
+                        int value = i - 1;
+                        while (value >= 0 && ints[value] < key)
+                        {
+                            ints[value + 1] = ints[value];
+                            value--;
+                        }
+                        ints[value + 1] = key;
+                    }
+                    break;
             }
         }
         enum SortAlgorithmType
@@ -129,33 +189,32 @@
             switch ((sortAlgorithmType, sortedBy))
             {
                 case (SortAlgorithmType.Select, SortedBy.Asc):
-                    Select(ints);
+                    Select(ints, SortedBy.Asc);
                     Print(ints);
                     break;
                 case (SortAlgorithmType.Select, SortedBy.Desc):
-                    Select(ints);
-                    Array.Reverse(ints);
+                    Select(ints, SortedBy.Desc);
+
                     Console.Write("|| ");
                     Print(ints);
                     break;
                 case (SortAlgorithmType.Bubble, SortedBy.Asc):
-                    Bubble(ints);
+                    Bubble(ints, SortedBy.Asc);
                     Print(ints);
                     break;
                 case (SortAlgorithmType.Bubble, SortedBy.Desc):
-                    Bubble(ints);
-                    Array.Reverse(ints);
+                    Bubble(ints, SortedBy.Desc);
+
                     Console.Write("|| ");
                     Print(ints);
                     break;
 
                 case (SortAlgorithmType.Insert, SortedBy.Asc):
-                    Insert(ints);
+                    Insert(ints, SortedBy.Asc);
                     Print(ints);
                     break;
                 case (SortAlgorithmType.Insert, SortedBy.Desc):
-                    Insert(ints);
-                    Array.Reverse(ints);
+                    Insert(ints, SortedBy.Desc);
                     Console.Write("|| ");
                     Print(ints);
                     break;
