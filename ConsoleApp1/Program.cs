@@ -206,6 +206,7 @@ namespace ConsoleApp1
             {
                 recordsToWrite[i] = records[i - 1].Item1 + "," + records[i - 1].Item2 + "," + records[i - 1].Item3;
             }
+            DisplayPhoneBook(records);
             File.WriteAllLines(path, recordsToWrite);
         }
         static void SortBinary(string path)
@@ -224,58 +225,22 @@ namespace ConsoleApp1
 
         public static void BubbleSort((string name, string surname, string phone)[] array, OrderBy order, SortBy criteria)
         {
-            switch (criteria)
+            for (int i = 0; i < array.Length; i++)
             {
-                case SortBy.Name:
-                    for (int i = 0; i < array.Length; i++)
+                for (int j = 0; j < array.Length - 1; j++)
+                {
+                    if ((array[j].surname.CompareTo(array[j + 1].surname) >= 1 && order == OrderBy.Ascending && criteria == SortBy.Surname) ||
+                        (array[j].surname.CompareTo(array[j + 1].surname) <= -1 && order == OrderBy.Descending && criteria == SortBy.Surname) ||
+                        (array[j].phone.CompareTo(array[j + 1].phone) >= 1 && order == OrderBy.Ascending && criteria == SortBy.Phone) ||
+                        (array[j].phone.CompareTo(array[j + 1].phone) <= -1 && order == OrderBy.Descending && criteria == SortBy.Phone) ||
+                        (array[j].name.CompareTo(array[j + 1].name) >= 1 && order == OrderBy.Ascending && criteria == SortBy.Name) ||
+                        (array[j].name.CompareTo(array[j + 1].name) <= -1 && order == OrderBy.Descending && criteria == SortBy.Name))
                     {
-                        for (int j = 0; j < array.Length - 1; j++)
-                        {
-
-                            if ((array[j].name.CompareTo(array[j + 1].name) >= 1 && order == OrderBy.Ascending) ||
-                                (array[j].name.CompareTo(array[j + 1].name) <= -1 && order == OrderBy.Descending))
-                            {
-                                (string name, string surname, string phone) t = array[j];
-                                array[j] = array[j + 1];
-                                array[j + 1] = t;
-                            }
-                        }
+                        (string name, string surname, string phone) t = array[j];
+                        array[j] = array[j + 1];
+                        array[j + 1] = t;
                     }
-                    break;
-                case SortBy.Surname:
-                    for (int i = 0; i < array.Length; i++)
-                    {
-                        for (int j = 0; j < array.Length - 1; j++)
-                        {
-                            if ((array[j].surname.CompareTo(array[j + 1].surname) >= 1 && order == OrderBy.Ascending) ||
-                                (array[j].surname.CompareTo(array[j + 1].surname) <= -1 && order == OrderBy.Descending))
-                            {
-                                (string name, string surname, string phone) t = array[j];
-                                array[j] = array[j + 1];
-                                array[j + 1] = t;
-                            }
-
-                        }
-                    }
-                    break;
-                case SortBy.Phone:
-                    for (int i = 0; i < array.Length; i++)
-                    {
-                        for (int j = 0; j < array.Length - 1; j++)
-                        {
-                            if ((array[j].phone.CompareTo(array[j + 1].phone) >= 1 && order == OrderBy.Ascending) ||
-                                (array[j].phone.CompareTo(array[j + 1].phone) <= -1 && order == OrderBy.Descending))
-                            {
-                                (string name, string surname, string phone) t = array[j];
-                                array[j] = array[j + 1];
-                                array[j + 1] = t;
-                            }
-
-                        }
-                    }
-                    break;
-                default:
-                    break;
+                }
             }
         }
 
@@ -284,12 +249,12 @@ namespace ConsoleApp1
             // get the info to search
             Console.WriteLine("Enter surname to search: ");
             string search = Console.ReadLine() ?? "";
-            // get the info u need 
             (string firstname, string lastname, string phone)[] records;
-            SortBinary(path);
-            records = ReadPhoneBookRecords(path);
             // sort at first
-
+            SortBinary(path);
+            // get the info u need 
+            records = ReadPhoneBookRecords(path);
+            
             // search 
             int l = 0;
             int r = records.Length - 1;
@@ -317,7 +282,6 @@ namespace ConsoleApp1
 
         static void EditRecord(string path)
         {
-
             var records = File.ReadAllLines(path);
             int input = IdInput(records.Length);
 
@@ -345,7 +309,6 @@ namespace ConsoleApp1
 
             DeleteSwap(records, input);
             Array.Resize(ref records, records.Length - 1);
-            DeleteSwap(records, input);
 
             File.WriteAllLines(path, records);
         }
