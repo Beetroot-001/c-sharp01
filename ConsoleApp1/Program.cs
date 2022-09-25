@@ -3,17 +3,17 @@ using System.Security.Cryptography;
 
 namespace ConsoleApp1
 {
-	internal class Program
-	{
+    internal class Program
+    {
         static string pathPhoneBook = Path.Combine(Directory.GetCurrentDirectory(), "PhoneBook.csv");
 
         static void Main(string[] args)
-		{
+        {
             ConsoleKeyInfo consoleKeyInfo;
             while (true)
             {
                 DisplayMenu();
-                consoleKeyInfo = Console.ReadKey(); 
+                consoleKeyInfo = Console.ReadKey();
                 switch (consoleKeyInfo.Key)
                 {
                     case ConsoleKey.D1://Display the phone book
@@ -71,7 +71,14 @@ namespace ConsoleApp1
                         Console.Clear();
                         break;
                     case ConsoleKey.D7://Binary search
+
+                        Console.Clear();
+
                         BinarySearch();
+
+                        Console.WriteLine("\n\nPress any key to continue");
+                        Console.ReadKey();
+                        Console.Clear();
                         break;
                     case ConsoleKey.D0:// Exit app
                     default:
@@ -80,12 +87,12 @@ namespace ConsoleApp1
                 }
             }
         }
-		static void DisplayMenu()
-		{
-			Console.WriteLine("\tPhone Book");
-			Console.WriteLine("Press the number of the required operation");
+        static void DisplayMenu()
+        {
+            Console.WriteLine("\tPhone Book");
+            Console.WriteLine("Press the number of the required operation");
 
-			Console.WriteLine("1. Display the phone book");
+            Console.WriteLine("1. Display the phone book");
             Console.WriteLine("2. Add new contact");
             Console.WriteLine("3. Edit contact");//Зробити можливість оновлення запису
                                                  //якщо це зміна, то ви виводете, зчитуєте дані і зберігаєте в файл (H/W)
@@ -95,12 +102,12 @@ namespace ConsoleApp1
             Console.WriteLine("6. Search ");
             Console.WriteLine("7. Binary search\n");// бінарний пошук по прізвищу(Ex H/W)
             Console.WriteLine("0. Exit app");
-		}
+        }
         //
-        static (string number,string lastName,string firstName,string phoneNuber)[] GetStringArrayFromFail(string path)
+        static (string number, string lastName, string firstName, string phoneNuber)[] GetStringArrayFromFail(string path)
         {
             string[] phoneBook = File.ReadAllLines(path);
-            (string number, string lastName, string firstName, string phon)[] elementsOfArray = new(string number, string lastName, string firstName, string phon)[phoneBook.Length];
+            (string number, string lastName, string firstName, string phon)[] elementsOfArray = new (string number, string lastName, string firstName, string phon)[phoneBook.Length];
 
             for (int i = 0; i < phoneBook.Length; i++)
             {
@@ -120,7 +127,7 @@ namespace ConsoleApp1
         }
         static void DispleyPhonBook((string number, string lastName, string firstName, string phoneNuber) arrayPhonNumber)
         {
-          Console.WriteLine($"{arrayPhonNumber.number,-8}{arrayPhonNumber.lastName,-15}{arrayPhonNumber.firstName,-15}{arrayPhonNumber.phoneNuber,-15}");
+            Console.WriteLine($"{arrayPhonNumber.number,-8}{arrayPhonNumber.lastName,-15}{arrayPhonNumber.firstName,-15}{arrayPhonNumber.phoneNuber,-15}");
         }
         //
         static void AddNewContact()
@@ -134,8 +141,8 @@ namespace ConsoleApp1
             Console.Write("Phon nuber:\t");
             string phon = Console.ReadLine();
 
-            string[] newcontact = new[]{string.Join(',',GetStringArrayFromFail(pathPhoneBook).Length, lastName, firstName, phon)};
-            File.AppendAllLines(pathPhoneBook,newcontact);
+            string[] newcontact = new[] { string.Join(',', GetStringArrayFromFail(pathPhoneBook).Length, lastName, firstName, phon) };
+            File.AppendAllLines(pathPhoneBook, newcontact);
         }
         //
         static void Search()
@@ -152,7 +159,7 @@ namespace ConsoleApp1
             {
                 if (searchArray[i].lastName.Contains(paramsSearch, StringComparison.OrdinalIgnoreCase))
                     DispleyPhonBook(searchArray[i]);
-                else if (searchArray[i].firstName.Contains(paramsSearch,StringComparison.OrdinalIgnoreCase))
+                else if (searchArray[i].firstName.Contains(paramsSearch, StringComparison.OrdinalIgnoreCase))
                     DispleyPhonBook(searchArray[i]);
                 else if (searchArray[i].number.Contains(paramsSearch, StringComparison.OrdinalIgnoreCase))
                     DispleyPhonBook(searchArray[i]);
@@ -203,8 +210,8 @@ namespace ConsoleApp1
                     Console.WriteLine("Rewrite Last Name:\t");
                     searchArray[int.Parse(indexOrder)].lastName = Console.ReadLine();
 
-                    editContact=TransformArray(searchArray);
-                    File.WriteAllLines(pathPhoneBook,editContact);
+                    editContact = TransformArray(searchArray);
+                    File.WriteAllLines(pathPhoneBook, editContact);
                     break;
                 case ConsoleKey.D2:
                     Console.Clear();
@@ -217,7 +224,7 @@ namespace ConsoleApp1
                 case ConsoleKey.D3:
                     Console.Clear();
                     Console.WriteLine("Rewrite Phone Number:\t");
-                    searchArray[int.Parse(indexOrder)].phoneNuber= Console.ReadLine();
+                    searchArray[int.Parse(indexOrder)].phoneNuber = Console.ReadLine();
 
                     editContact = TransformArray(searchArray);
                     File.WriteAllLines(pathPhoneBook, editContact);
@@ -245,11 +252,11 @@ namespace ConsoleApp1
             Console.WriteLine(searchArray[int.Parse(indexOrder)]);
 
             for (int i = 0; i < searchArray.Length && i < int.Parse(indexOrder); i++)
-                DelArray[i]=searchArray[i];
-            for (int i = int.Parse(indexOrder)+1; i < searchArray.Length; i++)
+                DelArray[i] = searchArray[i];
+            for (int i = int.Parse(indexOrder) + 1; i < searchArray.Length; i++)
             {
-                DelArray[i-1] = searchArray[i];
-                DelArray[i-1].number = $"{i-1}";
+                DelArray[i - 1] = searchArray[i];
+                DelArray[i - 1].number = $"{i - 1}";
             }
             deleteContact = TransformArray(DelArray);
             File.WriteAllLines(pathPhoneBook, deleteContact);
@@ -261,7 +268,7 @@ namespace ConsoleApp1
             var searchArray = GetStringArrayFromFail(pathPhoneBook);
             Console.WriteLine("Select sort:\n\t1. Asc\n\t2. Desc");
             int sort = int.Parse(Console.ReadLine());
-            if (sort ==1)
+            if (sort == 1)
             {
                 Console.WriteLine("Select a sort parameter:\n\t 1. Order\n\t2. Last Name\n\t3. First Name");
                 ConsoleKeyInfo consoleKey = Console.ReadKey();
@@ -354,33 +361,82 @@ namespace ConsoleApp1
                 }
             }
 
-            File.WriteAllLines(pathPhoneBook,TransformArray(searchArray));
+            File.WriteAllLines(pathPhoneBook, TransformArray(searchArray));
 
         }
         //
         static void BinarySearch()
         {
-            int[] ints = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };// test
-            int mid = ints.Length / 2;
-            int value = 2;
+            var searchArray = GetStringArrayFromFail(pathPhoneBook);
+
+            for (int i = 0; i < searchArray.Length - 1; i++)
+            {
+                for (int j = 1; j < searchArray.Length - i - 1; j++)
+                    if (searchArray[j].firstName.CompareTo(searchArray[j + 1].firstName) > 0)
+                    {
+                        var temp = searchArray[j];
+                        searchArray[j] = searchArray[j + 1];
+                        searchArray[j + 1] = temp;
+                    }
+            }
+
+            Console.Write("enter the first name that needs to be found:\t");
+            string nameFound = Console.ReadLine();
+
+            double first = 0;
+            double last = searchArray.Length;
+            double mid = (first + last) / 2;
+
             while (true)
             {
-                if (mid == value)
+                if (1 >= Math.Floor(last))// для виходу якщо не знайшло
                 {
-                    Console.WriteLine(value);
+                    Console.WriteLine("Contact not faund");
                     break;
                 }
-                else if (mid > value)
+                if (searchArray.Length <= Math.Ceiling(first))// для виходу якщо не знайшло
                 {
-                    mid = (ints[0] + mid) / 2;
+                    Console.WriteLine("Contact not faund");
+                    break;
+                }
+                else if (nameFound == searchArray[(int)mid].firstName)
+                {
+                    DispleyPhonBook(searchArray[(int)mid]);
+                    break;
+                }
+                else if (nameFound.CompareTo(searchArray[(int)mid].firstName) < 0)
+                {
+                    last = mid - 1;
+                    mid = (first + last) / 2;
                 }
                 else
                 {
-                    mid = (ints.Length + mid) / 2;
+                    first = mid + 1;
+                    mid = (first + last) / 2;
                 }
-
             }
-    }
+
+            //int[] ints = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };// test
+            //int mid = ints.Length / 2;
+            //int value = 2;
+            //while (true)
+            //{
+            //    if (mid == value)
+            //    {
+            //        Console.WriteLine(value);
+            //        break;
+            //    }
+            //    else if (mid > value)
+            //    {
+            //        mid = (ints[0] + mid) / 2;
+            //    }
+            //    else
+            //    {
+            //        mid = (ints.Length + mid) / 2;
+            //    }
+
+            //}
+        }
         static string[] TransformArray((string number, string lastName, string firstName, string phoneNuber)[] searchArray)
         {
             string[] result = new string[searchArray.Length];
