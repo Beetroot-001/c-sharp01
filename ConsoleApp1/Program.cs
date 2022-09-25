@@ -71,7 +71,14 @@ namespace ConsoleApp1
                         Console.Clear();
                         break;
                     case ConsoleKey.D7://Binary search
+
+                        Console.Clear();
+
                         BinarySearch();
+                        
+                        Console.WriteLine("\n\nPress any key to continue");
+                        Console.ReadKey();
+                        Console.Clear();
                         break;
                     case ConsoleKey.D0:// Exit app
                     default:
@@ -360,27 +367,76 @@ namespace ConsoleApp1
         //
         static void BinarySearch()
         {
-            int[] ints = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };// test
-            int mid = ints.Length / 2;
-            int value = 2;
+            var searchArray = GetStringArrayFromFail(pathPhoneBook);
+
+            for (int i = 0; i < searchArray.Length - 1; i++)
+            {
+                for (int j = 1; j < searchArray.Length - i - 1; j++)
+                    if (searchArray[j].firstName.CompareTo(searchArray[j + 1].firstName) > 0)
+                    {
+                        var temp = searchArray[j];
+                        searchArray[j] = searchArray[j + 1];
+                        searchArray[j + 1] = temp;
+                    }
+            }
+
+            Console.Write("enter the first name that needs to be found:\t");
+            string nameFound = Console.ReadLine();
+
+            double first = 0;
+            double last = searchArray.Length;
+            double mid = (first + last) / 2;
+
             while (true)
             {
-                if (mid == value)
+                if (1 >= Math.Floor(last))// для виходу якщо не знайшло
                 {
-                    Console.WriteLine(value);
+                    Console.WriteLine("Contact not faund");
                     break;
                 }
-                else if (mid > value)
+                if (searchArray.Length<= Math.Ceiling(first))// для виходу якщо не знайшло
                 {
-                    mid = (ints[0] + mid) / 2;
+                    Console.WriteLine("Contact not faund");
+                    break;
                 }
-                else
+                else if(nameFound == searchArray[(int)mid].firstName)
                 {
-                    mid = (ints.Length + mid) / 2;
+                    DispleyPhonBook(searchArray[(int)mid]);
+                    break;
                 }
-
+                else if (nameFound.CompareTo(searchArray[(int)mid].firstName)<0)
+                {
+                    last = mid - 1;
+                    mid = (first + last) / 2;
+                }
+                else 
+                {
+                    first = mid + 1;
+                    mid = (first + last) / 2;
+                }
             }
-    }
+
+            //int[] ints = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };// test
+            //int mid = ints.Length / 2;
+            //int value = 2;
+            //while (true)
+            //{
+            //    if (mid == value)
+            //    {
+            //        Console.WriteLine(value);
+            //        break;
+            //    }
+            //    else if (mid > value)
+            //    {
+            //        mid = (ints[0] + mid) / 2;
+            //    }
+            //    else
+            //    {
+            //        mid = (ints.Length + mid) / 2;
+            //    }
+
+            //}
+        }
         static string[] TransformArray((string number, string lastName, string firstName, string phoneNuber)[] searchArray)
         {
             string[] result = new string[searchArray.Length];
