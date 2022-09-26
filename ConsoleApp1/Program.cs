@@ -4,12 +4,12 @@ namespace ConsoleApp1
 {
 	internal class Program
 	{
-
         /// <summary>
-        /// SelectionSort algorithm in direct order
+        /// Selection sort algorithm
         /// </summary>
-        /// <param name="array">sort this array in direct order</param>
-        static void SelectionSortAsc(int[] array)
+        /// <param name="array">array to sort</param>
+        /// <param name="sortOrder">direct or reverse sort order</param>
+        static void SelectionSort(int[] array, OrderBy sortOrder)
         {
             for (int i = 0; i < array.Length; i++)
             {
@@ -26,25 +26,18 @@ namespace ConsoleApp1
                 array[minIndex] = array[i];
                 array[i] = tempValue;
             }
+
+            if (sortOrder == OrderBy.Desc) Array.Reverse(array);    
+            
         }
 
         /// <summary>
-        /// SelectionSort algorithm in reverse order
+        /// Bubble sort algorithm
         /// </summary>
-        /// <param name="array">sort this array in reverse order</param>
-        static void SelectionSortDesc(int[] array)
-        {
-            SelectionSortAsc(array);
-            Array.Reverse(array);
-        }
+        /// <param name="array">array to sort</param>
+        /// <param name="sortOrder">direct or reverse sort order</param>
 
-
-        /// <summary>
-        /// BubbleSort algorithm in direct order
-        /// </summary>
-        /// <param name="array">sort this array in direct order</param>
-
-        static void BubbleSortAsc(int[] array)
+        static void BubbleSort(int[] array, OrderBy sortOrder)
         {
             for (int i = 0; i < array.Length; i++)
             {
@@ -58,26 +51,18 @@ namespace ConsoleApp1
                     }
                 }
             }
+
+            if(sortOrder == OrderBy.Desc) Array.Reverse(array);
+
         }
 
 
         /// <summary>
-        /// BubbleSort algorithm in reverse order
+        /// Insertion sort algorithm
         /// </summary>
-        /// <param name="array">sort this array in reverse order</param>
-
-         static void BubbleSortDesc(int[] array)
-        {
-            SelectionSortAsc(array);
-            Array.Reverse(array);
-        }
-
-
-        /// <summary>
-        /// InsertionSort algorithm in direct order
-        /// </summary>
-        /// <param name="array">sort this array in direct order</param>
-         static void InsertionSortAsc(int[] array)
+        /// <param name="array">array to sort</param>
+        /// <param name="sortOrder">direct or reverse sort order</param>
+        static void InsertionSort(int[] array, OrderBy sortOrder)
         {
            
             for (int i = 1; i < array.Length; i++)
@@ -91,17 +76,9 @@ namespace ConsoleApp1
                     key--;
                 }
             }
-        }
 
-        /// <summary>
-        /// InsertionSort algorithm in reverse order
-        /// </summary>
-        /// <param name="array">sort this array in reverse order</param>
-         static void InsertionSortDesc(int[] array)
-        {
+            if (sortOrder == OrderBy.Desc) Array.Reverse(array);
 
-            SelectionSortAsc(array);
-            Array.Reverse(array);
         }
 
         enum SortAlgorithmType
@@ -117,57 +94,35 @@ namespace ConsoleApp1
         }
 
 
-
-
-
-
-
         /// <summary>
-        /// Sort array in accordance with choosen algorithm and direction
+        /// Sort array by chosen algorithm and order
         /// </summary>
         /// <param name="array">array to sort</param>
-        /// <param name="sortAlgorithmType">type of algorithm sort</param>
-        /// <param name="orderBy">Asc - direct order, Desc - reverse order</param>
-        static void SortArray( int[] array, SortAlgorithmType sortAlgorithmType, OrderBy orderBy)
+        /// <param name="sortAlgorithmType">algorithm sort type</param>
+        /// <param name="orderBy">sort order type</param>
+        static void SortArray(int[] array, SortAlgorithmType sortAlgorithmType, OrderBy orderBy)
         {
-
-            if (orderBy == OrderBy.Asc)
+            switch (sortAlgorithmType)
             {
-                switch (sortAlgorithmType)
-                {
-                    case SortAlgorithmType.SelectionSort:
-                        SelectionSortAsc(array);
-                        break;
-                    case SortAlgorithmType.BubbleSort:
-                        BubbleSortAsc(array);
-                        break;
-                    case SortAlgorithmType.InsertionSort:
-                        InsertionSortAsc(array);
-                        break;       
-                }
+                case SortAlgorithmType.SelectionSort:
+                    SelectionSort(array, orderBy);
+                    break;
+                case SortAlgorithmType.BubbleSort:
+                    BubbleSort(array, orderBy);
+                    break;
+                case SortAlgorithmType.InsertionSort:
+                    InsertionSort(array, orderBy);
+                    break; 
             }
-            else
-            {
-                switch (sortAlgorithmType)
-                {
-                    case SortAlgorithmType.SelectionSort:
-                        SelectionSortDesc(array);
-                        break;
-                    case SortAlgorithmType.BubbleSort:
-                        BubbleSortDesc(array);
-                        break;
-                    case SortAlgorithmType.InsertionSort:
-                        InsertionSortDesc(array);
-                        break;
-                }
-            }                     
+
         }
+
 
         static void Main(string[] args)
 		{
 
             int[] array0 = { 3, 6, 1, 6, 4, 9, 2, 0 };
-            SortArray(array0, SortAlgorithmType.SelectionSort, OrderBy.Desc);
+            SortArray(array0, SortAlgorithmType.SelectionSort, OrderBy.Asc);
 
             foreach (var item in array0)
             {
@@ -175,18 +130,19 @@ namespace ConsoleApp1
             }
 
 
+
             //Extra Task
             Console.WriteLine();
-            double[] array = { 23,4,46,23,1,4 };
+            double[] array = { 23, 4, 46, 23, 1, 4 };
 
-            static double UniqueNum(double[] array )
+            static double UniqueNum(double[] array)
             {
                 for (int i = 0; i < array.Length; i++)
                 {
                     bool numMatch = false;
                     int index = array.Length - 1 - i;
                     double num = array[index];
-                    
+
                     for (int j = 0; j < array.Length; j++)
                     {
                         if (array[index] == array[j] && index != j)
@@ -208,7 +164,7 @@ namespace ConsoleApp1
 
 
             Console.WriteLine("test");
-            int [] array8 = { 5, 8, 3, 1, 9, 6, 4, 0, 7 };
+            int[] array8 = { 5, 8, 3, 1, 9, 6, 4, 0, 7 };
 
             SelectionSortDesc(array8);
 
@@ -217,5 +173,5 @@ namespace ConsoleApp1
                 Console.Write($"{item}, ");
             }
         }
-	}
+    }
 }
