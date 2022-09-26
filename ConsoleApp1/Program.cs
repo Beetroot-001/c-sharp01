@@ -84,74 +84,32 @@ namespace ConsoleApp1
             return new string(resultString).TrimStart();
         }
 
+
         /// <summary>
-        /// Search for duplicates in string
+        /// Search for repeated duplicates in the string
         /// </summary>
-        /// <param name="str">string to analyze fpr duplicates</param>
-        /// <returns>return array of characters that are duplicated in input string</returns>
+        /// <param name="str">string to analyze for duplicates</param>
+        /// <returns>return an array of duplicates</returns>
         static char[] Duplicate(string str)
         {
-            str = str.ToLower();
+            str = str.Replace(" ", "");                 ///remove all whitespaces
+            str = str.ToLowerInvariant();               ///set all chars to lowercase
+            char[] array = str.ToCharArray();           ///create an array of chars from string
+
+            Array.Sort(array);                          ///sort array to make all duplicates follow one by one
 
             string result = string.Empty;
 
-            for (int i = 0; i < str.Length; i++)
+            for (int i = 1; i < array.Length; i++)
             {
-                for (int j = i + 1; j < str.Length; j++)
+                if (array[i] == array[i - 1] && result.Contains(array[i]) == false)
                 {
-                    if (str[i].Equals(str[j]) && char.IsWhiteSpace(str[i]) == false)
-                    {
-                        bool match = false;                     
-                        
-                        for (int k = 0; k < result.Length; k++)  /*check for duplicates in the sorted result string*/
-                        {
-                            if (str[i] == result[k])
-                            {
-                                match = true;
-                                break;
-                            }
-                        }
-                        if (!match) result += str[i];          /* if not found add a char to the result string*/
-                    }
+                    result += array[i];
                 }
             }
-            return result.ToCharArray();
-        }
-
-
-        static char[] Duplicate2(string str)
-        {
-            str = str.ToLower();
-            str.Replace(" ", "");
-
-            string result = string.Empty;
-
-
-            for (int i = 0; i < str.Length; i++)
-            {
-
-                for (int j = 0; j < str.Length; j++)
-                {
-
-
-
-                }
-
-            }
-
-
-
-
-
 
             return result.ToCharArray();
         }
-
-
-
-
-
-
 
 
 
@@ -186,7 +144,7 @@ namespace ConsoleApp1
 
             foreach (var item in words)
             {
-                if (item.StartsWith("lorem") || item.StartsWith("Lorem"))
+                if (item.StartsWith("lorem", StringComparison.CurrentCultureIgnoreCase))
                 {
                     loremCounter++;
                 }
@@ -214,15 +172,6 @@ namespace ConsoleApp1
             resultString += " " + text + text.Substring(flag); ///concatenate the first 250 words + whitespace + main text + last 250 words
 
             //Console.WriteLine(result);
-
-
-
-
-
-
-
-
-
 
         }
     }
