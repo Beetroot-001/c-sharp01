@@ -119,6 +119,41 @@ namespace ConsoleApp1
         }
 
 
+        static char[] Duplicate2(string str)
+        {
+            str = str.ToLower();
+            str.Replace(" ", "");
+
+            string result = string.Empty;
+
+
+            for (int i = 0; i < str.Length; i++)
+            {
+
+                for (int j = 0; j < str.Length; j++)
+                {
+
+
+
+                }
+
+            }
+
+
+
+
+
+
+            return result.ToCharArray();
+        }
+
+
+
+
+
+
+
+
 
         static void Main(string[] args)
 		{
