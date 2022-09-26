@@ -21,16 +21,21 @@ namespace ConsoleApp1
             this.bookContent = bookContent;
         }
 
-
         public string BookTitle { get { return bookTitle; } }
         public string BookAuthor { get { return bookAuthor.FullName; } }
 
+        /// <summary>
+        /// Display title and author of the book
+        /// </summary>
+        /// <returns></returns>
         public string BookInfoShort()
         {
-            return $"Author Name: {bookAuthor.FullName} Book Title: {bookTitle}";       
+            return $"Author: {bookAuthor.FullName} Title: {bookTitle}";       
         }
 
-
+        /// <summary>
+        /// Display the full info about the book
+        /// </summary>
         public void BookInfoFull()
         {
             Console.WriteLine($"Author Name: {bookAuthor.FullName}");

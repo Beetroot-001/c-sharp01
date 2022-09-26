@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp1
 {
-    //Reader provides info about his name, last name and birthday only once and this iformation cannot be changed since it is copied from his/her ID. 
+    //Reader provides info about his\her name, last name and birthday only once and this iformation cannot be changed since it is copied from his/her ID. 
     //Phone number can be changed at will 
 
     class Reader
@@ -31,6 +31,10 @@ namespace ConsoleApp1
 
         public ulong PhoneNumber {get {return phoneNumber;} set {phoneNumber = value;}  }
         
+        /// <summary>
+        /// Display the info about reader
+        /// </summary>
+        /// <returns></returns>
         public string ReaderInfo()
         {
             return $"Name: {name}\nLastName: {lastName}\nPhone number: {phoneNumber}\nBirthday: {birthday.ToShortDateString()}";
