@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp1
 {
-    //Reader provides info about his\her name, last name and birthday only once and this iformation cannot be changed since it is copied from his/her ID. 
-    //Phone number can be changed at will 
+   
 
     class Reader
     {

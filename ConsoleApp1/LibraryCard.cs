@@ -9,9 +9,6 @@ using System.Threading.Tasks;
 namespace ConsoleApp1
 {
 
-    //Library card contains info about reader and the list of books the reader assigned to his/her card
-    //You can assign only those books which are available in the library
-    //You can view the list of assigned books and the reader's info as well as remove any book from the list of assigned books 
     internal class LibraryCard
     {
         private static int nextId;

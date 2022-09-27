@@ -6,12 +6,7 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp1
 {
-    /// Main class that unites all other classes <summary>
-    /// Main class that unites all other classes
-    /// It contains books which are added through the Class Book. Class Book creates an istance of "book" using the assitance of another class Author
-    /// It contains library cards which are added through the Class LibraryCard. The instance of library card is created through using the Class
-    /// 
-    /// </summary>
+  
     static class Library
     {
 
