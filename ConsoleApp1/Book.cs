@@ -8,7 +8,7 @@ namespace ConsoleApp1
 {
     internal class Book
     {
-        public Guid id { get; } = Guid.NewGuid();
+        public Guid Id { get; } = Guid.NewGuid();
 
         public Author Author { get; set; }
 
@@ -21,9 +21,9 @@ namespace ConsoleApp1
         public Book(Author author, string title)
         {
             Author = author;
-            Title = title;
-            
+            Title = title;            
         }
+
         public Book(Author author, string title, List<Chapter> chapters) : this(author, title)
         {
             Chapters = chapters;

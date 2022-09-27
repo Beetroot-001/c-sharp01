@@ -30,8 +30,8 @@ namespace ConsoleApp1
         }
 
         public int Age { get; set; }
-        public string FullName { get => string.Format("{0} {1} {2}", FirstName, MiddleName, LastName); }
 
+        public string FullName { get => string.Format("{0} {1} {2}", FirstName, MiddleName, LastName); }
 
         public User(string firstName)
         {

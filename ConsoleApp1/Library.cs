@@ -9,15 +9,19 @@ namespace ConsoleApp1
     internal class Library
     {
         public string Title { get; set; }
-        public string Address { get; set; }
-        public string Description { get; set; }
 
-        public enum jobStatus
+        public string Address { get; set; } = "";
+
+        public string Description { get; set; } = "";
+
+        public enum JobStatus
         {
             AllredyExist,
             Done
         }
+
         public List<Book> Books { get; set; } = new List<Book>();
+
         public List<UserCard> UserCards { get; set; } = new List<UserCard>();
 
         public Library(string title)
@@ -25,7 +29,7 @@ namespace ConsoleApp1
             Title = title;
         }
 
-        public Library(List<Book> books, List<UserCard> userCards)
+        public Library(string title, List<Book> books, List<UserCard> userCards) : this(title)
         {
             Books = books;
             UserCards = userCards;
@@ -38,10 +42,10 @@ namespace ConsoleApp1
             return userCard;
         }
 
-        public jobStatus AddNewBook(Book book)
+        public JobStatus AddNewBook(Book book)
         {
-            if (!Books.Contains(book)) { Books.Add(book); return jobStatus.Done; }
-            else return jobStatus.AllredyExist;
+            if (!Books.Contains(book)) { Books.Add(book); return JobStatus.Done; }
+            else return JobStatus.AllredyExist;
         } 
         
         public void AddNewBookToUser(Book book, UserCard userCard)
@@ -59,10 +63,10 @@ namespace ConsoleApp1
             if (userCard.GotBooks.Contains(book)) { userCard.GotBooks.Remove(book); }
         }
 
-        public jobStatus AddBookToUserCard(UserCard userCard, Book book)
+        public JobStatus AddBookToUserCard(UserCard userCard, Book book)
         {
-            if (!userCard.GotBooks.Contains(book)) { userCard.GotBooks.Add(book); return jobStatus.Done; }
-            else { return jobStatus.AllredyExist; }
+            if (!userCard.GotBooks.Contains(book)) { userCard.GotBooks.Add(book); return JobStatus.Done; }
+            else { return JobStatus.AllredyExist; }
         }
 
         static public void CreateTempBooks(Library library)
