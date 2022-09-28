@@ -75,9 +75,9 @@
                 */
 
                 Console.WriteLine("-----------SUPER EXTRA HOMEWORK 1----------");
-                x = x * y;
-                y = x / y;
-                x= x / y;
+                x = x + y;//7+3 = 10
+                y = x - y;//10-3=7
+                x= x - y;//10-7=3
 
                 Console.WriteLine($"x = {x}\ny = {y}");
 
