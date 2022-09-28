@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp1
 {
-
     internal class LibraryCard
     {
         private static int nextId;
@@ -19,14 +18,12 @@ namespace ConsoleApp1
         private List<Book> assignedBooks = new List<Book>();        
         private List<Book> allReadBooks = new List<Book>();
 
-
         public LibraryCard(Reader reader)
         {
            nextId++;
            id = nextId;         
            this.reader = reader;
         }
-
         public int ReadBooks {get {return readBooks;}}
 
         /// <summary>
@@ -127,7 +124,7 @@ namespace ConsoleApp1
         /// <summary>
         /// Display the list of all books that card owner read
         /// </summary>
-        public void AllReadBooks()
+        public void ShowAllReadBooks()
         {
             int exit = 1;
             while (exit != 0)
@@ -145,9 +142,5 @@ namespace ConsoleApp1
                 exit = int.Parse(Console.ReadLine());
             }         
         }
-
-
-
-
     }
 }

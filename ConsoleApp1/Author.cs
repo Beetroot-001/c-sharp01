@@ -20,8 +20,5 @@ namespace ConsoleApp1
         public string FullName {get {return fullName;}}
         public string ShortBiography { get {return shortBiography;}}
 
-
-
-
     }
 }
