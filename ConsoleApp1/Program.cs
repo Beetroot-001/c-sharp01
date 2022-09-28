@@ -62,13 +62,11 @@
         static bool TrySumIfOdd(int firstValue, int secondValue, out int sum)
         {
             sum = firstValue + secondValue;
-            if ((sum) % 2 == 0)
-                return false;
-            else
-                return true;
+            return (sum) % 2 == 0;
+
         }
         static int MaxValue(int x, int y) => Math.Max(x, y);
-        static int MaxValue(int x, int y, int z, int v) => Math.Max(x, Math.Max(z, Math.Max(z, v)));
+        static int MaxValue(int x, int y, int z, int v) => Math.Max(x, Math.Max(y, Math.Max(z, v)));
 
         static int MinValue(int x, int y) => Math.Min(x, y);
         static int MinValue(int x, int y, int z) => Math.Min(x, Math.Min(y, z));
@@ -150,9 +148,7 @@
                 Console.WriteLine();
                 for (int j = 0; j <= naumber; j++)
                 {
-                    if (j == 0 || j == naumber)
-                        Console.Write("*");
-                    else if (i==0||i==naumber)
+                    if (j == 0 || j == naumber||i==0||i== naumber)
                         Console.Write("*");
                     else
                         Console.Write(" ");
