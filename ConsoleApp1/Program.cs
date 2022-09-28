@@ -19,7 +19,7 @@ namespace ConsoleApp1
                     case ConsoleKey.D1://Display the phone book
                         Console.Clear();
 
-                        DispleyPhonBook(GetStringArrayFromFail(pathPhoneBook));
+                        DisplayPhoneBook(GetStringArrayFromFile(pathPhoneBook));
                         Console.WriteLine("\nPress any key to continue");
 
                         Console.ReadKey();
@@ -90,21 +90,27 @@ namespace ConsoleApp1
         static void DisplayMenu()
         {
             Console.WriteLine("\tPhone Book");
+
             Console.WriteLine("Press the number of the required operation");
 
             Console.WriteLine("1. Display the phone book");
+
             Console.WriteLine("2. Add new contact");
+
             Console.WriteLine("3. Edit contact");//Зробити можливість оновлення запису
                                                  //якщо це зміна, то ви виводете, зчитуєте дані і зберігаєте в файл (H/W)
             Console.WriteLine("4. Delete contact");//видалення Тобто, додаєте нові пункти меню, потім питаєте індекс і
                                                    //якщо видалення, то видаляєте по індексу, і зберігаєте файл (H/W)
             Console.WriteLine("5. Sort");//Зробити можливість сортування (Asc, Desc) та вибором по чому сортувати(H/W)
+
             Console.WriteLine("6. Search ");
+
             Console.WriteLine("7. Binary search\n");// бінарний пошук по прізвищу(Ex H/W)
+
             Console.WriteLine("0. Exit app");
         }
         //
-        static (string number, string lastName, string firstName, string phoneNuber)[] GetStringArrayFromFail(string path)
+        static (string number, string lastName, string firstName, string phoneNuber)[] GetStringArrayFromFile(string path)
         {
             string[] phoneBook = File.ReadAllLines(path);
             (string number, string lastName, string firstName, string phon)[] elementsOfArray = new (string number, string lastName, string firstName, string phon)[phoneBook.Length];
@@ -118,14 +124,12 @@ namespace ConsoleApp1
             return elementsOfArray;
         }
         //
-        static void DispleyPhonBook((string number, string lastName, string firstName, string phoneNuber)[] arrayPhonNumber)
+        static void DisplayPhoneBook((string number, string lastName, string firstName, string phoneNuber)[] arrayPhonNumber)
         {
             for (int i = 0; i < arrayPhonNumber.Length; i++)
-            {
-                Console.WriteLine($"{arrayPhonNumber[i].number,-8}{arrayPhonNumber[i].lastName,-15}{arrayPhonNumber[i].firstName,-15}{arrayPhonNumber[i].phoneNuber,-15}");
-            }
+                DisplayPhoneBook(arrayPhonNumber[i]);
         }
-        static void DispleyPhonBook((string number, string lastName, string firstName, string phoneNuber) arrayPhonNumber)
+        static void DisplayPhoneBook((string number, string lastName, string firstName, string phoneNuber) arrayPhonNumber)
         {
             Console.WriteLine($"{arrayPhonNumber.number,-8}{arrayPhonNumber.lastName,-15}{arrayPhonNumber.firstName,-15}{arrayPhonNumber.phoneNuber,-15}");
         }
@@ -141,7 +145,7 @@ namespace ConsoleApp1
             Console.Write("Phon nuber:\t");
             string phon = Console.ReadLine();
 
-            string[] newcontact = new[] { string.Join(',', GetStringArrayFromFail(pathPhoneBook).Length, lastName, firstName, phon) };
+            string[] newcontact = new[] { string.Join(',', GetStringArrayFromFile(pathPhoneBook).Length, lastName, firstName, phon) };
             File.AppendAllLines(pathPhoneBook, newcontact);
         }
         //
@@ -150,45 +154,33 @@ namespace ConsoleApp1
             Console.WriteLine("Enter your search parameters");
             string paramsSearch = Console.ReadLine();
 
-            (string number, string lastName, string firstName, string phoneNuber)[] searchArray = GetStringArrayFromFail(pathPhoneBook);
+            (string number, string lastName, string firstName, string phoneNuber)[] searchArray = GetStringArrayFromFile(pathPhoneBook);
 
             Console.WriteLine("\nSearch result:");
-            DispleyPhonBook(searchArray[0]);
+            DisplayPhoneBook(searchArray[0]);
 
             for (int i = 1; i < searchArray.Length; i++)
             {
-                if (searchArray[i].lastName.Contains(paramsSearch, StringComparison.OrdinalIgnoreCase))
-                    DispleyPhonBook(searchArray[i]);
-                else if (searchArray[i].firstName.Contains(paramsSearch, StringComparison.OrdinalIgnoreCase))
-                    DispleyPhonBook(searchArray[i]);
-                else if (searchArray[i].number.Contains(paramsSearch, StringComparison.OrdinalIgnoreCase))
-                    DispleyPhonBook(searchArray[i]);
-                else if (searchArray[i].phoneNuber.Contains(paramsSearch, StringComparison.OrdinalIgnoreCase))
-                    DispleyPhonBook(searchArray[i]);
+                if (searchArray[i].lastName.Contains(paramsSearch, StringComparison.OrdinalIgnoreCase)|| searchArray[i].firstName.Contains(paramsSearch, StringComparison.OrdinalIgnoreCase)|| searchArray[i].number.Contains(paramsSearch, StringComparison.OrdinalIgnoreCase)|| searchArray[i].phoneNuber.Contains(paramsSearch, StringComparison.OrdinalIgnoreCase))
+                    DisplayPhoneBook(searchArray[i]);
             }
         }
         static void Search(string paramsSearch)
         {
-            (string number, string lastName, string firstName, string phoneNuber)[] searchArray = GetStringArrayFromFail(pathPhoneBook);
+            (string number, string lastName, string firstName, string phoneNuber)[] searchArray = GetStringArrayFromFile(pathPhoneBook);
 
-            DispleyPhonBook(searchArray[0]);
+            DisplayPhoneBook(searchArray[0]);
 
             for (int i = 1; i < searchArray.Length; i++)
             {
-                if (searchArray[i].lastName.Contains(paramsSearch, StringComparison.OrdinalIgnoreCase))
-                    DispleyPhonBook(searchArray[i]);
-                else if (searchArray[i].firstName.Contains(paramsSearch, StringComparison.OrdinalIgnoreCase))
-                    DispleyPhonBook(searchArray[i]);
-                else if (searchArray[i].number.Contains(paramsSearch, StringComparison.OrdinalIgnoreCase))
-                    DispleyPhonBook(searchArray[i]);
-                else if (searchArray[i].phoneNuber.Contains(paramsSearch, StringComparison.OrdinalIgnoreCase))
-                    DispleyPhonBook(searchArray[i]);
+                if (searchArray[i].lastName.Contains(paramsSearch, StringComparison.OrdinalIgnoreCase) || searchArray[i].firstName.Contains(paramsSearch, StringComparison.OrdinalIgnoreCase) || searchArray[i].number.Contains(paramsSearch, StringComparison.OrdinalIgnoreCase) || searchArray[i].phoneNuber.Contains(paramsSearch, StringComparison.OrdinalIgnoreCase))
+                    DisplayPhoneBook(searchArray[i]);
             }
         }
         //
         static void EditContact()
         {
-            (string number, string lastName, string firstName, string phoneNuber)[] searchArray = GetStringArrayFromFail(pathPhoneBook);
+            (string number, string lastName, string firstName, string phoneNuber)[] searchArray = GetStringArrayFromFile(pathPhoneBook);
             string[] editContact = new string[searchArray.Length];
             string paramsSearch;
 
@@ -237,7 +229,7 @@ namespace ConsoleApp1
         //
         static void DeleteContact()
         {
-            (string number, string lastName, string firstName, string phoneNuber)[] searchArray = GetStringArrayFromFail(pathPhoneBook);
+            (string number, string lastName, string firstName, string phoneNuber)[] searchArray = GetStringArrayFromFile(pathPhoneBook);
             var DelArray = new (string number, string lastName, string firstName, string phoneNuber)[searchArray.Length - 1];
             string[] deleteContact = new string[searchArray.Length];
             string paramsSearch;
@@ -265,120 +257,26 @@ namespace ConsoleApp1
         //
         static void SortAscDesc()
         {
-            var searchArray = GetStringArrayFromFail(pathPhoneBook);
+            var searchArray = GetStringArrayFromFile(pathPhoneBook);
             Console.WriteLine("Select sort:\n\t1. Asc\n\t2. Desc");
             int sort = int.Parse(Console.ReadLine());
+
+            Console.WriteLine("Select a sort parameter:\n\t 1. Order\n\t2. Last Name\n\t3. First Name");
+            ConsoleKeyInfo consoleKey = Console.ReadKey();
+
             if (sort == 1)
-            {
-                Console.WriteLine("Select a sort parameter:\n\t 1. Order\n\t2. Last Name\n\t3. First Name");
-                ConsoleKeyInfo consoleKey = Console.ReadKey();
-                switch (consoleKey.Key)
-                {
-                    case ConsoleKey.D1:
-                        for (int i = 0; i < searchArray.Length - 1; i++)
-                        {
-                            for (int j = 1; j < searchArray.Length - i - 1; j++)
-                                if (searchArray[j].number.CompareTo(searchArray[j + 1].number) > 0)
-                                {
-                                    var temp = searchArray[j];
-                                    searchArray[j] = searchArray[j + 1];
-                                    searchArray[j + 1] = temp;
-                                }
-                        }
-                        break;
-                    case ConsoleKey.D2:
-                        for (int i = 0; i < searchArray.Length - 1; i++)
-                        {
-                            for (int j = 1; j < searchArray.Length - i - 1; j++)
-                                if (searchArray[j].lastName.CompareTo(searchArray[j + 1].lastName) > 0)
-                                {
-                                    var temp = searchArray[j];
-                                    searchArray[j] = searchArray[j + 1];
-                                    searchArray[j + 1] = temp;
-                                }
-                        }
-                        break;
-                    case ConsoleKey.D3:
-                        for (int i = 0; i < searchArray.Length - 1; i++)
-                        {
-                            for (int j = 1; j < searchArray.Length - i - 1; j++)
-                                if (searchArray[j].firstName.CompareTo(searchArray[j + 1].firstName) > 0)
-                                {
-                                    var temp = searchArray[j];
-                                    searchArray[j] = searchArray[j + 1];
-                                    searchArray[j + 1] = temp;
-                                }
-                        }
-                        break;
-                    default:
-                        break;
-                }
-            }
+                SortAsc(searchArray,consoleKey.Key);
             else
-            {
-                Console.WriteLine("Select a sort parameter:\n\t 1. Order\n\t2. Last Name\n\t3. First Name");
-                ConsoleKeyInfo consoleKey = Console.ReadKey();
-                switch (consoleKey.Key)
-                {
-                    case ConsoleKey.D1:
-                        for (int i = 0; i < searchArray.Length - 1; i++)
-                        {
-                            for (int j = 1; j < searchArray.Length - i - 1; j++)
-                                if (searchArray[j].number.CompareTo(searchArray[j + 1].number) < 0)
-                                {
-                                    var temp = searchArray[j];
-                                    searchArray[j] = searchArray[j + 1];
-                                    searchArray[j + 1] = temp;
-                                }
-                        }
-                        break;
-                    case ConsoleKey.D2:
-                        for (int i = 0; i < searchArray.Length - 1; i++)
-                        {
-                            for (int j = 1; j < searchArray.Length - i - 1; j++)
-                                if (searchArray[j].lastName.CompareTo(searchArray[j + 1].lastName) < 0)
-                                {
-                                    var temp = searchArray[j];
-                                    searchArray[j] = searchArray[j + 1];
-                                    searchArray[j + 1] = temp;
-                                }
-                        }
-                        break;
-                    case ConsoleKey.D3:
-                        for (int i = 0; i < searchArray.Length - 1; i++)
-                        {
-                            for (int j = 1; j < searchArray.Length - i - 1; j++)
-                                if (searchArray[j].firstName.CompareTo(searchArray[j + 1].firstName) < 0)
-                                {
-                                    var temp = searchArray[j];
-                                    searchArray[j] = searchArray[j + 1];
-                                    searchArray[j + 1] = temp;
-                                }
-                        }
-                        break;
-                    default:
-                        break;
-                }
-            }
+                SortDesc(searchArray,consoleKey.Key);
 
             File.WriteAllLines(pathPhoneBook, TransformArray(searchArray));
-
         }
         //
         static void BinarySearch()
         {
-            var searchArray = GetStringArrayFromFail(pathPhoneBook);
+            var searchArray = GetStringArrayFromFile(pathPhoneBook);
 
-            for (int i = 0; i < searchArray.Length - 1; i++)
-            {
-                for (int j = 1; j < searchArray.Length - i - 1; j++)
-                    if (searchArray[j].firstName.CompareTo(searchArray[j + 1].firstName) > 0)
-                    {
-                        var temp = searchArray[j];
-                        searchArray[j] = searchArray[j + 1];
-                        searchArray[j + 1] = temp;
-                    }
-            }
+            SortAsc(searchArray,ConsoleKey.D3);
 
             Console.Write("enter the first name that needs to be found:\t");
             string nameFound = Console.ReadLine();
@@ -401,7 +299,7 @@ namespace ConsoleApp1
                 }
                 else if (nameFound == searchArray[(int)mid].firstName)
                 {
-                    DispleyPhonBook(searchArray[(int)mid]);
+                    DisplayPhoneBook(searchArray[(int)mid]);
                     break;
                 }
                 else if (nameFound.CompareTo(searchArray[(int)mid].firstName) < 0)
@@ -415,27 +313,6 @@ namespace ConsoleApp1
                     mid = (first + last) / 2;
                 }
             }
-
-            //int[] ints = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };// test
-            //int mid = ints.Length / 2;
-            //int value = 2;
-            //while (true)
-            //{
-            //    if (mid == value)
-            //    {
-            //        Console.WriteLine(value);
-            //        break;
-            //    }
-            //    else if (mid > value)
-            //    {
-            //        mid = (ints[0] + mid) / 2;
-            //    }
-            //    else
-            //    {
-            //        mid = (ints.Length + mid) / 2;
-            //    }
-
-            //}
         }
         static string[] TransformArray((string number, string lastName, string firstName, string phoneNuber)[] searchArray)
         {
@@ -445,6 +322,38 @@ namespace ConsoleApp1
                 result[i] = string.Join(",", searchArray[i].number, searchArray[i].lastName, searchArray[i].firstName, searchArray[i].phoneNuber);
             }
             return result;
-        }// Перетворити з того що я зробив масиву в масив стрінгів(якщо вказати не всі пункти (firstName і тд) то файл перезапишиться неправильно і постійно викидатиме помилку
+        }
+
+        static void SortAsc((string number, string lastName, string firstName, string phoneNuber)[] searchArray,ConsoleKey consoleKey)
+        {
+                for (int i = 0; i < searchArray.Length - 1; i++)
+                {
+                    for (int j = 1; j < searchArray.Length - i - 1; j++)
+                    {
+                        if (ConsoleKey.D1 == consoleKey && searchArray[j].number.CompareTo(searchArray[j + 1].number) > 0 || ConsoleKey.D2 == consoleKey && searchArray[j].lastName.CompareTo(searchArray[j + 1].lastName) > 0 || ConsoleKey.D3 == consoleKey && searchArray[j].firstName.CompareTo(searchArray[j + 1].firstName) > 0)
+                        {
+                            var temp = searchArray[j];
+                            searchArray[j] = searchArray[j + 1];
+                            searchArray[j + 1] = temp;
+                        }
+                    }
+                }
+            
+        }
+        static void SortDesc((string number, string lastName, string firstName, string phoneNuber)[] searchArray, ConsoleKey consoleKey)
+        {
+            for (int i = 0; i < searchArray.Length - 1; i++)
+            {
+                for (int j = 1; j < searchArray.Length - i - 1; j++)
+                {
+                    if (ConsoleKey.D1 == consoleKey && searchArray[j].number.CompareTo(searchArray[j + 1].number) < 0 || ConsoleKey.D2 == consoleKey && searchArray[j].lastName.CompareTo(searchArray[j + 1].lastName) < 0 || ConsoleKey.D3 == consoleKey && searchArray[j].firstName.CompareTo(searchArray[j + 1].firstName) < 0)
+                    {
+                        var temp = searchArray[j];
+                        searchArray[j] = searchArray[j + 1];
+                        searchArray[j + 1] = temp;
+                    }
+                }
+            }
+        }
     }
 }
