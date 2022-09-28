@@ -1,24 +1,59 @@
-﻿namespace ConsoleApp1
+﻿using ClassLibrary1;
+
+namespace ConsoleApp1
 {
 	internal class Program
 	{
+		//class Dog : Animal
+		//{
+		//	public Dog()
+		//	{
+		//		this.
+		//	}
+		//}
+
 		static void Main(string[] args)
 		{
-			//Person person = new Person();
+			//var animal = new Animal();
+
+			//Console.WriteLine(animal.NumOfPawns1);
+			//Console.WriteLine(animal.NumOfPawns2);
+			//Console.WriteLine(animal.NumOfPawns3);
+
+			var personWithDefaultName = new Person("A", "B", "DefaultName");
+			Console.WriteLine(personWithDefaultName.DefaultName);
+
+
+			Person person = new Person()
+			{
+				FirstName = "Petro",
+				LastName = "Petrovich"
+			};
+
+			Person person12 = new Person();
+			person12.FirstName = "Petro";
+			person12.LastName = "Petrovich";
+
+
+			person.FullName = "Petro Petrovich";
+			Console.WriteLine(person12.FirstName);
+			Console.WriteLine(person12.LastName);
+
+
 			//Person person2 = new Person("Anatolii", "Lechenko", 24);
 
-			//person.FirstName = "Anatolii 2";
+			person.FirstName = "Anatolii 2";
 
-			////Console.WriteLine($"Person's FirstName {}");
+			//Console.WriteLine($"Person's FirstName {}");
 			//person2.Display();
 
 			//Console.WriteLine($"Person's 2 FirstName {person2.FirstName}");
 
 
-			//person.FirstName = "Anatolii 2";
+			person.FirstName = "Anatolii 2";
 
-			//Console.WriteLine(Person.PersonInstancesCount);
-			//Console.WriteLine(Person.DEFAULT_AGE);
+			Console.WriteLine(Person.PersonInstancesCount);
+			Console.WriteLine(Person.DEFAULT_AGE);
 
 
 			var person1 = new Person("Ivan", "Ivan", 23);
@@ -30,12 +65,19 @@
 			var record3 = new PhoneBookRecord(person3, "38091216");
 
 
-			var phoneBook = new PhoneBook(new PhoneBookRecord[] { record1, record2, record3 });
+			var phoneBook = PhoneBook.GetOrCreatePhoneBook(new PhoneBookRecord[] { record1, record2, record3 });
+			var phoneBook1 = PhoneBook.GetOrCreatePhoneBook(new PhoneBookRecord[] { record1, record2, record3 });
+
+			Console.WriteLine(phoneBook == phoneBook1);
 
 			phoneBook.DisplayRecords();
 
-
 			Console.WriteLine(phoneBook[0].Display());
+		}
+
+		public static void Method(PhoneBook phone)
+		{
+
 		}
 	}
 }

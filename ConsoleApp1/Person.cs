@@ -7,28 +7,32 @@
 		public static string Description;
 
 		public const int DEFAULT_AGE = 18;
+		public const string ConstDefaultName = "";
+		public readonly string DefaultName;
 
-		public string firstName = "No name (default)";
+		private string _firstName = "No name (default)";
+
 		public string FirstName
 		{
-			get { return this.firstName; }
+			get { return this._firstName; }
 			set
 			{
 				if (value.Length > 10)
 				{
 					throw new ArgumentOutOfRangeException("First name can not be > 10");
 				}
-				firstName = value;
+				_firstName = value;
 			}
 		}
 
-		public string LastName { get; set; }
+		public string LastName { get; set; } = "INIT 1";
 
 		public Person()
 		{
 			PersonInstancesCount++;
 
-			this.firstName = "No name";
+			this._firstName = "No name";
+			LastName = "INIT2";
 
 			Console.WriteLine("INSTANCE");
 		}
@@ -37,24 +41,25 @@
 		{
 			Description = "Here is description";
 			Console.WriteLine("STATIC");
+
 		}
 
-		public Person(string FirstName, string lastName)
+		public Person(string FirstName, string lastName, string defaultName)
 		{
 			PersonInstancesCount++;
-			this.firstName = FirstName;
+			this._firstName = FirstName;
 			this.LastName = lastName;
 			Console.WriteLine("INSTANCE");
+
+			DefaultName = defaultName;
 		}
 
-		public Person(string FirstName, string lastName, int age) : this(FirstName, lastName)
+		public Person(string FirstName, string lastName, int age) : this(FirstName, lastName, "")
 		{
-			this.firstName = FirstName;
+			this._firstName = FirstName;
 			this.LastName = lastName;
 			this.Age = age;
 		}
-
-
 		public int Age { get; }
 
 		public string FullName
@@ -63,8 +68,14 @@
 			{
 				return $"{FirstName} {LastName}";
 			}
-		}
+			set
+			{
+				var array = value.Split(' ');
 
+				FirstName = array[0];
+				LastName = array[1];
+			}
+		}
 
 		public void Display()
 		{

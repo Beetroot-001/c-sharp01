@@ -2,13 +2,27 @@
 {
 	class PhoneBook
 	{
-		public PhoneBookRecord[] Records { get; set; }
+		private static PhoneBook instance;
+
+		public readonly PhoneBookRecord[] Records;
 
 		public DateTime LastModifiedDate { get; set; }
 
-		public PhoneBook(PhoneBookRecord[] records)
+		private PhoneBook(PhoneBookRecord[] records,)
 		{
 			Records = records;
+		}
+
+		static PhoneBook GetOrCreatePhoneBook(PhoneBookRecord[] records)
+		{
+			if (instance != null)
+			{
+				return instance;
+			}
+
+			instance = new PhoneBook(records);
+
+			return;
 		}
 
 		public void DisplayRecords()
