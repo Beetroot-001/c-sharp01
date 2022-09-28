@@ -46,6 +46,7 @@ namespace Beetroot_HOMEWORK
                 {
                     if (str[i] == str1[i])
                         caunt++;
+                    return false;
                 }
                 if (caunt==str.Length)
                     return true;
