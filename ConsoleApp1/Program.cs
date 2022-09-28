@@ -150,14 +150,6 @@ namespace ConsoleApp1
             return input;
         }
 
-        static void DeleteSwap(string[] records, int id)
-        {
-            if (id == records.Length)
-                return;
-            string swap = records[^1];
-            records[^1] = records[id];
-            records[id] = swap;
-        }
         public enum OrderBy
         {
             Ascending,
@@ -303,11 +295,14 @@ namespace ConsoleApp1
         }
 
         static void DeleteRecord(string path)
-        {
+        {   
             var records = File.ReadAllLines(path);
             int input = IdInput(records.Length);
 
-            DeleteSwap(records, input);
+            for (int i = input; i < records.Length - 1; i++)
+            {
+                records[i] = records[i + 1];
+            }
             Array.Resize(ref records, records.Length - 1);
 
             File.WriteAllLines(path, records);
