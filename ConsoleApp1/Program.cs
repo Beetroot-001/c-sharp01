@@ -18,7 +18,7 @@ namespace ConsoleApp1
 
         static void DisplayMenu()
         {
-            var path = Path.Combine(Directory.GetCurrentDirectory(), "phonebook.csv");
+            var path = Path.Combine(Directory.GetCurrentDirectory(), "phonebook1.csv");
 
 
             Console.WriteLine("\tThis is phonebook app");
@@ -59,7 +59,6 @@ namespace ConsoleApp1
                         Sort(path);
                         break;
                     case ConsoleKey.D7:
-                        // binary search
                         int id;
                         string message = BinarySearch(path, out id) ? $"Surname is in phonebook! Id: {id + 1}" : "Surname was not found";
                         Console.WriteLine(message);
@@ -72,7 +71,7 @@ namespace ConsoleApp1
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Program error occured: {ex.GetType()} {Environment.NewLine} {ex.Message} ");
+               Console.WriteLine($"Program error occured: {ex.GetType()} {Environment.NewLine} {ex.Message} ");
             }
             Console.WriteLine("Press any key to continue");
             Console.ReadKey();
@@ -87,21 +86,25 @@ namespace ConsoleApp1
             {
                 records = File.ReadAllLines(path);
             }
-            catch
+            catch (FileNotFoundException ex)
             {
+                Console.WriteLine($"Exception occured: {ex.GetType()}  {ex.Message}");
                 throw;
             }
-            
-            //FileNotFoundException 
             (string, string, string)[] phoneBookRecords = new (string, string, string)[records.Length - 1];
-
-            for (int i = 1; i < records.Length; i++)
+            try
             {
-                var itemProperties = records[i].Split(',');
-
-                phoneBookRecords[i - 1] = (itemProperties[0], itemProperties[1], itemProperties[2]);
+                for (int i = 1; i < records.Length; i++)
+                {
+                    var itemProperties = records[i].Split(',');
+                    phoneBookRecords[i - 1] = (itemProperties[0], itemProperties[1], itemProperties[2]);
+                }
             }
-
+            catch (NullReferenceException ex)
+            {
+                Console.WriteLine("Error occured: " + ex.GetType());
+                throw;
+            }
             return phoneBookRecords;
         }
 
@@ -118,7 +121,6 @@ namespace ConsoleApp1
 
         static void AddNewRecord(string path)
         {
-            
             Console.Write("First Name: ");
             var firstName = Console.ReadLine();
 
@@ -131,16 +133,71 @@ namespace ConsoleApp1
             try
             {
                 newRecords = new[] { string.Join(',', new[] { firstName, lastName, phone }) };
-
                 File.AppendAllLines(path, newRecords);
             }
-            catch (NullReferenceException ex)
+            catch (FileNotFoundException ex)
             {
                 Console.WriteLine($"{ex.Message}");
                 throw;
             }
         }
 
+        static void EditRecord(string path)
+        {
+            var records = File.ReadAllLines(path);
+            int input = IdInput(records.Length);
+
+            Console.WriteLine("Founded record: ");
+            Console.WriteLine(records[input]);
+
+            Console.Write("Enter new firstname: ");
+            string newName = Console.ReadLine() ?? "";
+
+            Console.Write("Enter new lastname: ");
+            string newLast = Console.ReadLine() ?? "";
+
+            Console.Write("Enter new phone: ");
+            string newPhone = Console.ReadLine() ?? "";
+
+            string newRecord = string.Join(',', newName, newLast, newPhone);
+            records[input] = newRecord;
+            try
+            {
+                SafeWrite(path, records);
+            }
+            catch (Exception ex)
+            {
+                throw new FileNotFoundException("Editing incomplete. Cannot write to a file... " + ex.Message);
+            }
+        }
+
+        static void DeleteRecord(string path)
+        {
+            string[] records;
+            try
+            {
+                records = File.ReadAllLines(path);
+            }
+            catch (FileNotFoundException ex)
+            {
+                throw new FileNotFoundException("Deletion incomplete. Cannot write to a file... " + ex.Message);
+            }
+            int input = IdInput(records.Length);
+            try
+            {
+                DeleteSwap(records, input);
+                Array.Resize(ref records, records.Length - 1);
+                SafeWrite(path, records);
+            }
+            catch (IndexOutOfRangeException ex)
+            {
+                Console.WriteLine($"{ex.GetType()} {ex.Message}");
+            }
+            catch (FileNotFoundException ex)
+            {
+                throw new FileNotFoundException("Deletion incomplete. Cannot write to a file... " + ex.Message);
+            }
+        }
         static void SearchRecords(string path)
         {
             Console.WriteLine();
@@ -152,7 +209,7 @@ namespace ConsoleApp1
             {
                 phoneBookRecords = ReadPhoneBookRecords(path);
             }
-            catch (NullReferenceException ex)
+            catch (Exception ex)
             {
                 Console.WriteLine($"{ex.Message} {ex.GetType()}");
                 throw;
@@ -182,8 +239,20 @@ namespace ConsoleApp1
                 Console.WriteLine(message);
             }
             while (!succes);
-
             return input;
+        }
+
+        static void SafeWrite(string path, string[] records)
+        {
+            try
+            {
+                File.WriteAllLines(path, records);
+            }
+            catch (FileNotFoundException ex)
+            {
+                Console.WriteLine($"Error ocured: {ex.GetType()} {ex.Message}");
+                throw;
+            }
         }
 
         static void DeleteSwap(string[] records, int id)
@@ -192,11 +261,10 @@ namespace ConsoleApp1
             {
                 throw new IndexOutOfRangeException("Error: Id is invalid to process");
             }
-            if (id == records.Length)
-                return;
-            string swap = records[^1];
-            records[^1] = records[id];
-            records[id] = swap;
+            for (int i = id; i < records.Length - 1; i++)
+            {
+                records[i] = records[i + 1];
+            }
         }
         public enum OrderBy
         {
@@ -210,13 +278,16 @@ namespace ConsoleApp1
             Surname,
             Phone
         }
+
         static void Sort(string path)
         {
             Console.WriteLine("Enter sorting order: ");
             Console.WriteLine("1. Ascending");
             Console.WriteLine("2. Descending");
+
             ConsoleKey pressed = Console.ReadKey().Key;
-            OrderBy order = (pressed == ConsoleKey.D2) ? OrderBy.Descending : OrderBy.Ascending;
+            OrderBy order = (pressed == ConsoleKey.D2) 
+                ? OrderBy.Descending : OrderBy.Ascending;
 
             Console.WriteLine("Sorting by: ");
             Console.WriteLine("1. Name");
@@ -224,20 +295,22 @@ namespace ConsoleApp1
             Console.WriteLine("3. Phone");
             pressed = Console.ReadKey().Key;
 
-            SortBy sort;
-            if (pressed == ConsoleKey.D3)
+            SortBy sort = pressed switch
             {
-                sort = SortBy.Phone;
-            }
-            else if (pressed == ConsoleKey.D2)
+                ConsoleKey.D2 => SortBy.Surname,
+                ConsoleKey.D3 => SortBy.Phone,
+                _ => SortBy.Name,
+            };
+            (string, string, string)[] records;
+            try
             {
-                sort = SortBy.Surname;
+                records = ReadPhoneBookRecords(path);
             }
-            else
+            catch (Exception ex)
             {
-                sort = SortBy.Name;
+                Console.WriteLine("Error occured: " + ex.GetType());
+                throw;
             }
-            var records = ReadPhoneBookRecords(path);
 
             BubbleSort(records, order, sort);
             string[] recordsToWrite = new string[records.Length + 1];
@@ -247,9 +320,16 @@ namespace ConsoleApp1
                 recordsToWrite[i] = records[i - 1].Item1 + "," + records[i - 1].Item2 + "," + records[i - 1].Item3;
             }
             DisplayPhoneBook(records);
-            File.WriteAllLines(path, recordsToWrite);
-        }
+            try
+            {
+                SafeWrite(path, recordsToWrite);
+            }
+            catch (Exception ex)
+            {
+                throw new FileNotFoundException("Deletion incomplete. Cannot write to a file... " + ex.Message);
+            }
 
+        }
         static void SortBinary(string path)
         {
             var records = ReadPhoneBookRecords(path);
@@ -261,7 +341,14 @@ namespace ConsoleApp1
             {
                 recordsToWrite[i] = records[i - 1].Item1 + "," + records[i - 1].Item2 + "," + records[i - 1].Item3;
             }
-            File.WriteAllLines(path, recordsToWrite);
+            try
+            {
+                SafeWrite(path, recordsToWrite);
+            }
+            catch (Exception ex)
+            {
+                throw new FileNotFoundException("Sorting incomplete. Cannot write to a file... " + ex.Message);
+            }
         }
 
         public static void BubbleSort((string name, string surname, string phone)[] array, OrderBy order, SortBy criteria)
@@ -287,15 +374,11 @@ namespace ConsoleApp1
 
         static bool BinarySearch(string path, out int id)
         {
-            // get the info to search
+
             Console.WriteLine("Enter surname to search: ");
             string search = Console.ReadLine() ?? "";
-            // get the info u need 
-            (string firstname, string lastname, string phone)[] records;
             SortBinary(path);
-            records = ReadPhoneBookRecords(path);
-            // sort at first
-            // search 
+            (string firstname, string lastname, string phone)[] records = ReadPhoneBookRecords(path);
             int l = 0;
             int r = records.Length - 1;
             int mid;
@@ -320,42 +403,6 @@ namespace ConsoleApp1
             return false;
         }
 
-        static void EditRecord(string path)
-        {
-            var records = File.ReadAllLines(path);
-            int input = IdInput(records.Length);
-
-            Console.WriteLine("Founded record: ");
-            Console.WriteLine(records[input]);
-
-            Console.Write("Enter new firstname: ");
-            string newName = Console.ReadLine() ?? "";
-
-            Console.Write("Enter new lastname: ");
-            string newLast = Console.ReadLine() ?? "";
-
-            Console.Write("Enter new phone: ");
-            string newPhone = Console.ReadLine() ?? "";
-
-            string newRecord = string.Join(',', newName, newLast, newPhone);
-            records[input] = newRecord;
-            File.WriteAllLines(path, records);
-        }
-
-        static void DeleteRecord(string path)
-        {
-            var records = File.ReadAllLines(path);
-            int input = IdInput(records.Length);
-            try
-            {
-                DeleteSwap(records, input);
-                Array.Resize(ref records, records.Length - 1);
-            }
-            catch (IndexOutOfRangeException ex) 
-            {
-                Console.WriteLine($"{ex.GetType()} {ex.Message}");
-            }
-            File.WriteAllLines(path, records);
-        }
+        
     }
 }
