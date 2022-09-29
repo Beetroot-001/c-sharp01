@@ -9,11 +9,8 @@ namespace ConsoleApp1
     internal class ReaderCard
     {
         public Reader owner;
-
         private Book[] _borrowed;
-
         private int _limit;
-
         private DateTime _expDate;
 
         public ReaderCard(Reader owner, DateTime expDate, int limit)
@@ -43,7 +40,6 @@ namespace ConsoleApp1
             newBook.Borrowed = true;
             _borrowed[^1] = newBook;
             Array.Resize(ref _borrowed, _borrowed.Length + 1);
-            
             return true;
         }
 
@@ -52,9 +48,7 @@ namespace ConsoleApp1
             for (int i = 0; i < _borrowed.Length; i++)
             {
                 if (_borrowed[i].Title == title)
-                {
                     return i;
-                }
             }
             return -1;
         }

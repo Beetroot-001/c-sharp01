@@ -41,7 +41,6 @@
             my.readerCards.DisplayRecords();
             my.DisplayBooks();
 
-
         }
 	}
 }

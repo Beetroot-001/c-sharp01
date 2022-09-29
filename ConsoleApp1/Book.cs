@@ -11,9 +11,7 @@ namespace ConsoleApp1
         private string _title;
         private string _type;
         private string _description;
-
         private Author _author;
-
         private DateTime _dateOfPublish;
 
         public Book (string title, string type, string description, 

@@ -11,9 +11,6 @@ namespace ConsoleApp1
         private string _name;
         private string _surname;
         private string _middlename;
-
-        
-
         public Author(string name, string surname)
         {
             _name = name;

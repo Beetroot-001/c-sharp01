@@ -11,12 +11,10 @@ namespace ConsoleApp1
     internal class ReaderDatabase
     {
         private ReaderCard[] _readers;
-
         public ReaderDatabase()
         {
             _readers = new ReaderCard[1];
         }
-
         public int Capasity { get { return _readers.Length; } }
         public ReaderCard[] Readers { get { return _readers; } }
 
@@ -47,7 +45,6 @@ namespace ConsoleApp1
             }
             return -1;
         }
-
         public bool DeleteRecord(Reader owner)
         {
             int index = SearchRecord(owner);

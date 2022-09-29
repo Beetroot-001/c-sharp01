@@ -12,14 +12,12 @@ namespace ConsoleApp1
         private string _name;
         private string _surname;
         private string _middlename;
-
         public Reader(string name, string surname)
         {
             _name = name;
             _surname = surname;
             _middlename = "";
         }
-
         public Reader(string name, string surname, string middlename)
         {
             _name = name;
