@@ -64,7 +64,7 @@ namespace ConsoleApp1
                         Console.ReadKey();
                         Console.Clear();
                     }
-                    catch (Exception)
+                    catch (SystemException)
                     {
                         Console.WriteLine("FileNotFoundException cen not open file...");
                         Console.WriteLine("\nPress any key to continue");
@@ -141,7 +141,7 @@ namespace ConsoleApp1
                         break;
                 }
         }
-        //
+        
         static (string number, string lastName, string firstName, string phoneNuber)[] GetStringArrayFromFile(string path)
         {
             string[] phoneBook;
@@ -165,7 +165,7 @@ namespace ConsoleApp1
 
             return elementsOfArray;
         }
-        //
+        
         static void DisplayPhoneBook((string number, string lastName, string firstName, string phoneNuber)[] arrayPhonNumber)
         {
             for (int i = 0; i < arrayPhonNumber.Length; i++)
@@ -175,7 +175,7 @@ namespace ConsoleApp1
         {
             Console.WriteLine($"{arrayPhonNumber.number,-8}{arrayPhonNumber.lastName,-15}{arrayPhonNumber.firstName,-15}{arrayPhonNumber.phoneNuber,-15}");
         }
-        //
+        
         static void AddNewContact()
         {
             Console.Write("Last name:\t");
@@ -185,7 +185,7 @@ namespace ConsoleApp1
             string firstName = Console.ReadLine() ?? "Format Exception";
 
             Console.Write("Phone number:\t");
-            string phon = Console.ReadLine() ?? throw new FormatException();
+            string phon = Console.ReadLine() ?? throw new IOException();
 
             try
             {
@@ -197,11 +197,11 @@ namespace ConsoleApp1
                 throw ex;
             }
         }
-        //
+        
         static void Search()
         {
             Console.WriteLine("Enter your search parameters");
-            string paramsSearch = Console.ReadLine() ?? throw new Exception(); ;
+            string paramsSearch = Console.ReadLine() ?? throw new IOException(); 
 
             (string number, string lastName, string firstName, string phoneNuber)[] searchArray;
             try
@@ -235,7 +235,7 @@ namespace ConsoleApp1
                     DisplayPhoneBook(searchArray[i]);
             }
         }
-        //
+        
         static void EditContact()
         {
             (string number, string lastName, string firstName, string phoneNuber)[] searchArray = GetStringArrayFromFile(pathPhoneBook);
@@ -243,13 +243,14 @@ namespace ConsoleApp1
             string paramsSearch;
 
             Console.WriteLine("Enter (first name or last name or number) of the contact you want to change");
-            paramsSearch = Console.ReadLine() ?? throw new Exception();
+            paramsSearch = Console.ReadLine() ?? throw new IOException();
             Search(paramsSearch);
 
             Console.Write("Select the order in Result:\t");
-            string indexOrder = Console.ReadLine() ?? throw new Exception();
+            int indexOrder =0;
+            ParseOrException(ref indexOrder,Console.ReadLine());
 
-            Console.WriteLine(searchArray[int.Parse(indexOrder)]);
+            Console.WriteLine(searchArray[indexOrder]);
 
             Console.WriteLine("What do you want to change:\n\t1. LastName\n\t2. First Name\n\t3. Phone Number");
             ConsoleKeyInfo choice = Console.ReadKey();
@@ -260,14 +261,7 @@ namespace ConsoleApp1
                     Console.Clear();
                     Console.WriteLine("Rewrite Last Name:\t");
 
-                    try
-                    {
-                        searchArray[int.Parse(indexOrder)].lastName = Console.ReadLine();
-                    }
-                    catch (Exception)
-                    {
-                        throw;
-                    }
+                    searchArray[indexOrder].lastName = Console.ReadLine()?? throw new IOException();
 
                     editContact = TransformArray(searchArray);
 
@@ -275,7 +269,7 @@ namespace ConsoleApp1
                     {
                         File.WriteAllLines(pathPhoneBook, editContact);
                     }
-                    catch (Exception)
+                    catch (FileNotFoundException)
                     {
                         throw;
                     }
@@ -286,7 +280,7 @@ namespace ConsoleApp1
 
                     Console.Clear();
                     Console.WriteLine("Rewrite Firs Name:\t");
-                    searchArray[int.Parse(indexOrder)].firstName = Console.ReadLine() ?? throw new Exception(); ;
+                    searchArray[indexOrder].firstName = Console.ReadLine() ?? throw new IOException(); ;
 
                     editContact = TransformArray(searchArray);
                     File.WriteAllLines(pathPhoneBook, editContact);
@@ -298,7 +292,7 @@ namespace ConsoleApp1
                     Console.Clear();
                     Console.WriteLine("Rewrite Phone Number:\t");
 
-                    searchArray[int.Parse(indexOrder)].phoneNuber = Console.ReadLine() ?? throw new Exception(); ;
+                    searchArray[indexOrder].phoneNuber = Console.ReadLine() ?? throw new IOException(); ;
 
                     editContact = TransformArray(searchArray);
 
@@ -306,7 +300,7 @@ namespace ConsoleApp1
                     {
                         File.WriteAllLines(pathPhoneBook, editContact);
                     }
-                    catch (Exception)
+                    catch (FileNotFoundException)
                     {
                         throw;
                     }
@@ -317,7 +311,7 @@ namespace ConsoleApp1
             }
 
         }
-        //
+        
         static void DeleteContact()
         {
             (string number, string lastName, string firstName, string phoneNuber)[] searchArray = GetStringArrayFromFile(pathPhoneBook);
@@ -326,33 +320,17 @@ namespace ConsoleApp1
             string paramsSearch;
 
             Console.WriteLine("Enter (first name or last name or number) of the contact you want to delete");
-            paramsSearch = Console.ReadLine() ?? throw new Exception(); ;
+            paramsSearch = Console.ReadLine() ?? throw new IOException(); ;
             Search(paramsSearch);
 
+            int indexOrder=0;
             Console.Write("Select the order in Result:\t");
-            string indexOrder;
 
-            try
-            {
-                indexOrder = Console.ReadLine();
-            }
-            catch (FormatException)
-            {
-                throw;
-            }
+            ParseOrException(ref indexOrder, Console.ReadLine());
 
-            try
-            {
-                Console.WriteLine(searchArray[int.Parse(indexOrder)]);
-            }
-            catch (FormatException)
-            {
-                throw;
-            }
-
-            for (int i = 0; i < searchArray.Length && i < int.Parse(indexOrder); i++)
+            for (int i = 0; i < searchArray.Length && i < indexOrder; i++)
                 DelArray[i] = searchArray[i];
-            for (int i = int.Parse(indexOrder) + 1; i < searchArray.Length; i++)
+            for (int i = indexOrder + 1; i < searchArray.Length; i++)
             {
                 DelArray[i - 1] = searchArray[i];
                 DelArray[i - 1].number = $"{i - 1}";
@@ -360,22 +338,14 @@ namespace ConsoleApp1
             deleteContact = TransformArray(DelArray);
             File.WriteAllLines(pathPhoneBook, deleteContact);
         }
-        //
+        
         static void SortAscDesc()
         {
             var searchArray = GetStringArrayFromFile(pathPhoneBook);
             Console.WriteLine("Select sort:\n\t1. Asc\n\t2. Desc");
-            int sort;
-
-            try
-            {
-                sort = int.Parse(Console.ReadLine());
-            }
-            catch (Exception)
-            {
-                Console.WriteLine("try next time");
-                sort = 0;
-            }
+            int sort=0;
+            
+            ParseOrException(ref sort, Console.ReadLine());
 
             Console.WriteLine("Select a sort parameter:\n\t 1. Order\n\t2. Last Name\n\t3. First Name");
             ConsoleKeyInfo consoleKey = Console.ReadKey();
@@ -387,7 +357,7 @@ namespace ConsoleApp1
 
             File.WriteAllLines(pathPhoneBook, TransformArray(searchArray));
         }
-        //
+        
         static void BinarySearch()
         {
             var searchArray = GetStringArrayFromFile(pathPhoneBook);
@@ -395,7 +365,7 @@ namespace ConsoleApp1
             SortAsc(searchArray, ConsoleKey.D3);
 
             Console.Write("enter the first name that needs to be found:\t");
-            string nameFound = Console.ReadLine() ?? throw new FormatException();
+            string nameFound = Console.ReadLine() ?? throw new IOException();
 
             double first = 0;
             double last = searchArray.Length;
@@ -430,7 +400,7 @@ namespace ConsoleApp1
                 }
             }
         }
-        //
+        
         static string[] TransformArray((string number, string lastName, string firstName, string phoneNuber)[] searchArray)
         {
             string[] result = new string[searchArray.Length];
@@ -441,7 +411,7 @@ namespace ConsoleApp1
             }
             return result;
         }
-        //
+        
         static void SortAsc((string number, string lastName, string firstName, string phoneNuber)[] searchArray, ConsoleKey consoleKey)
         {
             for (int i = 0; i < searchArray.Length - 1; i++)
@@ -458,7 +428,7 @@ namespace ConsoleApp1
             }
 
         }
-        //
+        
         static void SortDesc((string number, string lastName, string firstName, string phoneNuber)[] searchArray, ConsoleKey consoleKey)
         {
             for (int i = 0; i < searchArray.Length - 1; i++)
@@ -470,7 +440,24 @@ namespace ConsoleApp1
                         var temp = searchArray[j];
                         searchArray[j] = searchArray[j + 1];
                         searchArray[j + 1] = temp;
+                        
                     }
+                }
+            }
+        }
+
+        private static void ParseOrException(ref int value, string str)
+        {
+            try
+            {
+                value = int.Parse(str);
+            }
+            catch (FormatException ex)
+            {
+                Console.WriteLine($"{ex.Message}\n Try again:\t");
+                if (!int.TryParse(Console.ReadLine(), out value))
+                {
+                    throw;
                 }
             }
         }
