@@ -8,6 +8,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Update="oop.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="exceptions.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

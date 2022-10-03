@@ -2,7 +2,7 @@
 {
 	internal class Program
 	{
-		public const string Exceptions = "exceptions.txt";
+		public const string Exceptions = "oop.txt";
 
 		static void Main(string[] args)
 		{
@@ -11,13 +11,12 @@
 			var students = new[]
 			{
 				"Sergiy Kuziv",
-				"Oleh Slobodeniuk",
+				//"Oleh Slobodeniuk",
 				"Serhii Kropotov",
 				"Popov Artem",
 				"Maryna Bohdanova",
 				"Balitskyi Vladyslav",
 				"Andrii Kovalenko",
-				"Ihor Kovalchuk",
 				"Ponomarienko Andrii",
 				"Nataliia Tyshchenko",
 				"Rushynets Oleksii",
@@ -49,7 +48,7 @@
 				Console.WriteLine($"Answering: {student}");
 				answerCount[random]++;
 
-				if (answerCount[random] > 2)
+				if (answerCount[random] >= 2)
 				{
 					students = students.Where(x => x != student).ToArray();
 				}
