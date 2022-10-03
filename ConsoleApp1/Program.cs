@@ -7,17 +7,12 @@ namespace ConsoleApp1
         static string path = Path.Combine(Directory.GetCurrentDirectory(), "phonebook1.csv");
         static void Main(string[] args)
         {
-
             string record = "Anatolii,Levchenko,023232323";
-
             var res = Regex.Matches(record, @"\W+");
-
             foreach (var match in res)
             {
                 Console.WriteLine(match.ToString());
             }
-
-
             while (true)
             {
                 DisplayMenu();
@@ -25,10 +20,7 @@ namespace ConsoleApp1
         }
 
         static void DisplayMenu()
-        {
-            //var path = Path.Combine(Directory.GetCurrentDirectory(), "phonebook.csv");
-
-
+        {          
             Console.WriteLine("\tThis is phonebook app");
 
             Console.WriteLine("\t1. Display phone book records");
@@ -65,7 +57,6 @@ namespace ConsoleApp1
                         break;
                     case ConsoleKey.D0:
                     default:
-                        //Environment.Exit(0);
                         break;
                 }
             }
@@ -73,10 +64,7 @@ namespace ConsoleApp1
             {
                 throw new Exception(ex.Message, ex);
             }
-
-            Console.ReadKey();
-            //Console.Clear();
-
+            Console.ReadKey();        
         }
 
         private static void DeleteRecord(string path)
@@ -86,11 +74,7 @@ namespace ConsoleApp1
                 var records = ReadPhoneBookRecords(path);
                 DisplayPhoneBook(records);
                 Console.WriteLine("Choose a record to delete by index:");
-                int choice = Int32.Parse(Console.ReadLine() ?? String.Empty);
-                //if (choice > records.Length)
-                //    Console.WriteLine("You have picked a wrong index!");
-                //if (choice < records.Length)
-                //{
+                int choice = Int32.Parse(Console.ReadLine() ?? String.Empty);               
                 records[choice].Item1 = string.Empty;
                 records[choice].Item2 = string.Empty;
                 records[choice].Item3 = string.Empty;
@@ -98,13 +82,11 @@ namespace ConsoleApp1
                 records[records.Length - 1] = records[choice];
                 records[choice] = temp;
                 Array.Resize(ref records, records.Length - 1);
-                RecordString(records);
-                //}
+                RecordString(records);                
             }
             catch (IndexOutOfRangeException e)
             {
                 throw new IndexOutOfRangeException("You picked a wrong index!", e);
-
             }
         }
 
@@ -119,54 +101,38 @@ namespace ConsoleApp1
             Console.WriteLine();
             try
             {
-                int index = Int32.Parse(Console.ReadLine() ?? null);
-                
-                //if (index > records.Length)
-                //{
-                //    Console.WriteLine("You picked a wrong index!");
-                //    Edit(path);
-                //}
-                //else if (index < records.Length)
-                //{
-                    Console.WriteLine("\n 1. Change first name \n 2. Change last name \n 3. Change number");
-                    int choice2 = Int32.Parse(Console.ReadLine() ?? string.Empty);
-                    if (choice2 == 1)
-                    {
-                        Console.WriteLine($"Changing that {records[index].Item1} to:");
-                        name = Console.ReadLine() ?? string.Empty;
-                        records[index].Item1 = name;
-
-
-                    }
-                    else if (choice2 == 2)
-                    {
-                        Console.WriteLine($"Changing that {records[index].Item2} to:");
-                        lastName = Console.ReadLine() ?? string.Empty;
-                        records[index].Item2 = lastName;
-
-                    }
-                    else
-                    {
-                        Console.WriteLine($"Changing that {records[index].Item3} to:");
-                        num = Console.ReadLine();
-                        records[index].Item3 = num ?? string.Empty;
-
-                    }
-
-                //}
-
-
+                int index; 
+                Int32.TryParse(Console.ReadLine(), out index);                
+                Console.WriteLine("\n 1. Change first name \n 2. Change last name \n 3. Change number");
+                int choice2;
+                Int32.TryParse(Console.ReadLine(), out choice2);
+                if (choice2 == 1)
+                {
+                    Console.WriteLine($"Changing that {records[index].Item1} to:");
+                    name = Console.ReadLine() ?? string.Empty;
+                    records[index].Item1 = name;
+                }
+                else if (choice2 == 2)
+                {
+                    Console.WriteLine($"Changing that {records[index].Item2} to:");
+                    lastName = Console.ReadLine() ?? string.Empty;
+                    records[index].Item2 = lastName;
+                }
+                else
+                {
+                    Console.WriteLine($"Changing that {records[index].Item3} to:");
+                    num = Console.ReadLine();
+                    records[index].Item3 = num ?? string.Empty;
+                }     
                 RecordString(records);
             }
-
             catch (ArgumentNullException argumentNullException) { throw new Exception("You need to type something!", argumentNullException); }
             catch (ArgumentOutOfRangeException outOfRangeException) { throw new Exception("You picked a wrong index!", outOfRangeException); }
-
         }
 
         static (string, string, string)[] ReadPhoneBookRecords(string path)
         {
-            (string, string, string)[] returnvalue = null;
+            (string, string, string)[] returnValue = null;
             try
             {
                 Console.WriteLine();
@@ -180,27 +146,15 @@ namespace ConsoleApp1
 
                     phoneBookRecords[i - 1] = (itemProperties[0], itemProperties[1], itemProperties[2]);
                 }
-                returnvalue = phoneBookRecords;
-
+                returnValue = phoneBookRecords;
             }
             catch (FileNotFoundException fnf)
             {
-
-                Console.WriteLine(fnf.Message);                
+                Console.WriteLine(fnf.Message);
                 string header = "First name,Second name,number";
                 File.WriteAllText(path, header);
-                
-            }
-            catch (OverflowException ae)
-            {
-
-                Console.WriteLine(ae.Message);
-                string header = "First name,Second name,number";
-                File.WriteAllText(path, header);
-
-            }
-            return returnvalue;
-            
+            }            
+            return returnValue;
         }
 
         static void DisplayPhoneBook((string firstName, string lastName, string phone)[] records)
@@ -226,9 +180,12 @@ namespace ConsoleApp1
             var phone = Console.ReadLine();
 
             string[] newRecords = new[] { string.Join(',', new[] { firstName, lastName, phone }) };
-
-            File.AppendAllLines(path, newRecords);
-
+            try
+            {
+                File.AppendAllLines(path, newRecords);
+            }
+            catch(DirectoryNotFoundException dir) 
+            { throw new Exception("Directiry not found!", dir); }
         }
 
         static void SearchRecords(string path)
@@ -236,12 +193,7 @@ namespace ConsoleApp1
             Console.WriteLine();
             Console.WriteLine("Enter search string: ");
             string searchText = Console.ReadLine() ?? "";
-
-            (string firstName, string lastName, string phone)[] phoneBookRecords = ReadPhoneBookRecords(path);
-
-
-            //(string firstName, string lastName, string phone)[] searchedRecords = new (string firstName, string lastName, string phone)[phoneBookRecords.Length];
-
+            (string firstName, string lastName, string phone)[] phoneBookRecords = ReadPhoneBookRecords(path);           
             Console.WriteLine($"{"First Name",-15} {"Last Name",-15} {"Phone",-15}");
             foreach (var record in phoneBookRecords)
             {
@@ -251,10 +203,7 @@ namespace ConsoleApp1
                 {
                     Console.WriteLine($"{record.firstName,-15} {record.lastName,-15} {record.phone,-15}");
                 }
-            }
-
-
-            //DisplayPhoneBook(searchedRecords);
+            }            
         }
         public enum Order { Asc, Desc };
         public enum SortBy { firstName, lastName, phoneNum };
@@ -266,7 +215,7 @@ namespace ConsoleApp1
             Console.WriteLine("Enter sorting order: ");
             Console.WriteLine("1. Ascending");
             Console.WriteLine("2. Descending");
-            ConsoleKey choice = Console.ReadKey().Key;
+            var choice = Console.ReadKey().Key;
             if (choice == ConsoleKey.D1)
                 order = Order.Asc;
             else
@@ -292,22 +241,12 @@ namespace ConsoleApp1
                 sort = SortBy.firstName;
             }
             var records = ReadPhoneBookRecords(path);
-            try
-            {
-                SortMethod(records, order, sort);
-                string[] newOrder = new string[records.Length + 1];
-                newOrder[0] = "FirstName,LastName,PhoneNumber";
-                RecordString(records);
-            }
-            catch
-            {
 
-            }
-            finally
-            {
-                Console.WriteLine("Sorting is done!");
-            }
-
+            SortMethod(records, order, sort);
+            string[] newOrder = new string[records.Length + 1];
+            newOrder[0] = "FirstName,LastName,PhoneNumber";
+            RecordString(records);
+            Console.WriteLine("Sorting is done!");
         }
         static void SortMethod((string name, string lastName, string phone)[] array, Order order, SortBy sort)
         {
@@ -435,7 +374,14 @@ namespace ConsoleApp1
                 if (index < records.Length)
                     newOrder[index + 1] = records[index].Item1 + ',' + records[index].Item2 + ',' + records[index].Item3;
             }
-            File.WriteAllLines(path, newOrder);
+            try
+            {
+                File.WriteAllLines(path, newOrder);
+            }
+            catch (DirectoryNotFoundException dir)
+            {
+                throw new Exception("Directory not found!", dir);
+            }
         }
 
     }
