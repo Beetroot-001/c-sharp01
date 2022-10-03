@@ -22,7 +22,7 @@
 			_surname = surname;
 			_middlename = middleName;
 			_age = age;
-			_atWork = false;
+			_atWork = true;
 			_salary = 1000;
 		}
 

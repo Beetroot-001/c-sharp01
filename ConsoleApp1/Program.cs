@@ -1,114 +1,57 @@
-﻿namespace ConsoleApp1
+﻿using Microsoft.VisualBasic.FileIO;
+using System.IO;
+
+namespace ConsoleApp1
 {
 	internal class Program
 	{
 		static void Main(string[] args)
 		{
 			Mechanic m = new Mechanic("John", "John", "", 18);
-			Console.WriteLine(m.Name);
-		}
-	}
-
-	class Vehicle
-	{
-		private int _wheelCount;
-
-	} 
-
-	class Car : Vehicle
-	{
-
-	}
-
-	class Bicycle : Vehicle
-	{
-
-	}
-
-	class Truck : Vehicle
-	{
-
-	}
-
-	public enum VehicleStateS
-    {
-		New,
-		Working,
-		Broken,
-		Repeared
-	}
-
-	class VehicleSystem
-	{
-		private string _name;
-		protected VehicleStateS _state;
-
-		public string Name => _name;
-
-		public VehicleStateS State => _state;
-
-		public VehicleSystem(string name)
-		{
-			_name = name;
-			_state = VehicleStateS.New;
-		}
-		public VehicleSystem(string name, VehicleStateS state) : this (name)
-		{
-			_name = name;
-			_state = state;
-		}
-
-		public virtual void Break()
-		{
-            _state = VehicleStateS.Broken;
-			Console.WriteLine("Vehicle system broken successfully");
-        } 
-	}
-
-	class MovingSystem : VehicleSystem
-	{
-		private bool _isWheesMoving;
-		private bool _isBouncing;
-		public MovingSystem(string name, VehicleStateS state) : base(name, state)
-		{
-			_isBouncing = true;
-			_isWheesMoving = true;
-		}
-
-        public bool IsBroken => !(_isBouncing && _isWheesMoving);
-        public override void Break()
-		{
-            _isWheesMoving = _isBouncing = false;
-			_state = VehicleStateS.Broken;
-            Console.WriteLine("Moving system broken successfully");
+            Console.WriteLine(m.Name);
+			Console.WriteLine(m.AtWork);
+			m.Work();
+			Car testCar = new Car(10, 4, FuelType.Gas, VehicleType.Auto);
+			Console.WriteLine("First test Nothing is broken");
+			testCar.Repair(m);
+            Console.WriteLine("Second test Mechanic isn't working");
+            m.GoHome();
+			testCar.Repair(m);
+			m.Work();
+			Console.WriteLine("Third test Actual repair");
+			AutoService autoService = AutoService.GetAutoService();
+			autoService.toRepair[0].BreakSystem.Break();
+			autoService.toRepair[0].Repair(autoService.mechanics[0]);
         }
-		
 	}
-
-	class CoolingSystem : VehicleSystem
+	class AutoService
 	{
-		private bool _isCooling;
-        public bool IsBroken => !_isCooling;
-
-        public CoolingSystem(string name, VehicleStateS state) : base(name, state)
+		private static AutoService _autoService;
+		public Mechanic[] mechanics;
+		public Janitor janitor;
+		public Vehicle[] toRepair;
+			
+		public static AutoService GetAutoService()
 		{
-			_isCooling = true;
+			if(_autoService == null)
+			{
+				_autoService = new AutoService();
+			}
+			return _autoService;
+		}
+		private AutoService()
+		{	
+			mechanics = new Mechanic[] { new Mechanic("John", "Milborn", "", 18), new Mechanic("Jo", "Johnes", "", 43)};
+			janitor = new Janitor("Mark", "Me", "", 20);
+			toRepair = new Vehicle[] { new Car(10, 4, FuelType.Gas, VehicleType.Auto), 
+				new Car(12, 2, FuelType.Gasoline, VehicleType.Mechanic),
+				new Truck(100, 2, FuelType.Hybrid, VehicleType.Auto)
+			};
+
 		}
 
-		public override void Break()
-		{
-			_isCooling = false;
-			_state = VehicleStateS.Broken;
-            Console.WriteLine("Colling system broken successfully");
-		}
-	}
+    }
 
-	class BreakSystem : VehicleSystem
-	{	
-
-		public BreakSystem(string name, VehicleStateS state) : base(name, state)
-		{
-		}
-	}
+    
 
 }
