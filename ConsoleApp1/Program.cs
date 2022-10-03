@@ -6,23 +6,38 @@ namespace ConsoleApp1
 	{
 		static void Main(string[] args)
 		{
-
-			//var animal = new Animal();
-
-			//var dog = new Dog();
+			//var animal = new Animal(); // imposible to create abstract class instances
 
 			Cat cat = new Cat(EyeColor.Green);
-			Animal animalCat = new Cat(EyeColor.Blue);
-			Animal animalDog = new Dog(EyeColor.Blue);
+			IMovable mCat = cat;
+			mCat.Move();
+			IAnimal aCat = cat;
+			aCat.Move();
+			
+			IAnimal animalCat = new Cat(EyeColor.Blue)
+			{
+				Breed = Breed.Ashera,
+				EatingStyle = EatingStyle.Grass
+			};
+			IAnimal animalDog = new Dog(EyeColor.Blue)
+			{
+				EatingStyle = EatingStyle.Grass,
+				Mood = Mood.Happy
+			};
+
+			animalCat.Move();
+
+			IMovable movableCat = (IMovable)animalCat;
+
+			movableCat.Move();
+
 
 			cat.Say();
-			animalCat.Say();
-			animalDog.Say();
 
 			bool isDog = animalDog is Dog;
-			Dog anotherDog = (Dog)animalCat;
+			//Dog anotherDog = (Dog)animalCat;
 
-			anotherDog.Say();
+			//anotherDog.Say();
 
 			Console.WriteLine(cat);
 
@@ -49,12 +64,30 @@ namespace ConsoleApp1
 				Mood = Mood.Neutral
 			};
 
+			DoSomethighWithAnimal(cat);
+			DoSomethighWithAnimal(animalDog);
+
+			Console.WriteLine(animalCat.TotalWeight);
+			Console.WriteLine(animalDog.TotalWeight);
+
 			Console.WriteLine($"{cat1.GetHashCode()} {cat2.GetHashCode()}");
 			Console.WriteLine($"{cat1.GetHashCode()} {cat3.GetHashCode()}");
 			Console.WriteLine(cat1.Equals(cat2));
 			Console.WriteLine(cat1.Equals(cat3));
 			Console.WriteLine(cat2.Equals(cat3));
 			Console.WriteLine(cat2.Equals(new Dog(EyeColor.Yellow)));
+
+			var dog12 = new Dog(EyeColor.Blue);
+			var consolePrinter = new ConsolePrinter();
+
+			dog12.SayGoodBy(consolePrinter);
+		}
+
+
+		static void DoSomethighWithAnimal(IAnimal animal)
+		{
+			Console.WriteLine(animal.TotalWeight);
+			animal.SayHi();
 		}
 	}
 
@@ -75,17 +108,22 @@ namespace ConsoleApp1
 			Console.WriteLine("CTR Cat");
 		}
 
-		public override int Say()
+		public override string TotalWeight
 		{
-			Console.WriteLine("Cat SAY");
-			return 0;
+			get
+			{
+				return ((int)Mood + (int)this.Breed).ToString();
+			}
+			set
+			{
+				TotalWeight = value;
+			}
 		}
 
-		public void Move()
+		public override string Say()
 		{
-			throw new NotImplementedException();
+			return "Cat says: meow";
 		}
-
 
 		public override string ToString()
 		{
