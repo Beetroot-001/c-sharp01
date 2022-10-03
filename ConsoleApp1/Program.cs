@@ -4,7 +4,12 @@
 	{
 		static void Main(string[] args)
 		{
-			Library my = new Library();
+			Library my = Library.GetLibrary();
+
+			Library test = Library.GetLibrary();
+
+			if (test == my) Console.WriteLine("Singleton is a success");
+			else Console.WriteLine("Singleton is a failure");
 
 			Reader reader1 = new Reader("Vox", "Akuma");
 			Reader reader2 = new Reader("Karen", "Musli");

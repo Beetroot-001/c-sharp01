@@ -35,10 +35,10 @@ namespace ConsoleApp1
             Console.WriteLine();
         }
 
-        public string Title { get { return _title; } }
-        public string Type { get { return _type; } }
-        public string Desc { get { return _description; } }
-        public Author Author { get { return _author; } }
+        public string Title => _title;
+        public string Type => _type;
+        public string Desc => _description;
+        public Author Author => _author;
         public bool Borrowed { get; set; }
         public DateTime PublishDate { 
             get { return _dateOfPublish; } 

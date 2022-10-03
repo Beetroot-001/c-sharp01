@@ -11,6 +11,7 @@ namespace ConsoleApp1
         private string _name;
         private string _surname;
         private string _middlename;
+
         public Author(string name, string surname)
         {
             _name = name;
@@ -27,9 +28,9 @@ namespace ConsoleApp1
             BookWritten = 0;
         }
 
-        public string Name { get { return _name; } }
-        public string Surname { get { return _surname; } }
-        public string MiddleName { get { return _middlename; } }
+        public string Name => _name;
+        public string Surname => _surname;
+        public string MiddleName => _middlename;
         public int BookWritten { get; set; }
 
         public void DisplayAuthorInfo()

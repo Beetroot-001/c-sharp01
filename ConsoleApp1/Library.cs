@@ -8,17 +8,30 @@ namespace ConsoleApp1
 {
     internal class Library
     {
+        private static Library _library;
+
         public ReaderDatabase readerCards;
         public Book[] books;
+
+        private Library()
+        {
+            this.readerCards = new ReaderDatabase();
+            this.books = new Book[1];
+        }
+
         public Library(ReaderDatabase readerCards, Book[] books)
         {
             this.readerCards = readerCards;
             this.books = books;
         }
-        public Library()
+
+        public static Library GetLibrary()
         {
-            this.readerCards = new ReaderDatabase();
-            this.books = new Book[1];
+            if(_library == null)
+            {
+                _library = new Library();
+            }
+            return _library;
         }
         public void DisplayBooks()
         {
@@ -27,25 +40,32 @@ namespace ConsoleApp1
                 books[i].DisplayBookInfo();
             }
         }
+
         public void AddBook(Book newBook)
         {
             books[^1] = newBook;
             Array.Resize(ref books, books.Length + 1);
         }
-        public int SearchBook(string title)
+
+        public bool TrySearchBook(string title, out int index)
         {
             for (int i = 0; i < books.Length - 1; i++)
             {
                 if (books[i].Title == title)
-                    return i;
+                {
+                    index = i;
+                    return true;
+                }
             }
-            return -1;
+            index = -1;
+            return false;
         }
+
         public bool BorrowBook(Reader reader, string title)
         {
             int recordIndex = readerCards.SearchRecord(reader);
-            int bookIndex = SearchBook(title);
-            if (recordIndex == -1 || bookIndex == -1)
+            int bookIndex;
+            if (recordIndex == -1 || !TrySearchBook(title, out bookIndex))
             {
                 return false;
             }
@@ -62,6 +82,7 @@ namespace ConsoleApp1
             books = newArray;
             return true;
         }
+
         public bool ReturnBook(Reader reader, string title)
         {
             int recordIndex = readerCards.SearchRecord(reader);

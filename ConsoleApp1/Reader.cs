@@ -24,9 +24,9 @@ namespace ConsoleApp1
             _surname = surname;
             _middlename = middlename;
         }
-        public string Name { get { return _name; } }
-        public string Surname { get { return _surname; } }
-        public string MiddleName { get { return _middlename; } }
+        public string Name => _name;
+        public string Surname => _surname;
+        public string MiddleName => _middlename;
 
         public void DisplayReaderInfo()
         {
