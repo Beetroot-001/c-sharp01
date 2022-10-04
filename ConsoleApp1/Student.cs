@@ -12,5 +12,12 @@ namespace ConsoleApp1
         private List<Lesson> lessons;
         private List<Subject> subjects;
 
+        public Student(string name)
+        {
+            this.name = name;
+        }
+
+        public string  Name { get { return name; } }
+
     }
 }

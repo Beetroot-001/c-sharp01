@@ -16,6 +16,6 @@ namespace ConsoleApp1
         }
 
 
-        public string SubjectName { get { return name; } }
+        public string Name { get { return name; } }
     }
 }

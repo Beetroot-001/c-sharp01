@@ -10,26 +10,20 @@
 
 			Teacher petrovych = new Teacher("Ivan petrovych", math);
 			Teacher ivanych = new Teacher("Kyryl Ivanych", biology);
-			Teacher zaharovna = new Teacher("Klara Xaharovna", chemistry);
+			Teacher zaharovna = new Teacher("Klara Zaharovna", chemistry);
 
-
+			Student kyryl = new Student("Kyryl");
+			Student petro = new Student("Petro");
 
 			School school40 = new School("School #40");
-
-
-			//school40.AddNewToSchool(School.AddNew.teacher, petrovych);
-
-
-
 			school40.AddNewTeacher(petrovych, ivanych, zaharovna);
-
-			school40.AddNewToSchool(School.AddNew.teacher, ivanych);
-
-			school40.GetListOfTeachers();
+			school40.AddNewStudent(kyryl, petro);
+			school40.AddNewSubject(math, biology, chemistry);
 
 			
-
-
+			
+		
+		
 
         }
 	}

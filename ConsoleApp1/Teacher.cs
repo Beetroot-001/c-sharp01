@@ -17,17 +17,16 @@ namespace ConsoleApp1
             this.name = name;
             this.subject = subject;
         }
-
-
+        public string Name { get { return name; }}
 
         public string GetTeacherInfo()
         {
-            return $"{name} teaches {subject.SubjectName}";
+            return $"{name} teaches {subject.Name}";
         }
 
         public void TeachLesson(List<Lesson> lesson)
         {
-            Console.WriteLine($"Teacher {name} start lesson {lessons}");
+            Console.WriteLine($"Teacher {name} starts lesson {lessons}");
         }
 
 
