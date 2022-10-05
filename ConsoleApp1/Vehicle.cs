@@ -23,65 +23,74 @@
         Hybrid
     }
 
-    class Vehicle
-	{
-        protected float _canCaryKg;
-        protected FuelType _fuelType;
-        protected VehicleType _vehicleType;
-        protected int _seats;
-        protected int _wheelCount;
-		protected VehicleSystem[] parts;
-
-		public float CanCaryKg => _canCaryKg;
-		public FuelType Fuel => _fuelType;
-		public VehicleType Type => _vehicleType;
-		public int Seats => _seats;
-		public int Wheels => _wheelCount;
-		public CoolingSystem CoolingSystem => (CoolingSystem)parts[0];
-		public BreakSystem BreakSystem => (BreakSystem)parts[1];
-		public MovingSystem MovingSystem => (MovingSystem)parts[2];
-
-        public Vehicle(float canCaryKg, int seats, FuelType fuelType, VehicleType vehicleType)
-		{
-			parts = new VehicleSystem[] { new CoolingSystem("Cooling System", VehicleStateS.New),
-				new BreakSystem("Breaking system", VehicleStateS.New),
-				new MovingSystem("Moving system", VehicleStateS.New) };
-            _wheelCount = 4;
-            _canCaryKg = canCaryKg;
-			_fuelType = fuelType;
-			_vehicleType = vehicleType;
-			_seats = seats;
-		}
-
-		public void Repair(Mechanic tech)
-		{
-			foreach(var part in parts)
-			{
-				part.Repair(tech);
-            }
-		}
-	}
-
-    class Car : Vehicle
+    interface Repeirable
     {
+        void Repair(Mechanic tech);
+    }
 
-        public Car(float canCaryKg, int seats, FuelType fuelType, VehicleType vehicleType) : base(canCaryKg, seats, fuelType, vehicleType)
+    class Car : Repeirable
+    {
+        FuelType _fuelType;
+        VehicleType _vehicleType;
+        int _seats;
+        BreakSystem _breakSystem;
+        MovingSystem _movingSystem;
+
+        public FuelType Fuel => _fuelType;
+        public VehicleType Type => _vehicleType;
+        public int Seats => _seats;
+        public BreakSystem BreakSystem => _breakSystem;
+        public MovingSystem MovingSystem => _movingSystem;
+
+        public Car(int seats, FuelType fuelType, VehicleType vehicleType)
         {
-            _wheelCount = 4;
+            _breakSystem = new BreakSystem("Breaking car system", VehicleStateS.New);
+            _movingSystem = new MovingSystem("Moving car system", VehicleStateS.New);
+            _fuelType = fuelType;
+            _vehicleType = vehicleType;
+            _seats = seats;
+        }
+
+        public void Repair(Mechanic tech)
+        {
+            if (!tech.AtWork)
+                return;
+            
         }
     }
 
-    class Truck : Vehicle
+    class Truck : Repeirable
     {
+        float _canCaryKg;
+        VehicleType _vehicleType;
+        int _wheelCount;
+        VehicleSystem[] parts;
         Car[] carry;
+
+        public float CanCaryKg => _canCaryKg;
+        public VehicleType Type => _vehicleType;
+        public int Wheels => _wheelCount;
+        public CoolingSystem CoolingSystem => (CoolingSystem)parts[0];
+        public BreakSystem BreakSystem => (BreakSystem)parts[1];
+        public MovingSystem MovingSystem => (MovingSystem)parts[2];
+
         public Car GetFirstCar => carry[0];
         public Car GetSecondCar => carry[1];
-        public Truck(float canCaryKg, int seats, FuelType fuelType, VehicleType vehicleType) : base(canCaryKg, seats, fuelType, vehicleType)
+        public Truck(float canCaryKg, int wheel, VehicleType vehicleType)
         {
-            _wheelCount = 8;
-            _canCaryKg *= 10;
-            carry = new Car[2];
+            parts = new VehicleSystem[] { new CoolingSystem("Cooling truck system", VehicleStateS.New),
+                new BreakSystem("Breaking truck system", VehicleStateS.New),
+                new MovingSystem("Moving truck system", VehicleStateS.New) };
+            _wheelCount = wheel;
+            _canCaryKg = canCaryKg;
+            carry = new Car[2]; // new car object!
         }
 
+        public void Repair(Mechanic tech)
+        {
+            if (!tech.AtWork)
+                return;
+
+        }
     }
 }
