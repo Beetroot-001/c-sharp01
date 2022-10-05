@@ -18,21 +18,15 @@ Console.WriteLine("MinValue:"+ resultMinValue);
 
 static int MaxValueReturn(int a, int b)
 {
-    if(a > b)
-    {
-        return a;
-      
-    }
-    return b;
+    int c;
+    c = a > b ? a : b;
+    return c;
 }
 static int MinValueReturn(int a, int b)
 {
-    if (a < b)
-    {
-        return a;
-
-    }
-    return b;
+    int c;
+    c = a < b ? a : b;
+    return c;
 }
  bool TrySumIfOdd(out int a,out int b,out int sum)
 {
