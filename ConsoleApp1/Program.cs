@@ -13,7 +13,8 @@ Console.WriteLine($"result: {c}, sum: {z}");
 //The last task
 int resultMaxValue = MaxValue(5, 9, 6);
 Console.WriteLine("MaxValue:" + resultMaxValue);
-
+int resultMinValue = MinValue(5, 9, 6);
+Console.WriteLine("MinValue:" + resultMinValue);
 
 static int MaxValueReturn(int a, int b)
 {
@@ -38,6 +39,13 @@ static int MinValueReturn(int a, int b)
 }
   int MaxValue( int a,  int b, int c)
 {
-    int maxResult = MaxValue(a, b);
-    return MaxValue(maxResult, c);
+    int max1 = Math.Max(a, b);
+    int max2= Math.Max(max1, b);
+    return max2;
+}
+int MinValue(int a, int b, int c)
+{
+    int min1 = Math.Min(a, b);
+    int min2 = Math.Min(min1, b);
+    return min2;
 }
