@@ -22,7 +22,7 @@ namespace ConsoleApp1
         BatteryDiagnostics
     }
 
-    public class Servis
+    internal class Servis
     {
         ServisType servise;
         int id;

@@ -22,7 +22,7 @@ namespace ConsoleApp1
 
         public void AddNewService(Servis servis)
         {
-
+          
         }
 
         public void AddNewMechanic(Mechanic mechanic)
