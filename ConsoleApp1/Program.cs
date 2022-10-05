@@ -13,8 +13,7 @@ Console.WriteLine($"result: {c}, sum: {z}");
 //The last task
 int resultMaxValue = MaxValue(5, 9, 6);
 Console.WriteLine("MaxValue:" + resultMaxValue);
-int resultMinValue = MinValue(4, 2, 1);
-Console.WriteLine("MinValue:"+ resultMinValue);
+
 
 static int MaxValueReturn(int a, int b)
 {
@@ -37,15 +36,8 @@ static int MinValueReturn(int a, int b)
     if (sum % 2 == 1) {  return true; }
     return false; 
 }
-  int MaxValue(int a, int b, int c)
+  int MaxValue( int a,  int b, int c)
 {
-    if (a >= b && a >= c) { return a; }  
-    if(b >= a && b >= c) { return b; }
-    else return c;
-}
-int MinValue(int a, int b, int c)
-{
-    if (a <= b && a <= c) { return a; }
-    if (b <= a && b <= c) { return b; }
-    else return c;
+    int maxResult = MaxValue(a, b);
+    return MaxValue(maxResult, c);
 }
