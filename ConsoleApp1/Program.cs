@@ -4,6 +4,7 @@
 	{
 		static void Main(string[] args)
 		{
+			Console.WriteLine("Got little carried away with my HW");
 		}
 	}
 }
