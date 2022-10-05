@@ -11,29 +11,28 @@ namespace ConsoleApp1
         public int age;
         public string name;
         public string description;
-        Book[] readBooks;
+        private Book[] readBooks;
         int numOfRead;
-        public Reader(int age, string name, string description) 
+        int readTimes = 0;
+        public Reader(int age, string name, string description)
         {
             this.age = age;
             this.name = name;
             this.description = description;
         }
 
-        public void GetBook(Book book, Ticket ticket)
+        public void GetBook(Book book)
         {
-            int read = book.ReadBook(book);
-            numOfRead++;
-            Array.Resize(ref readBooks, numOfRead);
-            for (int i = 0; i < readBooks.Length; i++)
+            Array.Resize(ref readBooks, numOfRead + 1);
+            readBooks[numOfRead] = book;
+            numOfRead++;            
+        }
+        public void GetListOfRead()
+        {
+            foreach (Book book in readBooks)
             {
-                if (readBooks[i] != book)
-                {
-                    readBooks[i] = book;
-                }
-                
+                Console.WriteLine(book.name + " " + book.writerName);
             }
         }
-        
     }
 }

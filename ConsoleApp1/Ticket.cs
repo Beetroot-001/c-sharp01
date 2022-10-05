@@ -8,31 +8,36 @@ namespace ConsoleApp1
 {
     internal class Ticket
     {
-        private string[] readers;
-        public int Id = 1;
+        private Book[] readBooks;
+        private string name;
+        public int countOfRead { get; set; }
+
+        public string Name { get { return name; } set { name = value; } }
+        public int Id { get; set; }
+        public Ticket(Reader reader)
+        {
+            Name = reader.name;
+        }
+        public void AddBookToReadList(Book book)
+        {
+            countOfRead++;
+            Array.Resize(ref readBooks, countOfRead);
+            readBooks[countOfRead-1] = book;
+
+        }
         
-        public void AddReader(Reader reader)
-        {
-            Array.Resize(ref readers, Id + 1);
-            readers[0] = "Id, Name, Age, Description";
-            readers[Id] = $"{Id}" + ", " + $"{reader.name}" + ", " + $"{reader.age}" + ", " + $"{reader.description}";
-
-            Id++;
-        }
-
-        public void DeleteReader(int Id)
-        {
-            string temp = readers[readers.Length - 1];
-            readers[readers.Length - 1] = readers[Id];
-            readers[Id] = temp;
-            Array.Resize(ref readers, readers.Length - 1);
-        }
         public void ReadList()
         {
-            foreach (var reader in readers)
-                Console.WriteLine(reader);
+            if (readBooks == null)
+            {
+                Console.WriteLine("No records at the moment!");
+            }
+            else
+            {
+                foreach (var book in readBooks)
+                    Console.WriteLine(book.name + " " + book.writerName);
+            }
         }
-        
 
     }
 }
