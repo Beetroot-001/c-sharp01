@@ -8,32 +8,32 @@ namespace ConsoleApp1
 {
     internal class Books
     {
-        public string authors { get; set; }
-        public string title { get; set; }
-        public string description { get; set; }// опис
-        public int yearOfPublication { get; set; }
-        public string[] content { get; set; } 
+        public string Authors { get; set; }
+        public string Title { get; set; }
+        public string Description { get; set; }// опис
+        public int YearOfPublication { get; set; }
+        public string[] Content { get; set; } 
 
         public Books(string authors, string title, string description, int yearOfPublication, string[] content = null)
         {
-            this.authors = authors;
-            this.title = title; 
-            this.description = description??"No information";
-            this.content = content ?? new string[] {"No information"}; 
-            this.yearOfPublication = yearOfPublication;
+            this.Authors = authors;
+            this.Title = title; 
+            this.Description = description??"No information";
+            this.Content = content ?? new string[] {"No information"}; 
+            this.YearOfPublication = yearOfPublication;
         }
 
         public void GetFullInformation()
         { 
-            Console.WriteLine($"Title: {title}\tAuthors: {authors}\tYear Of Publication: {yearOfPublication}\nDescription:\n{description}\n\n\t\tTable of Content:\n");
+            Console.WriteLine($"Title: {Title}\tAuthors: {Authors}\tYear Of Publication: {YearOfPublication}\nDescription:\n{Description}\n\n\t\tTable of Content:\n");
             GetContentInformation();
         }
 
         private void GetContentInformation()
         {
-            for (int i = 0; i < content.Length; i++)
+            for (int i = 0; i < Content.Length; i++)
             {
-                Console.WriteLine(content[i]);
+                Console.WriteLine(Content[i]);
             }
             Console.WriteLine();
         }

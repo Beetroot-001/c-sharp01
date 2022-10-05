@@ -8,20 +8,20 @@ namespace ConsoleApp1
 {
     internal class Authors
     {
-        public string _firstName, _lastName, _country, _isMarried;
-        public int age { get; }
-        public int countOfBooks { get; set; }
-        public string[] bestsellers { get; set; }
+        private string _firstName, _lastName, _country, _isMarried;
+        public int Age { get; }
+        public int CountOfBooks { get; set; }
+        public string[] Bestsellers { get; set; }
 
         public Authors(string firstName, string lastName, int age, string country, string job = "Unemployed", string isMarried = "Single", int countOfBook = 1, string[] bestseller = null)
         {
             this._firstName = firstName;
             this._lastName = lastName;
-            this.age = age;
+            this.Age = age;
             this._country = country;
             this._isMarried = isMarried;
-            this.countOfBooks = countOfBook;
-            this.bestsellers = bestseller;
+            this.CountOfBooks = countOfBook;
+            this.Bestsellers = bestseller;
         }
 
         private void DisplayBestsellers(string[] bestsellers)
@@ -37,13 +37,13 @@ namespace ConsoleApp1
 
         public void GetFullInformation()
         {
-            Console.WriteLine($"First Name:\t{_firstName}\nLast Name:\t{_lastName}\nAge:\t{age}\nCountry:\t{_country}\nMarital status\t{_isMarried}\nCount Of Book:\t{countOfBooks}");
-            DisplayBestsellers(bestsellers);
+            Console.WriteLine($"First Name:\t{_firstName}\nLast Name:\t{_lastName}\nAge:\t{Age}\nCountry:\t{_country}\nMarital status\t{_isMarried}\nCount Of Book:\t{CountOfBooks}");
+            DisplayBestsellers(Bestsellers);
         }
 
         public void GetShortInformation()
         {
-            Console.WriteLine($"First Name:\t{_firstName}\nLast Name:\t{_lastName}\nAge:\t{age}");
+            Console.WriteLine($"First Name:\t{_firstName}\nLast Name:\t{_lastName}\nAge:\t{Age}");
         }
     }
 }
