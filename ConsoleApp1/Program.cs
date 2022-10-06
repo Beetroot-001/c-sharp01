@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Buffers;
 using System.Net.Http.Headers;
+using System.Xml.Linq;
 
 namespace ConsoleApp1
 {
@@ -13,25 +14,27 @@ namespace ConsoleApp1
     }
     interface IShop
     {
-        void RegisterNewProduct(Product product);
-        void AddQuantity(int quantity, Product product);
+        void RegisterNewProduct();
+        void AddQuantity(string product, int quantity);
         bool SellProduct(Receipt receipt);
-        bool RegisterBuyer(Buyer buyer);
+        void RegisterBuyer(Buyer buyer);
 
     }
 
     class InternetShop : IShop
     {
-        public Registration[] registrations;
+        public Registration registration;
         public Warehouse warehouse;
-        public void RegisterNewProduct(Product product)
+        public void RegisterNewProduct()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("Enter product name: ");
+            string? name = Console.ReadLine();
+            warehouse.AddProduct(name, 1);
         }
 
-        public void AddQuantity(int quantity, Product product)
+        public void AddQuantity(string product, int quantity)
         {
-            throw new NotImplementedException();
+            warehouse.AddProduct(product, quantity);
         }
 
         public bool SellProduct(Receipt receipt)
@@ -39,12 +42,10 @@ namespace ConsoleApp1
             throw new NotImplementedException();
         }
 
-        public bool RegisterBuyer(Buyer buyer)
+        public void RegisterBuyer(Buyer buyer)
         {
-            throw new NotImplementedException();
+            registration.AddBuyer(buyer);
         }
-
-
     }
 
     class Registration
@@ -52,24 +53,47 @@ namespace ConsoleApp1
         Receipt[] _records;
         Buyer[] _registers;
 
-        public void AddRecord()
+        public void AddRecord(Receipt receipt)
         {
-            throw new NotImplementedException();
+            _records[^1] = receipt;
+            Array.Resize(ref _records, _records.Length + 1);
         }
 
-        public Receipt GetRecords(string phone)
+        public bool TryFindRecord(string phone, out int id)
         {
-            throw new NotImplementedException();
+            for (int i = 0; i < _records.Length; i++)
+            {
+                if (_records[i].Owner == phone)
+                {
+                    id = i;
+                    return true;
+                }
+            }
+            id = -1;
+            return false;
+            
         }
 
-        public Receipt DeleteRecords(string phone)
+        public bool TryDeleteRecord(string phone, out Receipt? receipt)
         {
-            throw new NotImplementedException();
+            int index;
+            if(TryFindRecord(phone, out index))
+            {
+                receipt = _records[index];
+                for (int i = index; i < _records.Length - 1; i++)
+                {
+                    _records[i] = _records[i + 1];
+                }
+                return true;
+            }
+            receipt = null;
+            return false;
         }
 
         public void AddBuyer(Buyer buyer)
         {
-            throw new NotImplementedException();
+            _registers[^1] = buyer;
+            Array.Resize(ref _registers, _registers.Length + 1);
         }
     }
 
@@ -78,22 +102,71 @@ namespace ConsoleApp1
         Product[] _available;
         Product[] _toOrder;
 
-        void AddNewProduct(Product product)
+        public Warehouse()
         {
+            _available = new Product[1];
+            _toOrder = new Product[1];
+        }
+        public bool TrySearchProduct(string name, out int id)
+        {
+            for (int i = 0; i < _available.Length; i++)
+            {
+                if (_available[i].Name == name)
+                {
+                    id = i;
+                    return true;
+                }
+            }
+            id = -1;
+            return false;
+            
+        }
 
-        }
-        Product GiveProduct()
+        public Product AddNewProduct(string name, int quantity)
         {
-            return null;
+            Console.WriteLine("Enter type: ");
+            // choose tyep
+            ProductType type = ProductType.Dairy;
+            Console.WriteLine("Enter id: ");
+            int id = 1;
+            Console.WriteLine("Enter cost per unit: ");
+            int cost = 5;
+            return new Product(id, name, type, cost, quantity);
         }
-        int SearchProduct(string phonenumber)
+        public void AddProduct(string name, int quantity)
         {
-            throw new NotImplementedException();
+            int index = 0;
+            if(TrySearchProduct(name, out index))
+            {
+                _available[index].AddQuantity(quantity);
+                return;
+            }
+            _available[^1] = AddNewProduct(name, quantity);
+            Array.Resize(ref _available, _available.Length + 1);
         }
-        void ReturnProduct(Product product)
+        public bool TryGiveProduct(string name, out Product? product, int quantity)
         {
+            int index;
+            if (TrySearchProduct(name, out index))
+            {
+                if (_available[index].Quantity >= quantity)
+                {
+                    Console.WriteLine("Giving a product :)");
+                    product = new Product(_available[index], quantity);
+                    _available[index].ReduceQuantity(quantity);
+                }
+                else if (_available[index].Quantity >= 0)
+                {
+                    Console.WriteLine("Giving smaller amount :\\");
+                    product = new Product(_available[index], _available[index].Quantity);
+                    _available[index].ReduceQuantity(_available[index].Quantity);
+                }
+            }
+            Console.WriteLine("Giving 0 amount, no product to give :(");
+            product = null;
+            return false;
+        }
 
-        }
     }
 
     struct Date
@@ -105,6 +178,12 @@ namespace ConsoleApp1
         {
             prodDate = DateTime.Today;
             expDate = prodDate.AddDays(days);
+        }
+
+        public Date(DateTime exp, DateTime prod)
+        {
+            prodDate = exp;
+            expDate = prod;
         }
 
     }
@@ -128,20 +207,30 @@ namespace ConsoleApp1
         int _cash;
         Cart _cart;
 
-         Receipt CheckOut()
-        {
-            throw new NotImplementedException();
-        }
+        public string Name => _name;
+        public string Surname => _surname;
+        public string Email => _email;
+        public string Phone => _phone;
+        public int Cash => _cash;
 
-        Product ReturnProduct(string name)
+        public void PutInCart(Product product)
         {
-            throw new NotImplementedException();
+            _cart.AddProduct(product);
         }
-        void PutInCart(Product product)
+        public bool TryCheckOut(out Receipt? receipt)
         {
-
+            if(_cart.Size == 0)
+            {
+                receipt = null;
+                return false;
+            }
+            receipt = new Receipt(this._phone, _cart.Size);
+            return true;
         }
-
+        public bool ReturnProduct(string name, out Product? product)
+        {
+            return _cart.RemoveProduct(name, out product) ? true : false;
+        }
     }
 
     class Product
@@ -179,6 +268,16 @@ namespace ConsoleApp1
             _quantity = quantity;
         }
 
+        public Product(Product prototype, int quantity)
+        {
+            _id = prototype.ID;
+            _name = prototype.Name;
+            _type = prototype.Type;
+            _cost = prototype.Prise;
+            _date = new Date(prototype.ExpDate, prototype.ProdDate);
+            _quantity = quantity;
+        }
+
         public void AddQuantity(int quantity)
         {
             this._quantity += quantity;
@@ -187,31 +286,60 @@ namespace ConsoleApp1
         {
             this._quantity -= reduce;
         }
-
+    }
     class Cart
     {
         Product[] _products;
 
-        // add
-        void AddProduct(Product product)
-        {
+        public int Size => _products.Length;
 
-        }
-        int SearchProduct(string name)
+        public void AddProduct(Product product)
         {
-            return -1;
+            _products[^1] = product;
+            Array.Resize(ref _products, Size + 1);
         }
-        // remove
-        void RemoveProduct(string name)
+        public bool TrySearchProduct(string name, out int id)
         {
-
+            for (int i = 0; i < Size; i++)
+            {
+                if (_products[i].Name == name)
+                {
+                    id = i;
+                    return true;
+                }
+            }
+            id = -1;
+            return false;
         }
-        int CountTotalPrise()
+        public bool RemoveProduct(string name, out Product? product)
         {
-            return 0;
+            int index;
+            if(TrySearchProduct(name, out index))
+            {
+                product = _products[index];
+                for (int i = index; i < Size - 1; i++)
+                {
+                    _products[i] = _products[i + 1];
+                }
+                Array.Resize(ref _products, Size - 1);
+                return true;
+            }
+            else
+            {
+                product = null;
+                Console.WriteLine("There isn't such product in a cart");
+                return false;
+            }
         }
-
-
+        public int CountTotalPrise()
+        {
+            int total = 0;
+            for (int i = 0; i < Size; i++)
+            {
+                total += _products[i].Prise * _products[i].Quantity;
+            }
+            return total;
+        }
     }
 
     class Receipt
