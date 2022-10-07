@@ -4,6 +4,7 @@
 	{
 		static void Main(string[] args)
 		{
+			Console.WriteLine("Autoservice UML model");
 		}
 	}
 }
