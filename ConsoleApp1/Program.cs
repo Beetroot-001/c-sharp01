@@ -200,14 +200,6 @@ namespace ConsoleApp1
 
 		static void SortRecords(string path)
 		{
-
-            Func<(string firstName, string lastName, string phone), int, string> SortBy = 
-				(a, b) => b == 1 ? a.firstName : b == 2 ? 
-					a.lastName : a.phone;
-			Func<string, string, int, bool> sorter = (a, b, o) => o == 1 ?
-				string.Compare(a, b, StringComparison.OrdinalIgnoreCase) < 0 ? false : true : 
-				string.Compare(a, b, StringComparison.OrdinalIgnoreCase) < 0 ? true : false;
-
             (string firstName, string lastName, string phone)[] rec = ReadPhoneBookRecords(path);
 
             Console.WriteLine("\t1. first name");
@@ -252,30 +244,19 @@ namespace ConsoleApp1
                     break;
             }
 
-			if(sortBy != -1 && order != -1)
-			{
-				for (int i = 1; i < rec.Length; i++)
-				{
-					for (int j = i; j > 0 && sorter(SortBy(rec[j - 1],sortBy), SortBy(rec[j], sortBy), order); j--)
-					{
-                        (string firstName, string lastName, string phone) temp = rec[j];
-						rec[j] = rec[j - 1];
-						rec[j - 1] = temp;
-                    }
-				}
+			SortRecords(rec, sortBy, order);
 
-                string[] strRes = new string[rec.Length + 1];
-                strRes[0] = "FirstName,LastName,PhoneNumber";
+            string[] strRes = new string[rec.Length + 1];
+            strRes[0] = "FirstName,LastName,PhoneNumber";
 
-                for (int i = 0; i < rec.Length; i++)
-                {
-                    strRes[i + 1] = $"{rec[i].firstName},{rec[i].lastName},{rec[i].phone}";
-                }
-                File.WriteAllLines(path, strRes);
+            for (int i = 0; i < rec.Length; i++)
+            {
+                strRes[i + 1] = $"{rec[i].firstName},{rec[i].lastName},{rec[i].phone}";
             }
+            File.WriteAllLines(path, strRes);
         }
-        static (string firstName, string lastName, string phone)[] SortRecords(
-			(string firstName, string lastName, string phone)[] rec, 
+
+        static void SortRecords((string firstName, string lastName, string phone)[] rec, 
 			int sortBy = 2, 
 			int order = 1)
         {
@@ -283,9 +264,7 @@ namespace ConsoleApp1
             Func<(string firstName, string lastName, string phone), int, string> SortBy =
                 (a, b) => b == 1 ? a.firstName : b == 2 ?
                     a.lastName : a.phone;
-            Func<string, string, int, bool> sorter = (a, b, o) => o == 1 ?
-                string.Compare(a, b, StringComparison.OrdinalIgnoreCase) < 0 ? false : true :
-                string.Compare(a, b, StringComparison.OrdinalIgnoreCase) < 0 ? true : false;
+            Func<string, string, int, bool> sorter = (a, b, o) => string.Compare(a, b, StringComparison.OrdinalIgnoreCase) < 0 && o == 1;
 
             if (sortBy != -1 && order != -1)
             {
@@ -299,8 +278,6 @@ namespace ConsoleApp1
                     }
                 }
             }
-
-			return rec;
         }
 
 		static void BinarySearch(string path)
