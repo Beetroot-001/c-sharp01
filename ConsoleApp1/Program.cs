@@ -1,41 +1,27 @@
-﻿using System.Text;
+﻿using System.Numerics;
+using System.Text;
 using System.Text.RegularExpressions;
+using System.Xml.XPath;
 
 namespace ConsoleApp1
 {
 	internal class Program
 	{
-		public static void method() { method(); }
 		static void Main(string[] args)
 		{
 			Console.OutputEncoding = Encoding.Unicode;
 
-			//string record = "Anatolii,Levchenko,023232323";
-
-			//var res = Regex.Matches(record, @"\W+");
-
-			//foreach (var match in res)
-			//{
-			//	Console.WriteLine(match.ToString());
-			//}
-
 			while (true)
 			{
-				try
-				{
-					DisplayMenu();
-				}
-				catch (Exception ex)
-				{
-					Console.WriteLine($"Something bad happened, continue... {ex.GetType()}, Message : {ex.Message}");
-					Console.WriteLine();
-				}
+
+				DisplayMenu();
+
 			}
 		}
 
 		static void DisplayMenu()
 		{
-			var path = Path.Combine(Directory.GetCurrentDirectory(), "phonebook1.csv");
+			var path = Path.Combine(Directory.GetCurrentDirectory(), "phonebook.csv");
 
 			Console.WriteLine("\tThis is phonebook app");
 
@@ -43,41 +29,31 @@ namespace ConsoleApp1
 			Console.WriteLine("\t2. Add new record");
 			Console.WriteLine("\t3. Search records");
 			Console.WriteLine("\t4. Delete record");
-			Console.WriteLine("\t0. Exit app");
+            Console.WriteLine("\t5. Sort records");
+            Console.WriteLine("\t6. Binary search");
+            Console.WriteLine("\t0. Exit app");
 
 			Console.Write("Operation: ");
 			var pressedKey = Console.ReadKey();
 			switch (pressedKey.Key)
 			{
 				case ConsoleKey.D1:
-					//var records = ReadPhoneBookRecords(path);
-
-					(string, string, string)[] records = new (string, string, string)[] { };
-					bool isRead = TryReadPhoneBookRecords(path, ref records);
-					if (isRead)
-					{
-						DisplayPhoneBook(records);
-					}
-					else
-					{
-						Console.WriteLine("Can not read records");
-					}
-
+					DisplayPhoneBook(path);
 					break;
 				case ConsoleKey.D2:
 					AddNewRecord(path);
 					break;
 				case ConsoleKey.D3:
-					throw new NotSupportedException("Ще не зробили, спробуйте пізніше");
-					// SearchRecords(path);
+					SearchRecords(path);
 					break;
 				case ConsoleKey.D4:
-					Console.WriteLine();
-					throw new NotImplementedException("Ще не зробили, спробуйте пізніше");
+					DeleteRecords(path);
 					break;
 				case ConsoleKey.D5:
-					Console.WriteLine();
-					throw new NotImplementedException("Ще не зробили, спробуйте пізніше");
+					SortRecords(path);
+					break;
+				case ConsoleKey.D6:
+					BinarySearch(path);
 					break;
 				case ConsoleKey.D0:
 				default:
@@ -92,105 +68,45 @@ namespace ConsoleApp1
 		static (string, string, string)[] ReadPhoneBookRecords(string path)
 		{
 			Console.WriteLine();
-			if (string.IsNullOrEmpty(path))
+
+			string[] records = File.ReadAllLines(path);
+			(string, string, string)[] phoneBookRecords = new (string, string, string)[records.Length - 1];
+
+			for (int i = 1; i < records.Length; i++)
 			{
-				var exception = new ArgumentException("Path can not be null or empty");
-				var exception1 = new ArgumentNullException("Path can not be null or empty");
-				var exception2 = new ArgumentOutOfRangeException("Path can not be null or empty");
-				throw exception;
+				var itemProperties = records[i].Split(',');
+
+				phoneBookRecords[i - 1] = (itemProperties[0], itemProperties[1], itemProperties[2]);
 			}
 
-			try
-			{
-				string[] records = File.ReadAllLines(path);
-				(string, string, string)[] phoneBookRecords = new (string, string, string)[records.Length - 1];
-
-				for (int i = 1; i < records.Length; i++)
-				{
-					var itemProperties = records[i].Split(',');
-
-					phoneBookRecords[i - 1] = (itemProperties[0], itemProperties[1], itemProperties[2]);
-				}
-
-				return phoneBookRecords;
-			}
-			catch (FileNotFoundException ex)
-			{
-				Console.WriteLine($"Input/output Exception: {ex.Message}");
-				Console.WriteLine($"Input/output Exception: {ex.StackTrace}");
-				Console.WriteLine($"Input/output Exception: {ex.InnerException}");
-
-				var ownException = new FileNotFoundException("File not found", ex);
-
-				throw ownException;
-			}
-			catch (IOException ex)
-			{
-				Console.WriteLine($"Input/output Exception: {ex.Message}");
-
-				throw;
-			}
-			finally
-			{
-				Console.WriteLine("Records are readed");
-			}
-		}
-
-		static bool TryReadPhoneBookRecords(string path, ref (string, string, string)[] phoneBookRecords)
-		{
-			Console.WriteLine();
-			if (string.IsNullOrEmpty(path))
-			{
-				var exception = new ArgumentException("Path can not be null or empty");
-				throw exception;
-			}
-
-			try
-			{
-				string[] records = File.ReadAllLines(path);
-				phoneBookRecords = new (string, string, string)[records.Length - 1];
-
-				for (int i = 1; i < records.Length; i++)
-				{
-					var itemProperties = records[i].Split(',');
-
-					phoneBookRecords[i - 1] = (itemProperties[0], itemProperties[1], itemProperties[2]);
-				}
-
-				return true;
-			}
-			catch (FileNotFoundException ex)
-			{
-				//Console.WriteLine($"Input/output Exception: {ex.Message}");
-				//Console.WriteLine($"Input/output Exception: {ex.StackTrace}");
-				//Console.WriteLine($"Input/output Exception: {ex.InnerException}");
-
-				var ownException = new FileNotFoundException("File not found", ex);
-
-				return false;
-			}
-			catch (IOException ex)
-			{
-				Console.WriteLine($"Input/output Exception: {ex.Message}");
-				return false;
-			}
-			finally
-			{
-				//Console.WriteLine("Records are readed");
-			}
+			return phoneBookRecords;
 		}
 
 		static void DisplayPhoneBook((string firstName, string lastName, string phone)[] records)
 		{
 			Console.WriteLine();
 			Console.WriteLine("List of phone book records");
-			Console.WriteLine($"{"First Name",-15} {"Last Name",-15} {"Phone",-15}");
+			Console.WriteLine($"{"",-5}{"First Name",-15} {"Last Name",-15} {"Phone",-15}");
 
-			foreach (var record in records)
+			for(int i = 0; i < records.Length; i++)
 			{
-				Console.WriteLine($"{record.firstName,-15} {record.lastName,-15} {record.phone,-15}");
+				Console.WriteLine($"{i + 1,3}. {records[i].firstName,-15} {records[i].lastName,-15} {records[i].phone,-15}");
 			}
 		}
+
+		static void DisplayPhoneBook(string path)
+		{
+			(string firstName, string lastName, string phone)[] records = ReadPhoneBookRecords(path);
+
+            Console.WriteLine();
+            Console.WriteLine("List of phone book records");
+            Console.WriteLine($"{"",-5}{"First Name",-15} {"Last Name",-15} {"Phone",-15}");
+
+            for (int i = 0; i < records.Length; i++)
+            {
+                Console.WriteLine($"{i + 1,3}. {records[i].firstName,-15} {records[i].lastName,-15} {records[i].phone,-15}");
+            }
+        }
 
 		static void AddNewRecord(string path)
 		{
@@ -220,8 +136,6 @@ namespace ConsoleApp1
 
 			(string firstName, string lastName, string phone)[] phoneBookRecords = ReadPhoneBookRecords(path);
 
-			//(string firstName, string lastName, string phone)[] searchedRecords = new (string firstName, string lastName, string phone)[phoneBookRecords.Length];
-
 			Console.WriteLine($"{"First Name",-15} {"Last Name",-15} {"Phone",-15}");
 			foreach (var record in phoneBookRecords)
 			{
@@ -232,8 +146,176 @@ namespace ConsoleApp1
 					Console.WriteLine($"{record.firstName,-15} {record.lastName,-15} {record.phone,-15}");
 				}
 			}
-
-			//DisplayPhoneBook(searchedRecords);
 		}
-	}
+
+		static void DeleteRecords(string path)
+		{
+			DisplayPhoneBook(path);
+
+			Console.WriteLine();
+			Console.WriteLine("Deleting records");
+			Console.Write("Enter record index (0 to cancel): ");
+
+			int index;
+
+			if (int.TryParse(Console.ReadLine() ?? "1", out index))
+			{
+				if (index > 0)
+				{
+					(string firstName, string lastName, string phone)[] phoneBookRecords = ReadPhoneBookRecords(path);
+
+                    if (index - 1 < phoneBookRecords.Length)
+					{
+                        (string firstName, string lastName, string phone)[] res = 
+							new (string firstName, string lastName, string phone)[phoneBookRecords.Length - 1];
+
+                        for (int i = 0; i < phoneBookRecords.Length; i++)
+						{
+							if (i < index - 1)
+							{
+								res[i] = phoneBookRecords[i];
+
+							} else if (i > index - 1)
+							{
+								res[i - 1] = phoneBookRecords[i];
+							}
+						}
+
+						string[] strRes = new string[res.Length  + 1];
+						strRes[0] = "FirstName,LastName,PhoneNumber";
+
+                        for (int i = 0; i < res.Length; i++)
+						{
+							strRes[i + 1] = $"{res[i].firstName},{res[i].lastName},{res[i].phone}";
+						}
+                        File.WriteAllLines(path, strRes);
+					}
+				}
+
+            } else
+			{
+				Console.WriteLine("invalid input");
+			}
+        }
+
+		static void SortRecords(string path)
+		{
+            (string firstName, string lastName, string phone)[] rec = ReadPhoneBookRecords(path);
+
+            Console.WriteLine("\t1. first name");
+            Console.WriteLine("\t2. last name");
+            Console.WriteLine("\t3. phone number");
+            Console.Write("Sort by: ");
+            var pressedKey = Console.ReadKey();
+			int sortBy = 1;
+			switch (pressedKey.Key)
+			{
+				case ConsoleKey.D1:
+					sortBy = 1;
+					break;
+				case ConsoleKey.D2:
+					sortBy = 2;
+					break;
+				case ConsoleKey.D3:
+					sortBy = 3;
+					break;
+				default:
+					sortBy = -1;
+					break;
+			}
+
+			Console.WriteLine();
+            Console.WriteLine("\t1. ASC");
+			Console.WriteLine("\t2. DSC");
+            Console.Write("Sort order: ");
+
+            pressedKey = Console.ReadKey();
+            int order = 1;
+            switch (pressedKey.Key)
+            {
+                case ConsoleKey.D1:
+                    order = 1;
+                    break;
+                case ConsoleKey.D2:
+                    order = 2;
+                    break;
+                default:
+                    order = -1;
+                    break;
+            }
+
+			SortRecords(rec, sortBy, order);
+
+            string[] strRes = new string[rec.Length + 1];
+            strRes[0] = "FirstName,LastName,PhoneNumber";
+
+            for (int i = 0; i < rec.Length; i++)
+            {
+                strRes[i + 1] = $"{rec[i].firstName},{rec[i].lastName},{rec[i].phone}";
+            }
+            File.WriteAllLines(path, strRes);
+        }
+
+        static void SortRecords((string firstName, string lastName, string phone)[] rec, 
+			int sortBy = 2, 
+			int order = 1)
+        {
+
+            Func<(string firstName, string lastName, string phone), int, string> SortBy =
+                (a, b) => b == 1 ? a.firstName : b == 2 ?
+                    a.lastName : a.phone;
+            Func<string, string, int, bool> sorter = (a, b, o) => string.Compare(a, b, StringComparison.OrdinalIgnoreCase) < 0 && o == 1;
+
+            if (sortBy != -1 && order != -1)
+            {
+                for (int i = 1; i < rec.Length; i++)
+                {
+                    for (int j = i; j > 0 && sorter(SortBy(rec[j - 1], sortBy), SortBy(rec[j], sortBy), order); j--)
+                    {
+                        (string firstName, string lastName, string phone) temp = rec[j];
+                        rec[j] = rec[j - 1];
+                        rec[j - 1] = temp;
+                    }
+                }
+            }
+        }
+
+		static void BinarySearch(string path)
+		{
+			Console.WriteLine();
+			Console.Write("Enter serching last name: ");
+			string searchingStr = Console.ReadLine() ?? string.Empty;
+
+			(string firstName, string lastName, string phone)[] rec = ReadPhoneBookRecords(path);
+			SortRecords(rec);
+
+			int start = 0;
+			int end = rec.Length - 1;
+			bool is_ok = false;
+
+			while (start <= end) {
+				int current = (start + end) / 2;
+
+
+				if (string.Compare(searchingStr, rec[current].lastName, StringComparison.OrdinalIgnoreCase) == 0)
+				{ 
+					Console.WriteLine($"{rec[current].firstName,-15} {rec[current].lastName,-15} {rec[current].phone,-15}");
+					is_ok = true;
+				}
+				if (string.Compare(searchingStr, rec[current].lastName,StringComparison.OrdinalIgnoreCase) < 0)
+				{
+					end = current - 1;
+				} else
+				{
+					start = current + 1;
+
+                }
+			}
+
+			if (!is_ok)
+			{
+				Console.WriteLine($"There is on records {searchingStr}");
+			}
+		}
+    }
 }
