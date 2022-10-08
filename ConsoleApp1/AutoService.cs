@@ -17,11 +17,11 @@ namespace ConsoleApp1
 
         public void AddVehicle(Vehicle vehicle) { throw new NotImplementedException(); }
 
-        public void GetVehicle(string id) { throw new NotImplementedException(); }
+        public Vehicle GetVehicle(string id) { throw new NotImplementedException(); }
 
         public void AddWorker(Worker worker) { throw new NotImplementedException(); }
 
-        public void GetWorker(string id) { throw new NotImplementedException(); }
+        public Worker GetWorker(string id) { throw new NotImplementedException(); }
 
         private AutoService() {}
 
