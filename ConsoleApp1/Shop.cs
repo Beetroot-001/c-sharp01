@@ -8,11 +8,17 @@ namespace ConsoleApp1
 {
     internal class Shop
     {
+        private Shop myShop;
         public Goods[] AllGoods { get; set; }
         public Seller[] AllSeller { get; set; }
         public Buyer[] AllBuyer { get; set; }
         public Receipts[] ArchiveReceipts { get; set; }
         public Discount[] AllDiscount { get; set; }
+
+        public Shop()
+        {
+            myShop = myShop??new Shop();
+        }
 
         public void AddGoods()
         {
@@ -65,9 +71,12 @@ namespace ConsoleApp1
         public void DisplayApp()
         {
 
+
         }
-        public void SendReceipts()
+        public void SendReceipts(Buyer buyer)
         {
+            Console.WriteLine($"Send Receipts in E-mail {buyer.Email}");
+            Console.WriteLine($"text ");
 
         }
     }

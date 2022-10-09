@@ -30,9 +30,9 @@ namespace ConsoleApp1
             return Price;
         }
 
-        public void GetFullInfo()
+        public string GetFullInfo()
         {
-
+            return "";
         }
     }
 }

@@ -28,9 +28,9 @@ namespace ConsoleApp1
         }
 
 
-        public void GetFullName()
+        public string GetFullName()
         {
-
+            return $"First Name:\t{FirstName}\nLast Name:\t{LastName}\nMidl Name:\t{MidlName}";
         }
 
         public void Edit()

@@ -27,7 +27,7 @@ namespace ConsoleApp1
             PromotionСonditions = promotionСonditions;
         }
 
-        public void GetFullInfo()
+        public string GetFullInfo()
         {
             throw new NotImplementedException();
         }

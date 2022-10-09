@@ -19,9 +19,9 @@ namespace ConsoleApp1
             this.ID = GetsID.GetID();
         }// Коректна реалізація базового класу чи можна якось скоротити?
 
-        public void GetFullInfo()
+        public string GetFullInfo()
         {
-            
+            return"";
         }
     }
 }

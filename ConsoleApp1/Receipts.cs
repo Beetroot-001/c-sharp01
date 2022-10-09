@@ -23,9 +23,10 @@ namespace ConsoleApp1
             this._gooods = goods;
             this.ID = GetsID.GetID();
         }
-        public void GetFullInfo()
+        public string GetFullInfo()
         {
-            throw new NotImplementedException();
+            Console.WriteLine($"Buyer: ");
+            return "";
         }
     }
 }

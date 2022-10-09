@@ -9,6 +9,6 @@ namespace ConsoleApp1
     internal interface IInfo
     {
         public int ID { get; set; }
-        public void GetFullInfo();
+        public string GetFullInfo();
     }
 }
