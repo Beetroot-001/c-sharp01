@@ -27,15 +27,20 @@ namespace ConsoleApp1
     {
         public BrandCar brandCar;
 
-        string _model, _engine;
+        private string _model, _engine;
 
-        int _graduationYear;
+        private int _graduationYear;
 
         public Car()
         {
 
         }
-        public void GetFullInform()
+
+        public Car(BrandCar brandCar, string _model,string _engine, int _graduationYear)
+        {
+
+        }
+        public virtual void DisplayFullInfo()
         {
 
         }
@@ -46,35 +51,41 @@ namespace ConsoleApp1
     }
     public class FuellCar:Car
     {
-        byte _engineCapacity;
-        FuelType fuelType;
-        byte _consumptionPer100km;
+        private byte _engineCapacity;
+        public FuelType fuelType;
+        private byte _consumptionPer100km;
 
         public FuellCar()
         {
 
         }
 
-        public void GetFullInfo()
+        public override void DisplayFullInfo()
         {
 
         }
 
-        public void Eddit()
+        public new void Eddit()
         {
 
         }
     }
     public class ElectroCar:Car
     {
-        int _enginePower, _batteryCapacity, _power, _powerReserve;
-        string _batteryCooling;
-        public ElectroCar()
-        {
+        private int _enginePower, _batteryCapacity, _power, _powerReserve;
+        private string _batteryCooling;
 
+
+        public ElectroCar(int enginePower, int batteryCapacity, int power, int powerReserve, string batteryCooling)
+        {
+            _enginePower = enginePower;
+            _batteryCapacity = batteryCapacity;
+            _power = power;
+            _powerReserve = powerReserve;
+            _batteryCooling = batteryCooling;
         }
 
-        public void GetFullInfo()
+        public override void DisplayFullInfo()
         {
 
         }

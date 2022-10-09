@@ -9,7 +9,7 @@ namespace ConsoleApp1
 			Car car = new Car();
 			Mechanic mechanic = new Mechanic();
 			Client client = new Client();
-			Servis servis=new Servis();
+			TypesOfServices servis=new TypesOfServices();
 			AutoService autoService = new AutoService();
 			autoService.infoAboutServices();
 			autoService.AddNewMechanic(mechanic);

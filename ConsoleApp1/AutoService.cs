@@ -8,19 +8,19 @@ namespace ConsoleApp1
 {
     public class AutoService
     {
-        AutoService Main;
-        Servis[] _Services;
-        Car[] _CarsInService;
-        Mechanic[] _Mechanics;
-        Client[] _Clients;
-        OrderList[] _orderLists;
+        private AutoService Main;
+        private TypesOfServices[] _Services;
+        private Car[] _CarsInService;
+        private Mechanic[] _Mechanics;
+        private Client[] _Clients;
+        private OrderList[] _orderLists;
 
         public AutoService()
         {
             this.Main = Main??new AutoService();
         }
 
-        public void AddNewService(Servis servis)
+        public void AddNewService(TypesOfServices servis)
         {
           
         }
@@ -37,7 +37,7 @@ namespace ConsoleApp1
 
         public void DelCarInServise(Car car) => Console.WriteLine("DelCarInServise()");
 
-        public void DelService(Servis servis) => Console.WriteLine("DelService()");
+        public void DelService(TypesOfServices servis) => Console.WriteLine("DelService()");
 
         public void DellMechanic(Mechanic mechanic) => Console.WriteLine("DellMechanic()");
 
@@ -47,6 +47,6 @@ namespace ConsoleApp1
 
         public void infoAboutServices() => Console.WriteLine("infoAboutServices()");
 
-        public void GetFullInfo() => Console.WriteLine("GetFullInfo()");
+        public void DisplayFullinfo() => Console.WriteLine("GetFullInfo()");
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp1
 {
-    enum ServisType
+    public enum ServisType
     {
         RepairFrontdoor,
         BrakeInspection,
@@ -22,17 +22,19 @@ namespace ConsoleApp1
         BatteryDiagnostics
     }
 
-    internal class Servis
+    public class TypesOfServices
     {
-        ServisType servise;
-        int id;
-        float Price;
+        public ServisType servise;
+
+        public int id;
+
+        public float Price;
 
         public int GetId() { return id; }
 
         public float GetPrice() { return Price; }
 
-        public void Getfullinform()
+        public void Displayfullinform()
         {
 
         }

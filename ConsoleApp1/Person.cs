@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp1
 {
-    enum StatusMechanic
+     public enum StatusMechanic
     {
         Vacation,
         Hospital,
@@ -15,60 +15,56 @@ namespace ConsoleApp1
 
     public class Person
     {
-        string _firstNama, _lastName;
-        int _contactFone;
+        private string _firstNama, _lastName;
+        private int _contactPhone;
 
         public Person()
         {
 
         }
 
-        public virtual void GettFullName()
+        public virtual void DisplayFullinfo()
         {
 
         }
     }
     public class Client: Person
     {
-        string _E_mail ;
+        private string _email ;
         public int id { get; set; }
-        byte _quantityOfCars;
-        public void GetEmail()
-        {
 
+        private byte _quantityOfCars;
+        public string GetEmail()
+        {
+            return _email;
         }
 
         public void EditInform() => Console.WriteLine();
 
-        public override void GettFullName()
+        public override void DisplayFullinfo()
         {
-            base.GettFullName();
-        }
-        
-        public void GetFullInfo()
-        {
-
+            base.DisplayFullinfo();
         }
     }
     public class Mechanic:Person
     {
-        int _quantityOfOrderList, _idMechanic;
-        StatusMechanic status;
-        OrderList[] orderLists;
+        private int _quantityOfOrderList, _idMechanic;
+        public StatusMechanic status;
+        private OrderList[] orderLists;
 
-        public  void GetFullinfo()
+        public  void DisplayFullinfo()
         {
 
         }
 
-        public void GetStatus()
+        public void DisplayStatus()
         {
 
         }
 
-        public void GetId()
+        public int GetId()
         {
-
+            return this._idMechanic;
         }
 
         public void AddOrder()

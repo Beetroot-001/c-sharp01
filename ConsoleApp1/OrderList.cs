@@ -8,20 +8,15 @@ namespace ConsoleApp1
 {
     internal class OrderList
     {
-        Car _car;
-        Mechanic[] _mechanics;
-        Client _client;
-        Servis[] _servis;
-        DateTime deadline;
-        string notes;
-        int id;
+        private Car _car;
+        private Mechanic[] _mechanics;
+        private Client _client;
+        private TypesOfServices[] _servis;
+        public DateTime deadline;
+        public string notes;
+        public int id;
 
-        public OrderList()
-        {
-
-        }
-
-        public void GetFullinfo()
+        public void DisplayFullinfo()
         {
 
         }
