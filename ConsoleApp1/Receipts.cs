@@ -8,7 +8,7 @@ namespace ConsoleApp1
 {
     internal class Receipts : IInfo
     {
-        public int ID { get ; set ; }
+        public int ID { get; set; }
         public float Prise { get; set; }
         public Shop NameShop { get; private set; }// ЯК ПРОКИНУТИ дефолтне імя магазину?
 
@@ -16,12 +16,12 @@ namespace ConsoleApp1
         private Seller _seller;
         private Goods[] _gooods;
 
-        public Receipts(Buyer buyer, Seller seller, Goods[] goods )
+        public Receipts(Buyer buyer, Seller seller, Goods[] goods)
         {
             this._buyer = buyer;
-            this._seller = seller;  
+            this._seller = seller;
             this._gooods = goods;
-            this.ID = GetsID.GetID();
+            this.ID = IDSequence.GetNextId();
         }
         public string GetFullInfo()
         {

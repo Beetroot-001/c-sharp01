@@ -17,7 +17,7 @@ namespace ConsoleApp1
 
         public Shop()
         {
-            myShop = myShop??new Shop();
+            myShop = myShop ?? new Shop();
         }
 
         public void AddGoods()
@@ -77,7 +77,6 @@ namespace ConsoleApp1
         {
             Console.WriteLine($"Send Receipts in E-mail {buyer.Email}");
             Console.WriteLine($"text ");
-
         }
     }
 }

@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp1
 {
-    public class GetsID
+    public class IDSequence
     {
         static public int Id { get; private set; } = 1;
-        
-        static public int GetID()
+
+        static public int GetNextId()
         {
             return Id += 1;
         }
-        
+
     }
 }

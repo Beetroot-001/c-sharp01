@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp1
 {
-    internal class Discount:IInfo
+    internal class Discount : IInfo
     {
         public int SizeOfDiscount { get; set; }
         public Goods GoodsOfDiscount { get; set; }
@@ -23,7 +23,7 @@ namespace ConsoleApp1
             StartDate = startDate;
             EndDate = endDate;
             Quantity = quantity;
-            ID = GetsID.GetID();
+            ID = IDSequence.GetNextId();
             PromotionСonditions = promotionСonditions;
         }
 
@@ -32,9 +32,9 @@ namespace ConsoleApp1
             throw new NotImplementedException();
         }
 
-        public void GetData()
+        public DateTime GetData()
         {
-
+            return StartDate;
         }
     }
 }

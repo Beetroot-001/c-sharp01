@@ -6,16 +6,16 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp1
 {
-    internal class Seller:Person,IInfo
+    internal class Seller : Person, IInfo
     {
         public string Position { get; set; }
         public int WorkExperience { get; set; } = 0;
-        public int ID { get ; set; }
+        public int ID { get; set; }
         public DateTime DateOfHire { get; set; }// Future fiction
 
         public Seller(string firstName, string lastName, string midlName, byte age, int phone, string email, DateTime dateOfHire, Discount discounts = null) : base(firstName, lastName, midlName, age, phone, email, discounts)
         {
-            this.ID = GetsID.GetID();
+            this.ID = IDSequence.GetNextId();
             DateOfHire = dateOfHire;
         }
 
