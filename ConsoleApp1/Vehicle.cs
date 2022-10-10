@@ -1,6 +1,7 @@
 ﻿using ConsoleApp1.FIlters;
 using ConsoleApp1.Lights;
 using ConsoleApp1.Wheels;
+using ConsoleApp1.Windows;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,32 +13,26 @@ namespace ConsoleApp1
 
     internal class Vehicle
     {
-        private int wheelsNumber;
+        private int wheelsNumber = 4;
+        private List<Wheel> wheels = new List<Wheel>();
+
+        private AirFilter airFilter;
+        private FuelFilter fuelFilter;
+        private OilFilter oilFilter;
+      
+        private Transmission transmission;
         private Battery battery;
         private Engine engine;
-        private Transmission transmission;
+
+        private List<DoorGlass> doorGlasses = new List<DoorGlass>();
+        private BackWindow backWindow;
+        private FrontWindow frontWindow;
 
         private BrakeLight brakeLight;
         private TailLight tailLight;
         private HeadLight headLight;
 
-        private AirFilter airFilter;
-        private FuelFilter fuelFilter;
-        private OilFilter oilFilter;
-
-
-
-        private List<Wheel> wheels = new List<Wheel>();
-       
-
-       
-
-        public Vehicle(int wheelsNumber)
-        {
-            this.wheelsNumber = wheelsNumber;
-
-        }
-
+ 
         /// <summary>
         /// Add wheels to the vehicle
         /// </summary>
@@ -50,7 +45,7 @@ namespace ConsoleApp1
             }
             else
             {
-                Console.WriteLine("The car has all 4 wheels. You can't add more.");
+                Console.WriteLine($"The car has all {wheelsNumber} wheels. You can't add more.");
             }
         }    
         
@@ -127,7 +122,11 @@ namespace ConsoleApp1
             FuelFilter,
             OilFilter
         }
-
+        /// <summary>
+        /// Add filter to the car
+        /// </summary>
+        /// <param name="filterType"></param>
+        /// <param name="filter"></param>
         public void AddFilter (FilterType filterType, Filter filter)
         {
             switch (filterType)
@@ -146,7 +145,36 @@ namespace ConsoleApp1
             }
         }
 
+        public enum WindowType
+        {
+            DoorGlass,
+            FrontWindow,      
+            BackWindow
+        }
+        /// <summary>
+        /// Add windows to the car
+        /// </summary>
+        /// <param name="windowType"></param>
+        /// <param name="window"></param>
+        public void AddWindow(WindowType windowType, Window window)
+        {
+            switch (windowType)
+            {
+                case WindowType.DoorGlass:
+                    if (doorGlasses.Count < 4) doorGlasses.Add((DoorGlass)window);
+                    break;
+                case WindowType.FrontWindow:
+                    frontWindow = (FrontWindow)window;
+                    break;            
+                case WindowType.BackWindow:
+                    backWindow = (BackWindow)window;
+                    break;                
+            }
+        }
 
+        /// <summary>
+        /// Show Car Info
+        /// </summary>
         public void CarInfo()
         {
             Console.WriteLine($"The car has {wheels.Count} wheels");
@@ -159,10 +187,13 @@ namespace ConsoleApp1
             Console.WriteLine($"Oil Filter: {oilFilter.Operation}");
             Console.WriteLine($"Air Filter: {airFilter.Operation}");
             Console.WriteLine($"Fuel Filter: {fuelFilter.Operation}");
-           
-
+            Console.WriteLine($"Back window info: {backWindow.WindowInfo}");
+            Console.WriteLine($"Front window info: {frontWindow.WindowInfo}");
+            foreach (var item in doorGlasses)
+            {
+                Console.WriteLine($"Door glass info: {item.WindowInfo}");
+            }
         }
-
 
     }
 }

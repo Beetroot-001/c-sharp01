@@ -9,13 +9,11 @@ namespace ConsoleApp1
     internal class Battery
     {
         private int capacity;
-
         public Battery(int capacity)
         {
             if (capacity > 1000) capacity = 1000;
             this.capacity = capacity;
         }
         public int Capacity { get { return capacity; } }
-
     }
 }

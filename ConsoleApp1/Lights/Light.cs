@@ -37,10 +37,6 @@ namespace ConsoleApp1.Lights
 
         public virtual string LightInfo { get { return $"It's a {bulb} {color} light {frame.Size} inches size"; } }
 
-     
-
-
-
     }
 
    

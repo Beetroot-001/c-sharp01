@@ -9,12 +9,10 @@ namespace ConsoleApp1
     internal class Transmission
     {
         private Type transmisionType;
-
         public Transmission(Type transmisionType)
         {
             this.transmisionType = transmisionType;
         }
-
         public enum Type
         {
             AutomaticTransmission,
@@ -22,11 +20,6 @@ namespace ConsoleApp1
             AutomatedManualTransmission,
             ContinuouslyVariableTransmission
         }
-
         public Type TransmisionType { get { return transmisionType; } }
-
-
-
-
     }
 }

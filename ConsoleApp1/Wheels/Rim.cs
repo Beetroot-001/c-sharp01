@@ -9,7 +9,6 @@ namespace ConsoleApp1.Wheels
     internal class Rim
     {
         private string material;
-
         public Rim(string material)
         {
             this.material = material;        

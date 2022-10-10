@@ -19,11 +19,6 @@ namespace ConsoleApp1.Wheels
             this.size = size;
         }
 
-        public void Rotate()
-        {
-            Console.WriteLine("The wheel rotates");
-        }
-
         public void Info()
         {
             Console.WriteLine($"Rim Material: {rim.Material}");

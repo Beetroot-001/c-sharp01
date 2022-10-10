@@ -10,8 +10,6 @@ namespace ConsoleApp1.Lights
     {
         public TailLight(Glass material, Frame frame, Bulbs bulb, Colors color) : base(material, frame, bulb, color)
         {
-        }
-
-       
+        }      
     }
 }

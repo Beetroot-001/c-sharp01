@@ -11,7 +11,5 @@ namespace ConsoleApp1.Windows
         public FrontWindow(Glass material, Frame frame) : base(material, frame)
         {
         }
-
-
     }
 }

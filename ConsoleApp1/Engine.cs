@@ -14,20 +14,11 @@ namespace ConsoleApp1
             Hybrid,
             Electric
         }
-
         private Type engineType;
-
         public Engine(Type engineType)
         {
             this.engineType = engineType;
         }
-
-        public void Start()
-        {
-            Console.WriteLine("The engine works");
-        }
-
         public Type EngineType { get { return engineType; } }
-
     }
 }

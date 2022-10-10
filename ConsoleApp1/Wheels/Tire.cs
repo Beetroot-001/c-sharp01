@@ -9,8 +9,6 @@ namespace ConsoleApp1.Wheels
     internal class Tire
     {
         private string material;
-        
-       
         public Tire(string material)
         {
             this.material = material;

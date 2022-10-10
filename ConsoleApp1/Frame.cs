@@ -10,14 +10,11 @@ namespace ConsoleApp1
     {
         private string material;
         private int size;
-
         public Frame(string material, int size)
         {
             this.material = material;
             this.size = size;
         }
-
         public int Size { get { return size; } }
-
     }
 }
