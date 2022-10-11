@@ -53,7 +53,6 @@ namespace ConsoleApp1
             {
                 values[i] = (T)Convert.ChangeType(objects[i], types[i]);
             }
-
         }
     }
 }
