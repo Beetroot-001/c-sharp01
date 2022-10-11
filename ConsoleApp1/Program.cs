@@ -18,37 +18,16 @@ namespace ConsoleApp1
             m.GoHome();
             testCar.Repair(m);
             m.Work();
-            Console.WriteLine("Third test Actual repair");
+            Console.WriteLine();
+            Console.WriteLine("MAIN TEST");
             AutoService autoService = AutoService.GetAutoService();
             //autoService.toRepair[0].BreakSystem.Break();
             //autoService.toRepair[0].Repair(autoService.mechanics[0]);
+            if(autoService.TryRepair())
+                Console.WriteLine( "Car test: Success!" );
+            autoService.GenerateNewRepairable("truck");
+            if (autoService.TryRepair())
+                Console.WriteLine("Truck test: Success!");
         }
-    }
-    class AutoService
-    {
-        private static AutoService _autoService;
-        public Mechanic[] mechanics;
-        public Janitor janitor;
-       // public Vehicle[] toRepair;
-        public Repeirable[] toRepair;
-
-        public static AutoService GetAutoService()
-        {
-            if (_autoService == null)
-            {
-                _autoService = new AutoService();
-            }
-            return _autoService;
-        }
-        private AutoService()
-        {
-            mechanics = new Mechanic[] { new Mechanic("John", "Milborn", "", 18), new Mechanic("Jo", "Johnes", "", 43) };
-            janitor = new Janitor("Mark", "Me", "", 20);
-            
-            //toRepair = 
-            
-
-        }
-        
     }
 }

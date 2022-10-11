@@ -25,7 +25,8 @@
 
     interface Repeirable
     {
-        void Repair(Mechanic tech);
+        bool Repair(Mechanic tech);
+        void Break();
     }
 
     class Car : Repeirable
@@ -49,13 +50,23 @@
             _fuelType = fuelType;
             _vehicleType = vehicleType;
             _seats = seats;
+            Break();
         }
 
-        public void Repair(Mechanic tech)
+        public void Break()
+        {
+            _breakSystem.Break();
+            _movingSystem.Break();
+            Console.WriteLine();
+        }
+
+        public bool Repair(Mechanic tech)
         {
             if (!tech.AtWork)
-                return;
-            
+                return false;
+            _breakSystem.Repair(tech);
+            _movingSystem.Repair(tech);
+            return true;
         }
     }
 
@@ -84,13 +95,37 @@
             _wheelCount = wheel;
             _canCaryKg = canCaryKg;
             carry = new Car[2]; // new car object!
+            Break();
         }
 
-        public void Repair(Mechanic tech)
+        public void AddCars(Car car1, Car car2)
+        {
+            carry[0] = car1;
+            carry[1] = car2;
+        }
+
+        public void Break()
+        {
+            foreach (var item in parts)
+            {
+                item.Break();
+            }
+            Console.WriteLine();
+        }
+
+        public bool Repair(Mechanic tech)
         {
             if (!tech.AtWork)
-                return;
-
+                return false;
+            foreach (var item in parts)
+            {
+                item.Repair(tech);
+            }
+            foreach (var item in carry)
+            {
+                item.Repair(tech);
+            }
+            return true;
         }
     }
 }
