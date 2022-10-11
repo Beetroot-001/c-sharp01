@@ -22,11 +22,6 @@
 			myShop.RegisterNewBuyer(petia);
 
 			myShop.ShopMenu();
-            
-			
-
-
-
 
         }
 	}
