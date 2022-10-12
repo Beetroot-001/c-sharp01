@@ -8,10 +8,10 @@ namespace ConsoleApp1
 {
     internal interface IProduct
     {
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public int Quantity { get; set; }
-        public int Price { get; set; }
+         string Name { get; set; }
+         string Description { get; set; }
+         int Quantity { get; set; }
+         int Price { get; set; }
         
 
 

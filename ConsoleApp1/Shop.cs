@@ -20,6 +20,7 @@ namespace ConsoleApp1
         {
             products.Add(product);
         }
+
         /// <summary>
         /// Add quantity of goods to the existed product in the shop
         /// </summary>
@@ -143,6 +144,117 @@ namespace ConsoleApp1
             Console.WriteLine("7.Show list of recipts");
         }
 
+        /// <summary>
+        /// Add new product to the shop
+        /// </summary>
+        public void AddNewProduct()
+        {
+            Console.WriteLine("Provide the new name of the product");
+            string name = Console.ReadLine();
+
+            Console.WriteLine("Provide description of new product");
+            string description = Console.ReadLine();
+
+            Console.WriteLine("Provide price of new product");
+            int price;
+            int.TryParse(Console.ReadLine(), out price);
+            AddProduct(new Product(name, description, 0, price));
+        }
+
+        /// <summary>
+        /// Increase the quantity of the product in the shop
+        /// </summary>
+        public void AddProductQuantity()
+        {         
+            ShowProductsList();
+            Console.WriteLine("Choose the product to increase quantity.");
+            
+            int index;
+            
+            if (!int.TryParse(Console.ReadLine(), out index))
+            {
+                Console.WriteLine("Pls, choose the corect number");
+                Console.ReadKey();
+                return;
+            }
+
+            IProduct product = null;
+           
+            try
+            {
+                product = products[index - 1];
+            }         
+            catch (ArgumentOutOfRangeException)
+            {
+                Console.WriteLine("There is no such product on the list");
+                Console.ReadKey();
+                return;
+            }
+
+            Console.WriteLine("Indicate the quantity of products you want to add");
+            int quantity = int.Parse(Console.ReadLine());
+            AddProductQuantity(product, quantity);
+        }
+
+        /// <summary>
+        /// Register a new buyer to the shop
+        /// </summary>
+        public void RegisterBuyer()
+        {
+            Console.WriteLine("Provide new customer's name");
+            string buyerName = Console.ReadLine();
+
+            Console.WriteLine("Provide info about new customer");
+            string info = Console.ReadLine();
+            RegisterNewBuyer(new Buyer(buyerName, info));
+        }
+
+        /// <summary>
+        /// Check wther input contains only digits
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public bool FormatValidation(out int value)
+        {
+            if (!int.TryParse(Console.ReadLine(), out value))
+            {
+                Console.WriteLine("Wrong format. Pls enter only numbers from the list.");
+                Console.ReadKey();
+                return false;
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// Sell a product to a registered buyer 
+        /// </summary>
+        public void SellProduct()
+        {
+            ShowBuyersList();           
+            Console.WriteLine("Choose the buyer to sell product");           
+            int buyerIndex;
+            if (!FormatValidation(out buyerIndex)) return;
+
+            ShowProductsList();
+            Console.WriteLine("Choose the product to sell");
+            int productIndex;
+            if (!FormatValidation(out productIndex)) return;
+
+            Console.WriteLine("How many items to sell?");
+            int productQuantity;
+            if (!FormatValidation(out productQuantity)) return;
+
+            try
+            {
+                SellProduct(buyers[buyerIndex - 1], products[productIndex - 1], productQuantity);
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                Console.WriteLine("You entered either the wrong byer or product item.");
+                Console.ReadKey();
+            }  
+        }
+
         public void ShopMenu()
         {
             int option = 1;
@@ -155,58 +267,26 @@ namespace ConsoleApp1
                 switch (option)
                 {
                     case 1:
-                        Console.WriteLine("Provide the new name of the product");                       
-                        string name = Console.ReadLine();
-
-                        Console.WriteLine("Provide description of new product");
-                        string description = Console.ReadLine();
-
-                        Console.WriteLine("Provide price of new product");
-                        int price;                            
-                        int.TryParse(Console.ReadLine(), out price);                       
-                        AddProduct(new Product(name, description, 0, price));
-
+                        
+                        AddNewProduct();
                         Console.Clear();
                         break;
 
                     case 2:
-                        ShowProductsList();
-                        Console.WriteLine("Choose the product to increase quantity");
-                        int index = int.Parse(Console.ReadLine());
-                        var product = products[index - 1];
 
-                        Console.WriteLine("Indicate the quantity of products you want to add");
-                        int quantity = int.Parse(Console.ReadLine());
-                        AddProductQuantity(product, quantity);
-                       
+                        AddProductQuantity();
                         Console.Clear();
                         break;
 
                     case 3:
-                        Console.WriteLine("Provide new customer's name");
-                        string buyerName = Console.ReadLine();
 
-                        Console.WriteLine("Provide info about new customer");
-                        string info = Console.ReadLine();
-                        RegisterNewBuyer(new Buyer(buyerName, info));
-
+                        RegisterBuyer();
                         Console.Clear();
                         break;
 
                     case 4:
-                        ShowBuyersList();
-                        Console.WriteLine("Choose the buyer to sell product");
-                        int buyerIndex = int.Parse(Console.ReadLine());                   
 
-                        ShowProductsList();
-                        Console.WriteLine("Choose the product to sell");
-                        int productIndex = int.Parse(Console.ReadLine());
-
-                        Console.WriteLine("How many items to sell?");
-                        int productQuantity = int.Parse(Console.ReadLine());
-
-                        SellProduct(buyers[buyerIndex - 1], products[productIndex - 1], productQuantity);
-
+                        SellProduct();
                         Console.Clear();
                         break;
 

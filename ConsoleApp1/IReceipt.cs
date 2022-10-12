@@ -8,8 +8,8 @@ namespace ConsoleApp1
 {
     internal interface IReceipt
     {
-        public IProduct SoldProduct { get; }
-        public IBuyer Buyer { get; }
-        public int Quantity { get; }
+         IProduct SoldProduct { get; }
+         IBuyer Buyer { get; }
+         int Quantity { get; }
     }
 }
