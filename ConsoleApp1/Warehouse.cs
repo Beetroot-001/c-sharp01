@@ -2,8 +2,8 @@
 {
     class Warehouse
     {
-        Product[] _available;
-        Product[] _toOrder;
+        private Product[] _available;
+        private Product[] _toOrder;
 
         public Warehouse()
         {

@@ -2,8 +2,8 @@
 {
     class Receipt
     {
-        string _ownerPhone;
-        int _totalCartValue;
+        private string _ownerPhone;
+        private int _totalCartValue;
 
         public string Owner => _ownerPhone;
         public int Value => _totalCartValue;

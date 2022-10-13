@@ -2,8 +2,8 @@
 {
     class Registration
     {
-        Receipt[] _records;
-        Buyer[] _registers;
+        private Receipt[] _records;
+        private Buyer[] _registers;
 
         public Registration()
         {

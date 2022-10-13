@@ -2,12 +2,12 @@
 {
     class Buyer
     {
-        string _name;
-        string _surname;
-        string _email;
-        string _phone;
-        int _cash;
-        Cart _cart;
+        private string _name;
+        private string _surname;
+        private string _email;
+        private string _phone;
+        private int _cash;
+        private Cart _cart;
 
         public string Name => _name;
         public string Surname => _surname;
@@ -46,7 +46,7 @@
         }
         public bool ReturnProduct(string name, out Product? product)
         {
-            return _cart.RemoveProduct(name, out product) ? true : false;
+            return _cart.RemoveProduct(name, out product);
         }
         public void DisplayBuyerInfo()
         {

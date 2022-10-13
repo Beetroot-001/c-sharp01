@@ -31,12 +31,12 @@
 
     class Product
     {
-        int _id;
-        string _name;
-        ProductType _type;
-        int _cost;
-        Date _date;
-        int _quantity;
+        private int _id;
+        private string _name;
+        private ProductType _type;
+        private int _cost;
+        private Date _date;
+        private int _quantity;
 
         public int ID => _id;
         public string Name => _name;

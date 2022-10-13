@@ -87,9 +87,9 @@ namespace ConsoleApp1
             }
             return false;
         }
+
         public bool SellProduct(Buyer buyer)
         {
-
             Product product;
             Console.WriteLine("Enter product name: ");
             string name = Console.ReadLine();

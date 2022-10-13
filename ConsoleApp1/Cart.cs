@@ -2,7 +2,7 @@
 {
     class Cart
     {
-        Product[] _products;
+        private Product[] _products;
         public int Size => _products.Length;
 
         public Cart()
