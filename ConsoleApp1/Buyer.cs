@@ -11,7 +11,6 @@ namespace ConsoleApp1
         private string personalInfo;
         private string name;
         private List<IReceipt> receipts = new List<IReceipt>();
-
         public Buyer(string name, string personalInfo)
         {
             this.name = name;

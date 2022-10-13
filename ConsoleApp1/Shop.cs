@@ -8,9 +8,9 @@ namespace ConsoleApp1
 {
     internal class Shop
     {
-        private  List<IProduct> products = new List<IProduct>();
-        private  List<IBuyer> buyers = new List<IBuyer>();
-        private  List<IReceipt> receipts = new List<IReceipt>();
+        private List<IProduct> products = new List<IProduct>();
+        private List<IBuyer> buyers = new List<IBuyer>();
+        private List<IReceipt> receipts = new List<IReceipt>();
 
         /// <summary>
         /// Add new product to the shop
@@ -101,7 +101,7 @@ namespace ConsoleApp1
             Console.WriteLine("The List of Products");
             for (int i = 0; i < products.Count; i++)
             {
-                Console.WriteLine($"#{i+1} Product name: {products[i].Name} quantity: {products[i].Quantity}");
+                Console.WriteLine($"#{i+1} Product name: {products[i].Name} Quantity: {products[i].Quantity} Price per item: {products[i].Price}");
             }
         }
 
@@ -128,6 +128,8 @@ namespace ConsoleApp1
                 Console.WriteLine($"Buyer Name: {item.Buyer.Name}");
                 Console.WriteLine($"Product: {item.SoldProduct.Name}");
                 Console.WriteLine($"Qantity: {item.Quantity}");
+                Console.WriteLine($"Price per item: {item.SoldProduct.Price}");
+                Console.WriteLine($"Sum: {item.Sum}");
                 Console.WriteLine("- - - - - - - - - - - - - -");
             }
         }
@@ -156,9 +158,9 @@ namespace ConsoleApp1
             string description = Console.ReadLine();
 
             Console.WriteLine("Provide price of new product");
-            int price;
-            int.TryParse(Console.ReadLine(), out price);
-            AddProduct(new Product(name, description, 0, price));
+            decimal price;
+            Decimal.TryParse(Console.ReadLine(), out price);
+            AddProduct(new Product(name, description, 0, new Price (price)));
         }
 
         /// <summary>

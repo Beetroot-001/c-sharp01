@@ -11,20 +11,18 @@ namespace ConsoleApp1
         private string name;
         private string description;
         private int quantity;
-        private int price;
-
-        public Product(string name, string description, int quantity, int price)
+        private Price price;
+        public Product(string name, string description, int quantity, Price price)
         {
             this.name = name;
             this.description = description;
             this.quantity = quantity;
             this.price = price;
         }
-
         public string Name { get { return name; } set { name = value; } }
         public string Description { get { return description; } set { description = value; } }
         public int Quantity { get { return quantity; } set { quantity = value; } }
-        public int Price { get { return price; } set { price = value; } }
-    
+        public string Price { get { return price.PriceInfo; } }
+        public decimal PriceDigit { get { return price.PriceDigit; } set { price.PriceDigit = value; } }
     }
 }

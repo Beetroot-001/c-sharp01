@@ -10,11 +10,7 @@ namespace ConsoleApp1
     {
         string Name { get; }
         string PersonalInfo {get;}
-
         void GetReceipt(IReceipt receipt);
-
         void ShowBoughtProducts();
-      
-
     }
 }

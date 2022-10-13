@@ -11,5 +11,6 @@ namespace ConsoleApp1
          IProduct SoldProduct { get; }
          IBuyer Buyer { get; }
          int Quantity { get; }
+         string Sum { get; }
     }
 }
