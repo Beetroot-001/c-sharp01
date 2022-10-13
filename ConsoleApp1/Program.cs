@@ -63,7 +63,7 @@ namespace ConsoleApp1
 
         public bool CheckContinue()
         {   
-            return Console.ReadKey().Key == ConsoleKey.Y ? true : false;
+            return Console.ReadKey().Key == ConsoleKey.Y;
         }
 
         public bool CheckOutBuyer(Buyer buyer)
