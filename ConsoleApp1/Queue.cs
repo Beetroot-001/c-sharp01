@@ -3,12 +3,12 @@
     class Queue<T>
     {
         // head
-        Node<T> _head;
-        Node<T> _tail;
-        int _size;
+        private Node<T> _head;
+        private Node<T> _tail;
+        private int _size;
 
         public int Count => _size;
-        public bool IsEmpty => _head == null ? true : false;
+        public bool IsEmpty => _head == null;
 
         public Queue()
         {

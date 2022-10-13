@@ -3,10 +3,10 @@
     class Stack<T>
     {
         // top
-        Node<T> _top;
-        int _size;
+        private Node<T> _top;
+        private int _size;
         public int Count => _size;
-        public bool IsEmpty => _top == null ? true : false;
+        public bool IsEmpty => _top == null;
 
         public Stack()
         {

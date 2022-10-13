@@ -2,8 +2,8 @@
 {
     class Node<T>
     {
-        T _data;
-        Node<T> _next;
+        private T _data;
+        private Node<T> _next;
         public Node<T> Next { get { return _next; } set { _next = value; } }
         public T Data { get { return _data; } set { _data = value; } }
 
