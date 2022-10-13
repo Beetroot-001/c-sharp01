@@ -10,56 +10,52 @@ namespace ConsoleApp1
 {
     internal class Book
     {
-        string _BookInfo;
-        Author _Author;
-        string _Name;
-        string _Description;
+        private string _bookInfo;
+        private Author _author;
+        private string _name;
+        private string _description;
         public string[] Chapters;
 
         public Book()
         {
-            _BookInfo = string.Empty;
-            _Author = new Author();
-            _Name = string.Empty;
-            _Description = string.Empty;
+            _bookInfo = string.Empty;
+            _author = new Author();
+            _name = string.Empty;
+            _description = string.Empty;
             Chapters = new string[0];
         } 
 
         public Book(string bookInfo, Author author, string name, string description, string[] chapters)
         {
-            _BookInfo = bookInfo;
-            _Author = author;
-            _Name = name;
-            _Description = description;
+            _bookInfo = bookInfo;
+            _author = author;
+            _name = name;
+            _description = description;
             Chapters = chapters;
         }
 
         public string BookInfo
         {
-            get => _BookInfo;
-
-            set => _BookInfo = value ?? throw new ArgumentException("Argument can`t be null");
+            get => _bookInfo;
+            set => _bookInfo = value ?? throw new ArgumentException("Argument can`t be null");
         }
 
         public Author Author 
-        { 
-            get => _Author;
-
-            set => _Author = value ?? throw new ArgumentException("Argument can`t be null");
+        {
+            get => _author;
+            set => _author = value ?? throw new ArgumentException("Argument can`t be null");
         }
 
         public string Name
         { 
-            get => _Name; 
-            
-            set => _Name = value ?? throw new ArgumentException("Argument can`t be null");
+            get => _name; 
+            set => _name = value ?? throw new ArgumentException("Argument can`t be null");
         }
 
         public string Description
         {
-            get => _Description;
-
-            set => _Description = value ?? throw new ArgumentException("Argument can`t be null");
+            get => _description;
+            set => _description = value ?? throw new ArgumentException("Argument can`t be null");
         }
     }
 }

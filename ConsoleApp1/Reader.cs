@@ -8,48 +8,46 @@ namespace ConsoleApp1
 {
     internal class Reader : Person
     {
-        string _ReaderInfo;
-        Date _BornDate;
+        private string _readerInfo;
+        private Date _bornDate;
 
         public Reader()
         {
-            _ReaderInfo = string.Empty;
-            _BornDate = new Date();
+            _readerInfo = string.Empty;
+            _bornDate = new Date();
         }
 
         public Reader(Person person, string readerInfo, Date bornDate) :
             base(person.FirstName, person.LastName, person.MiddleName)
         {
-            _ReaderInfo = readerInfo;
-            _BornDate = bornDate;
+            _readerInfo = readerInfo;
+            _bornDate = bornDate;
         }
          
         public Reader(string firstName, string lastName, string middleName, string readerInfo, Date bornDate) :
             base(firstName, lastName, middleName)
         {
-            _ReaderInfo = readerInfo;
-            _BornDate = bornDate;
+            _readerInfo = readerInfo;
+            _bornDate = bornDate;
         }
 
         public Reader(string firstName, string lastName, string middleName, string readerInfo, int bornDay, int bornMonth, int bornYear) :
             base(firstName, lastName, middleName)
         {
-            _ReaderInfo = readerInfo;
-            _BornDate = new Date(bornDay, bornMonth, bornYear);
+            _readerInfo = readerInfo;
+            _bornDate = new Date(bornDay, bornMonth, bornYear);
         }
 
         public string ReaderInfo
         {
-            get => _ReaderInfo;
-            
-            set => _ReaderInfo = value ?? throw new ArgumentException("Argument can`t be null");
+            get => _readerInfo;
+            set => _readerInfo = value ?? throw new ArgumentException("Argument can`t be null");
         }
 
         public Date BornDate 
         { 
-            get => _BornDate;
-
-            set => _BornDate = value ?? throw new ArgumentException("Argument can`t be null");
+            get => _bornDate;
+            set => _bornDate = value ?? throw new ArgumentException("Argument can`t be null");
         }
     }
 }

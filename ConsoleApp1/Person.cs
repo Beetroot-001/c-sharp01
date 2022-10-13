@@ -9,43 +9,40 @@ namespace ConsoleApp1
     //Зробив базовий клас для автора та читача щоб не дублювати код з описом імені
     internal class Person
     {
-        string _FirstName;
-        string _LastName;
-        string _MiddleName;
+        private string _firstName;
+        private string _lastName;
+        private string _middleName;
 
         public Person(string firstName, string lastName, string middleName)
         {
-            _FirstName = firstName;
-            _LastName = lastName;
-            _MiddleName = middleName;
+            _firstName = firstName;
+            _lastName = lastName;
+            _middleName = middleName;
         }
 
         public Person()
         {
-            _FirstName = string.Empty;
-            _LastName = string.Empty;
-            _MiddleName = string.Empty;
+            _firstName = string.Empty;
+            _lastName = string.Empty;
+            _middleName = string.Empty;
         }
 
         public string FirstName
         {
-            get => _FirstName;
-
-            set => _FirstName = value ?? throw new ArgumentException("Argument can`t be null");
+            get => _firstName;
+            set => _firstName = value ?? throw new ArgumentException("Argument can`t be null");
         }
 
         public string LastName
         {
-            get => _LastName;
-
-            set => _LastName = value ?? throw new ArgumentException("Argument can`t be null");
+            get => _lastName;
+            set => _lastName = value ?? throw new ArgumentException("Argument can`t be null");
         }
 
         public string MiddleName
         {
-            get => _MiddleName;
-
-            set => _MiddleName = value ?? throw new ArgumentException("Argument can`t be null");
+            get => _middleName;
+            set => _middleName = value ?? throw new ArgumentException("Argument can`t be null");
         }
     }
 }

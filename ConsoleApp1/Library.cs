@@ -8,26 +8,26 @@ namespace ConsoleApp1
 {
     internal class Library
     {
-        Book[] Books;
-        ReaderCard[] Cards;
+        private Book[] _books;
+        private ReaderCard[] _cards;
 
         public Library()
         {
-            Books = new Book[0];
-            Cards = new ReaderCard[0];
+            _books = new Book[0];
+            _cards = new ReaderCard[0];
         }
 
         public Library(Book[] books, ReaderCard[] cards)
         {
-            Books = books;
-            Cards = cards;
+            _books = books;
+            _cards = cards;
         }
 
         public int SearchBook(string name)
         {
-            for (int i = 0; i < Books.Length; i++)
+            for (int i = 0; i < _books.Length; i++)
             {
-                if (Books[i].Name == name)
+                if (_books[i].Name == name)
                 {
                     return i;
                 }
@@ -41,7 +41,7 @@ namespace ConsoleApp1
             int index = SearchBook(name);
             if (index > -1)
             {
-                searchRes = Books[index];
+                searchRes = _books[index];
                 return true;
             }
 
@@ -52,9 +52,9 @@ namespace ConsoleApp1
         {
             if (SearchBook(newBook.Name) == -1)
             {
-                BooksRescale(Books.Length + 1);
+                BooksRescale(_books.Length + 1);
 
-                Books[Books.Length - 1] = newBook;
+                _books[_books.Length - 1] = newBook;
             }
             else throw new Exception("try add existing book");
         }
@@ -64,23 +64,23 @@ namespace ConsoleApp1
             int index = SearchBook(name);
             if (index > -1)
             {
-                for(int i = index; i < Books.Length - 1; i++)
+                for(int i = index; i < _books.Length - 1; i++)
                 {
-                    Books[i] = Books[i + 1];
+                    _books[i] = _books[i + 1];
                 }
             }
 
             if (index > -1)
             {
-                BooksRescale(Books.Length - 1);
+                BooksRescale(_books.Length - 1);
             }
         }
 
         public int SearchReaderCard(int iD)
         {
-            for (int i = 0; i < Cards.Length; i++)
+            for (int i = 0; i < _cards.Length; i++)
             {
-                if (Cards[i].ID == iD)
+                if (_cards[i].ID == iD)
                 {
                     return i;
                 }
@@ -93,9 +93,9 @@ namespace ConsoleApp1
         {
             if (SearchReaderCard(newCard.ID) == -1)
             {
-                CardsRescale(Cards.Length + 1);
+                CardsRescale(_cards.Length + 1);
 
-                Cards[Cards.Length - 1] = newCard;
+                _cards[_cards.Length - 1] = newCard;
             }
             else throw new Exception("try add existing book");
         }
@@ -105,15 +105,15 @@ namespace ConsoleApp1
             int index = SearchReaderCard(iD);
             if (index > -1)
             {
-                for (int i = index; i < Cards.Length - 1; i++)
+                for (int i = index; i < _cards.Length - 1; i++)
                 {
-                    Cards[i] = Cards[i + 1];
+                    _cards[i] = _cards[i + 1];
                 }
             }
 
             if (index > -1)
             {
-                CardsRescale(Cards.Length - 1);
+                CardsRescale(_cards.Length - 1);
             }
         }
 
@@ -121,24 +121,24 @@ namespace ConsoleApp1
         {
             Book[] temp = new Book[newLength];
 
-            for (int i = 0; i < temp.Length && i < Books.Length; i++)
+            for (int i = 0; i < temp.Length && i < _books.Length; i++)
             {
-                temp[i] = Books[i];
+                temp[i] = _books[i];
             }
 
-            Books = temp;
+            _books = temp;
         }
 
         private void CardsRescale(int newLength)
         {
             ReaderCard[] temp = new ReaderCard[newLength];
 
-            for (int i = 0; i < temp.Length && i < Cards.Length; i++)
+            for (int i = 0; i < temp.Length && i < _cards.Length; i++)
             {
-                temp[i] = Cards[i];
+                temp[i] = _cards[i];
             }
 
-            Cards = temp;
+            _cards = temp;
         }
     }
 }

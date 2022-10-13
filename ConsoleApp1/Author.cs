@@ -8,29 +8,29 @@ namespace ConsoleApp1
 {
     internal class Author : Person
     {
-        string _AuthorInfo;
+        private string _authorInfo;
 
         public Author()
         {
-            _AuthorInfo = string.Empty;
+            _authorInfo = string.Empty;
         }
 
         public Author(Person person, string info = "") : 
             base(person.FirstName, person.LastName, person.MiddleName)
         {
-            _AuthorInfo = info;
+            _authorInfo = info;
         }
 
         public Author(string firstName, string lastName, string middleName, string info = "") : 
             base(firstName, lastName, middleName)
         {
-            _AuthorInfo = info;
+            _authorInfo = info;
         }
 
         public string AuthorInfo 
         { 
-            get => _AuthorInfo; 
-            set => _AuthorInfo = value ?? throw new ArgumentException("Argument can`t be null"); 
+            get => _authorInfo; 
+            set => _authorInfo = value ?? throw new ArgumentException("Argument can`t be null"); 
         }
     }
 }
