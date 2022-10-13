@@ -95,7 +95,8 @@ namespace ConsoleApp1
 
             if (records.Length == 0)
             {
-                throw new Exception("Thare is no records in phonebook");
+                Console.WriteLine("There is no records in phonebook");
+                return;
             }
 
             Console.WriteLine();
@@ -158,49 +159,43 @@ namespace ConsoleApp1
 
             int index;
 
-            if (int.TryParse(Console.ReadLine() ?? "1", out index))
-            {
-                if (index > 0)
-                {
-                    (string firstName, string lastName, string phone)[] phoneBookRecords = ReadPhoneBookRecords(path);
-
-                    if (index - 1 < phoneBookRecords.Length)
-                    {
-                        (string firstName, string lastName, string phone)[] res =
-                            new (string firstName, string lastName, string phone)[phoneBookRecords.Length - 1];
-
-                        for (int i = 0; i < phoneBookRecords.Length; i++)
-                        {
-                            if (i < index - 1)
-                            {
-                                res[i] = phoneBookRecords[i];
-
-                            }
-                            else if (i > index - 1)
-                            {
-                                res[i - 1] = phoneBookRecords[i];
-                            }
-                        }
-
-                        string[] strRes = new string[res.Length + 1];
-                        strRes[0] = "FirstName,LastName,PhoneNumber";
-
-                        for (int i = 0; i < res.Length; i++)
-                        {
-                            strRes[i + 1] = $"{res[i].firstName},{res[i].lastName},{res[i].phone}";
-                        }
-                        File.WriteAllLines(path, strRes);
-                    }
-                    else
-                    {
-                        throw new IndexOutOfRangeException("Invalid input");
-                    }
-                }
-
-            }
-            else
+            if (!int.TryParse(Console.ReadLine() ?? "1", out index))
             {
                 throw new Exception("Invalid input");
+            }
+
+            if (index > 0)
+            {
+                (string firstName, string lastName, string phone)[] phoneBookRecords = ReadPhoneBookRecords(path);
+
+                if (index - 1 < phoneBookRecords.Length)
+                {
+                    (string firstName, string lastName, string phone)[] res =
+                        new (string firstName, string lastName, string phone)[phoneBookRecords.Length - 1];
+
+                    for (int i = index; i < phoneBookRecords.Length; i++)
+                    {
+                        res[i - 1] = phoneBookRecords[i];
+                    }
+
+                    string[] strRes = new string[res.Length + 1];
+                    strRes[0] = "FirstName,LastName,PhoneNumber";
+
+                    for (int i = 0; i < res.Length; i++)
+                    {
+                        strRes[i + 1] = $"{res[i].firstName},{res[i].lastName},{res[i].phone}";
+                    }
+
+                    if (File.GetAttributes(path) == FileAttributes.ReadOnly)
+                    {
+                        throw new Exception("File has read only status");
+                    }
+                    File.WriteAllLines(path, strRes);
+                }
+                else
+                {
+                    throw new IndexOutOfRangeException("Invalid input");
+                }
             }
         }
 
@@ -214,21 +209,13 @@ namespace ConsoleApp1
             Console.Write("Sort by: ");
             var pressedKey = Console.ReadKey();
             int sortBy = 1;
-            switch (pressedKey.Key)
+            sortBy = pressedKey.Key switch
             {
-                case ConsoleKey.D1:
-                    sortBy = 1;
-                    break;
-                case ConsoleKey.D2:
-                    sortBy = 2;
-                    break;
-                case ConsoleKey.D3:
-                    sortBy = 3;
-                    break;
-                default:
-                    sortBy = -1;
-                    break;
-            }
+                ConsoleKey.D1 => 1,
+                ConsoleKey.D2 => 2,
+                ConsoleKey.D3 => 3,
+                _ => -1
+            };
 
             Console.WriteLine();
             Console.WriteLine("\t1. ASC");
@@ -237,18 +224,12 @@ namespace ConsoleApp1
 
             pressedKey = Console.ReadKey();
             int order = 1;
-            switch (pressedKey.Key)
+            order = pressedKey.Key switch
             {
-                case ConsoleKey.D1:
-                    order = 1;
-                    break;
-                case ConsoleKey.D2:
-                    order = 2;
-                    break;
-                default:
-                    order = -1;
-                    break;
-            }
+                ConsoleKey.D1 => 1,
+                ConsoleKey.D2 => 2,
+                _ => -1
+            };
 
             SortRecords(rec, sortBy, order);
 
@@ -258,6 +239,11 @@ namespace ConsoleApp1
             for (int i = 0; i < rec.Length; i++)
             {
                 strRes[i + 1] = $"{rec[i].firstName},{rec[i].lastName},{rec[i].phone}";
+            }
+
+            if (File.GetAttributes(path) == FileAttributes.ReadOnly)
+            {
+                throw new Exception("File has read only status");
             }
             File.WriteAllLines(path, strRes);
         }
@@ -272,22 +258,20 @@ namespace ConsoleApp1
                     a.lastName : a.phone;
             Func<string, string, int, bool> sorter = (a, b, o) => string.Compare(a, b, StringComparison.OrdinalIgnoreCase) < 0 && o == 1;
 
-            if (sortBy != -1 && order != -1)
-            {
-                for (int i = 1; i < rec.Length; i++)
-                {
-                    for (int j = i; j > 0 && sorter(SortBy(rec[j - 1], sortBy), SortBy(rec[j], sortBy), order); j--)
-                    {
-                        (string firstName, string lastName, string phone) temp = rec[j];
-                        rec[j] = rec[j - 1];
-                        rec[j - 1] = temp;
-                    }
-                }
-            }
-            else
+            if ((sortBy != -1 && order != -1))
             {
                 throw new Exception("Invalid input");
             }
+
+            for (int i = 1; i < rec.Length; i++)
+            {
+                for (int j = i; j > 0 && sorter(SortBy(rec[j - 1], sortBy), SortBy(rec[j], sortBy), order); j--)
+                {
+                    (string firstName, string lastName, string phone) temp = rec[j];
+                    rec[j] = rec[j - 1];
+                    rec[j - 1] = temp;
+                }
+            }            
         }
 
         static void BinarySearch(string path)
