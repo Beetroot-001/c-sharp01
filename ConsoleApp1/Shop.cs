@@ -27,10 +27,8 @@ namespace ConsoleApp1
         /// <param name="product"></param>
         /// <param name="quantity"></param>
         public void AddProductQuantity(IProduct product, int quantity)
-        {
-            int index;
-            
-            if (ContainProduct(product, out index))
+        {           
+            if (ContainProduct(product, out int index))
             {
                 products[index].Quantity += quantity;
             }
@@ -131,7 +129,6 @@ namespace ConsoleApp1
                 Console.WriteLine("- - - - - - - - - - - - - -");
             }
         }
-
         private void ShopNavigation()
         {
             Console.WriteLine("0.Leave the shop");
@@ -168,23 +165,15 @@ namespace ConsoleApp1
         {         
             ShowProductsList();
             Console.WriteLine("Choose the product to increase quantity.");
-            
-            int index;
-            
-            if (!int.TryParse(Console.ReadLine(), out index))
+
+            if (!int.TryParse(Console.ReadLine(), out int index))
             {
                 Console.WriteLine("Pls, choose the corect number");
                 Console.ReadKey();
                 return;
             }
 
-            IProduct product = null;
-           
-            try
-            {
-                product = products[index - 1];
-            }         
-            catch (ArgumentOutOfRangeException)
+            if (index > products.Count || index <= 0)
             {
                 Console.WriteLine("There is no such product on the list");
                 Console.ReadKey();
@@ -192,8 +181,8 @@ namespace ConsoleApp1
             }
 
             Console.WriteLine("Indicate the quantity of products you want to add");
-            int quantity = int.Parse(Console.ReadLine());
-            AddProductQuantity(product, quantity);
+            if (!FormatValidation(out int quantity)) return;
+            AddProductQuantity(products[index - 1], quantity);
         }
 
         /// <summary>
@@ -232,17 +221,14 @@ namespace ConsoleApp1
         {
             ShowBuyersList();           
             Console.WriteLine("Choose the buyer to sell product");           
-            int buyerIndex;
-            if (!FormatValidation(out buyerIndex)) return;
+            if (!FormatValidation(out int buyerIndex)) return;
 
             ShowProductsList();
             Console.WriteLine("Choose the product to sell");
-            int productIndex;
-            if (!FormatValidation(out productIndex)) return;
+            if (!FormatValidation(out int productIndex)) return;
 
             Console.WriteLine("How many items to sell?");
-            int productQuantity;
-            if (!FormatValidation(out productQuantity)) return;
+            if (!FormatValidation(out int productQuantity)) return;
 
             try
             {

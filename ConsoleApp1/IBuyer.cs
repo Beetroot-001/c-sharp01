@@ -9,12 +9,11 @@ namespace ConsoleApp1
     internal interface IBuyer
     {
         string Name { get; }
-        string PersonalInfo {get;}
+        string PersonalInfo { get; }
 
-        void GetReceipt(IReceipt receipt);
+        void GetReceipt (IReceipt receipt);
 
-        void ShowBoughtProducts();
+        void ShowBoughtProducts ();
       
-
     }
 }

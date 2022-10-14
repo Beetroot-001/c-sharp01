@@ -11,9 +11,6 @@ namespace ConsoleApp1
          string Name { get; set; }
          string Description { get; set; }
          int Quantity { get; set; }
-         int Price { get; set; }
-        
-
-
+         int Price { get; set; }      
     }
 }

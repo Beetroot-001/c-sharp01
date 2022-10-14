@@ -17,9 +17,9 @@ namespace ConsoleApp1
             this.name = name;
             this.personalInfo = personalInfo;
         }
-        public string PersonalInfo { get { return personalInfo; } }
+        public string PersonalInfo => personalInfo;
 
-        public string Name {get { return name; } }
+        public string Name => name; 
 
         /// <summary>
         /// Get receipt after purchase and store it in the list of receipts 
