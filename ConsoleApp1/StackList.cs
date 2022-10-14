@@ -6,8 +6,6 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp1
 {
-    
-    
    internal class StackListNode<T>
     {
         public T data;
@@ -19,8 +17,7 @@ namespace ConsoleApp1
             next = null;
         }
     }
-    
-    
+       
     internal class StackList<T>
     {
         StackListNode<T> head;
@@ -35,7 +32,7 @@ namespace ConsoleApp1
         public int Count => length;
 
         /// <summary>
-        /// Add element at the top of the list
+        /// Add the element at the top of the list
         /// </summary>
         /// <param name="value"></param>
         public void Push(T value)
@@ -109,14 +106,6 @@ namespace ConsoleApp1
                 runner = runner.next;
             }
         }
-
-
-
-
-
-
-
-
 
     }
 }

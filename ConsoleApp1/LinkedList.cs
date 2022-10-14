@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp1
 {
-    ////////It's my test list that I used to train. Never mind
+    ////////It's my test list that I used to train. Never mind. Pls, take a look at StackList
     internal class LinkedListNode 
     {
         public int data;
