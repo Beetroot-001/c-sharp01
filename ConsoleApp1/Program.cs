@@ -9,7 +9,9 @@ namespace ConsoleApp1
 	{
 		static void Main(string[] args)
 		{
+			VoteCenter center = new VoteCenter();
 
+			center.CreateNewVote();
 
 
 			
