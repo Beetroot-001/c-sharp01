@@ -31,8 +31,9 @@ namespace ConsoleApp1
           
         }
 
+        string path = Path.Combine(Directory.GetCurrentDirectory(), "VoteDataBase.csv");
 
-        
+       
 
 
 
