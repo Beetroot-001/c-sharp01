@@ -31,10 +31,10 @@
 		{
 			if (_votes.Count == 0)
 			{
-				Console.WriteLine("No polles to vote for! Try creating one");
+				Console.WriteLine("No polls to vote for! Try creating one");
 				return false;
 			}
-			Console.WriteLine("Polles and Options: ");
+			Console.WriteLine("Polls and Options: ");
 			DisplayAll();
 			Console.Write("Enter poll name: ");
 			string? name = Console.ReadLine() ?? "default";
