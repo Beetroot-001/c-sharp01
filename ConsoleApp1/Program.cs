@@ -345,14 +345,7 @@
                 Name.AddAnswer(new Answer("Serhii"));
                 Name.AddAnswer(new Answer("Ulia"));
 
-                Vote maryt = new Vote("Will you marry me?");
-                Answer Nakkta = new Answer("Yes");
-                maryt.AddAnswer(Nakkta);
-                maryt.AddAnswer(new Answer("Yes ofc"));
-                maryt.AddAnswer(new Answer("Yes Yes Yes"));
-
                 Votes.Add(Name);
-                Votes.Add(maryt);
                 Display();
             }
             catch (Exception)
