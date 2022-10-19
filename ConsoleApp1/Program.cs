@@ -1,23 +1,75 @@
-﻿namespace ConsoleApp1
+﻿using System.Drawing;
+using System.Windows.Input;
+
+namespace ConsoleApp1
 {
 	internal class Program
 	{
+        
 
-       
+        private static System.Timers.Timer timer;
 
 
 
-		static void Main(string[] args)
+        public delegate void Method ();
+
+        public static void ShowTime()
+        {
+            int i = 0;
+            
+            while (true)
+            {
+                Thread.Sleep(500);
+                Console.WriteLine(i++);
+
+
+                if (Console.KeyAvailable)
+                {
+                    Console.WriteLine("Stop");
+                    break;
+                }
+
+                } 
+        }
+
+        public static void ShowMessage()
+        {
+            Console.ReadLine();
+        }
+
+
+
+        public static event Method OnCount; 
+
+
+        static  void Main(string[] args)
 		{
 
-			Board game = new Board(30);
-
-			game.Render();
-
-			Console.ReadKey();
+            //OnCount += ShowMessage;
 
 
 
-		}
-	}
+
+            Dot dot = new Dot();
+
+
+            //timer = new System.Timers.Timer(500);
+
+            //timer.Elapsed += dot.AutoMove;
+
+
+            //timer.Start();
+
+            dot.AutoMove2();
+
+
+
+
+
+
+
+        }
+
+      
+    }
 }
