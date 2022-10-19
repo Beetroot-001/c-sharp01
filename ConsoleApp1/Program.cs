@@ -1,185 +1,87 @@
-﻿using System.Timers;
+﻿using ConsoleApp1.Test;
 
 namespace ConsoleApp1
 {
-	internal class Program
+	public class Program
 	{
-		static void Main(string[] args)
+		static void Main(string[] s)
 		{
-			var game = new Game();
+			//System.Timers.Timer timer = new System.Timers.Timer(2000);
 
-			game.StartGame();
+			//timer.Start();
 
-			Thread.Sleep(Timeout.Infinite);
-		}
+			//timer.Elapsed += (obj, e) =>
+			//{
+			//	var readedString = Console.ReadLine();
+			//	Console.WriteLine("Readed: " + readedString);
+			//};
 
-		public static void M()
-		{
-			Program program = new Program();
+			//Thread.Sleep(Timeout.Infinite);
 
-			CounterChangeHandler changeHandler = program.InstanceMethod;
+			var program = new Program();
+			program.WordCount("asd");
 
-			changeHandler += program.InstanceMethod;
-			changeHandler += program.InstanceMethod;
-			changeHandler += program.InstanceMethod;
-			changeHandler -= program.InstanceMethod;
+			var str = "word1 test, abs";
 
-			Counter counter = new Counter();
-			counter.OnCounterChanged += program.InstanceMethod;
+			Console.WriteLine(str.WordCount());
+			Console.WriteLine(str.WordCount(specificWord: "test"));
 
-			counter.Increment();
-			counter.Decrement();
+			Console.WriteLine(StringExtensions.WordCount(str, "test"));
+			Console.WriteLine(StringExtensions.WordCount<int>(6, "test"));
 
+			int[] ints = new[] { 1, 2, 3, 4, 5, 6 };
+			var result = ints.ChunkBy(3);
 
-			var ints = new[] { 1, 3, 4, 5, 6, };
-			// 1, 4, 9,16, 25,36
+			DisplayCollection(result);
 
-			var result = Where(ints, CustomFilter).ToArray();
-			var result2 = Select(ints, (element) => new Program()).ToArray();
+			Console.WriteLine("0".ToBool());
+			Console.WriteLine("1".ToBool());
+			Console.WriteLine("y".ToBool());
+			Console.WriteLine("yes".ToBool());
 
-			var result3 = Any(ints, (elemnt) => elemnt % 2 == 0);
+			// Exception : Console.WriteLine("01".ToBool());
 
-			var result4 = First(ints, (elemnt) => elemnt % 2 == 0);
+			var birthDay = new DateTime(1998, 12, 1);
+			Console.WriteLine(birthDay.GetAge());
 
-			var timer = new System.Timers.Timer(1000);
-			timer.Elapsed += PrintEveryTime;
-			timer.Elapsed += PrintEveryTime;
+			Console.WriteLine(new DateTime(2022, 10, 19).IsWeekend());
+			Console.WriteLine(new DateTime(2022, 10, 22).IsWorkDay());
+			Console.WriteLine(new DateTime(2022, 10, 23).IsWeekend());
+			Console.WriteLine(new DateTime(2022, 10, 24).IsWorkDay());
 
-			timer.Start();
+			var d1 = new DateTime(2022, 10, 19).GetNextWorkDay();
+			var d2 = new DateTime(2022, 10, 22).GetNextWorkDay();
+			var d3 = new DateTime(2022, 10, 23).GetNextWorkDay();
+			var d4 = new DateTime(2022, 10, 24).GetNextWorkDay();
 
-			Thread.Sleep(10000);
-		}
+			var groups = ints.MyGroupBy((el) => el % 2);
 
-		public static void PrintEveryTime(object? state, ElapsedEventArgs elapsedEventArgs)
-		{
-			Console.WriteLine("HELLO FROM Timer");
-		}
-
-		public static bool CustomFilter(int element)
-		{
-			return element > 3;
-		}
-
-		public void InstanceMethod(Counter counter, int oldValue, int newValue)
-		{
-			Console.WriteLine($"Instance: {{OldValue: {oldValue}, NewValue: {newValue}}}");
-
-		}
-
-		public static void HandleChange(Counter counter, int oldValue, int newValue)
-		{
-			Console.WriteLine($"{{OldValue: {oldValue}, NewValue: {newValue}}}");
-		}
-
-		public static void AnotherHandleChange(Counter counter, int oldValue, int newValue)
-		{
-
-			Console.WriteLine($"///// {{OldValue: {oldValue}, NewValue: {newValue}}}");
-		}
-
-		public static IEnumerable<T> Where<T>(IEnumerable<T> collection, Predicate<T> filter)
-		{
-			foreach (var item in collection)
+			foreach (var item in GetStrings())
 			{
-				if (filter(item))
-				{
-					yield return item;
-				}
+				Console.WriteLine(item);
 			}
 		}
 
-		public static IEnumerable<U> Select<T, U>(IEnumerable<T> collection, Func<T, U> selector)
+		public static void DisplayCollection<T>(IEnumerable<T> values)
 		{
-			foreach (var item in collection)
-			{
-				var result = selector(item);
+			var res = string.Join(',', values);
 
-				yield return result;
+			Console.WriteLine(res);
+		}
+
+		public static void DisplayCollection<T>(IEnumerable<IEnumerable<T>> values)
+		{
+			foreach (var item in values)
+			{
+				DisplayCollection(item);
 			}
 		}
 
-		public static bool Any<T>(IEnumerable<T> collection, Predicate<T> predicate)
+		public static IEnumerable<string> GetStrings()
 		{
-			foreach (var item in collection)
-			{
-				if (predicate(item))
-				{
-					return true;
-				}
-			}
-
-			return false;
-		}
-
-
-		public static bool Any(int[] collection)
-		{
-			foreach (var item in collection)
-			{
-				var result = item % 2 == 0;
-
-				if (result)
-				{
-					return true;
-				}
-			}
-
-			return false;
-		}
-
-		public static T First<T>(IEnumerable<T> collection, Func<T, bool> func)
-		{
-			foreach (var item in collection)
-			{
-				if (func(item))
-				{
-					return item;
-				}
-			}
-
-			throw new ArgumentException();
-		}
-
-		public static T FirstOrDefault<T>(IEnumerable<T> collection, Func<T, bool> func)
-		{
-			foreach (var item in collection)
-			{
-				if (func(item))
-				{
-					return item;
-				}
-			}
-
-			return default(T);
-		}
-	}
-
-	public delegate U Selector<T, U>(T element);
-
-	public delegate void CounterChangeHandler(Counter counter, int oldValue, int newValue);
-
-	public class Counter
-	{
-		private CounterChangeHandler _handler;
-		public event CounterChangeHandler OnCounterChanged;
-
-		public int Count { get; private set; }
-
-		public void Increment()
-		{
-			var oldValue = Count++;
-			OnCounterChange(oldValue, Count);
-		}
-
-		public void Decrement()
-		{
-			var oldValue = Count--;
-			OnCounterChange(oldValue, Count);
-		}
-
-		private void OnCounterChange(int oldValue, int newValue)
-		{
-			OnCounterChanged.Invoke(this, oldValue, newValue);
+			yield return "1";
+			yield return "2";
+			yield return "3";
 		}
 	}
 }
