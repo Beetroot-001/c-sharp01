@@ -111,7 +111,6 @@ namespace ConsoleApp1
 			return false;
 		}
 
-
 		public static bool Any(int[] collection)
 		{
 			foreach (var item in collection)

@@ -2,9 +2,9 @@
 {
 	public class Board
 	{
-		public int Size { get; private set; }
-		public Snake Snake { get; private set; }
-		public Fruit Fruit { get; private set; }
+		public static int Size { get; private set; }
+		public static Snake Snake { get; private set; }
+		public static Fruit Fruit { get; private set; }
 
 		private System.Timers.Timer _timer;
 
@@ -19,6 +19,17 @@
 			_timer.Elapsed += Snake.Move;
 
 		}
+
+		public static bool checkFruit(Point point)
+        {
+			if (point.X == Fruit.Location.X && point.Y == Fruit.Location.Y)
+			{
+				Fruit = Fruit.CreateFruit(Size);
+				RenderFruit();
+				return true;
+			}
+			return false;
+        }
 
 		public void Render()
 		{
@@ -51,6 +62,11 @@
 			}
 
 			// fruit
+			RenderFruit();
+		}
+
+		public static void RenderFruit()
+        {
 			Console.ForegroundColor = ConsoleColor.Blue;
 			Console.SetCursorPosition(Fruit.Location.X, Fruit.Location.Y);
 			Console.Write("@");
