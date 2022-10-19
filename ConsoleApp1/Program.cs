@@ -53,12 +53,6 @@ namespace ConsoleApp1
             Dot dot = new Dot();
 
 
-            //timer = new System.Timers.Timer(500);
-
-            //timer.Elapsed += dot.AutoMove;
-
-
-            //timer.Start();
 
             dot.AutoMove2();
 

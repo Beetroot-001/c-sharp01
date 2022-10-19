@@ -11,39 +11,67 @@ namespace ConsoleApp1
 {
     internal class Dot
     {
-  
 
         private Point dot;
+
+        private List<Point> body = new List<Point>();
         public Dot()
         {
-            dot.X = 0;
-            dot.Y = 0;
-            Console.SetCursorPosition(dot.X, dot.Y);
+            //dot.X = 0;
+            //dot.Y = 0;
+            //Console.SetCursorPosition(dot.X, dot.Y);           
+            //Console.Write("*");
+
+            body = new List<Point>
+            {
+                new Point(1,1),
+                new Point(2,1),
+                new Point(3,1),
+            };
+
             
-            Console.Write("*");
+
         }
+
+        
+        public List<Point> Body => body;
+        public int SnakeSize => body.Count;
+
 
         public Point CurrentPosition => dot;
 
+
+
         public void NewPosition(Point point)
         {
-            Console.SetCursorPosition(dot.X, dot.Y);
-            Console.Write(" ");
+        
+            Point tail = body[0];
+
+            for (int i = 0; i < body.Count - 1; i++)
+            {
+                body[i] = body[i+1]; 
+            }
+
+            body[body.Count-1] = point;
+
+            Console.SetCursorPosition(tail.X, tail.Y);
             Console.Write(" ");
 
-            dot = point;
+            foreach (var item in body)
+            {
+                Console.SetCursorPosition(item.X, item.Y);
+                Console.Write("*");
+            }
 
-            Console.SetCursorPosition(dot.X, dot.Y);
-            Console.Write("*");           
+            
         }
 
 
 
-        //public void AutoMove(object? sender, ElapsedEventArgs e)
-        //{
-        //    NewPosition(new Point(dot.X + 1, dot.Y));
-        //}     
-        
+
+
+
+
         public void AutoMove2()
         {
             var direction = Direction.right;
@@ -54,7 +82,7 @@ namespace ConsoleApp1
 
                 if (Console.KeyAvailable)
                 {
-                    var k = Console.ReadKey();
+                    var k = Console.ReadKey(true);
 
                     switch (k.Key)
                     {
@@ -89,7 +117,6 @@ namespace ConsoleApp1
             right
         }
 
-
         public void Moving(Direction direction)
         {
             switch (direction)
@@ -111,61 +138,28 @@ namespace ConsoleApp1
 
 
         public void AutoMoveUp()
-        {
-            NewPosition(new Point(dot.X, dot.Y - 1));
+        {          
+            NewPosition(new Point(body[body.Count - 1].X, body[body.Count - 1].Y - 1));
             Thread.Sleep(500);
         }  
         
         public void AutoMoveDown()
-        {
-             NewPosition(new Point(dot.X, dot.Y + 1));
+        { 
+             NewPosition(new Point(body[body.Count - 1].X, body[body.Count - 1].Y + 1));
              Thread.Sleep(500);          
         }  
   
         public void AutoMoveRight()
         {
-            NewPosition(new Point(dot.X + 1, dot.Y));
+            NewPosition(new Point(body[body.Count-1].X + 1, body[body.Count - 1].Y));
             Thread.Sleep(500);
         }   
         
         public void AutoMoveLeft()
         {
-            NewPosition(new Point(dot.X - 1, dot.Y));
+            NewPosition(new Point(body[body.Count - 1].X - 1, body[body.Count - 1].Y));
             Thread.Sleep(500);
         }
-
-
-
-        //public void Move(object key)
-        //{
-
-        //    var key1 = (ConsoleKeyInfo)key;
-        //    switch (key1.Key)
-        //    {
-        //        case ConsoleKey.W:
-                            
-        //            NewPosition(new Point(dot.X, dot.Y-1));
-        //            break;
-        //        case ConsoleKey.S:
-
-        //            NewPosition(new Point(dot.X, dot.Y + 1));
-        //            break;
-
-        //        case ConsoleKey.A:
-        //            NewPosition(new Point(dot.X -1, dot.Y));
-                  
-        //            break;
-        //        case ConsoleKey.D:
-                    
-        //            NewPosition(new Point(dot.X + 1, dot.Y));
-                
-        //            break;
-
-        //    }
-
-        //}
-
-
 
 
     }
