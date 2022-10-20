@@ -8,7 +8,7 @@
 			{
 				DrawMenu();
 				var key = Console.ReadLine();
-				if (!new[] { "1", "2", "3", "5" }.Contains(key.Trim())){ Console.WriteLine("Error. Try again. press 5 to Exit"); continue; }
+				if (!new[] { "1", "2", "3", "5" }.Contains(key?.Trim())){ Console.WriteLine("Error. Try again. press 5 to Exit"); continue; }
 				switch (key)
                 {
 					case "1": { 
@@ -90,23 +90,42 @@
 		public static void VoteMenu()
 		{
 			string key = string.Empty;
-			Console.WriteLine("Виберіть опитування");
+			Console.WriteLine("Виберіть опитування. Введіть його номер");
             for (int i = 0; i < Vote.votes.Count; i++)
             {
 				Vote vote = Vote.votes[i];
 				Console.WriteLine($"{i}.{vote.Title}");
             }
-			key = Console.ReadLine();
+			do
+			{
+				key = Console.ReadLine() ?? "";
+				if (!int.TryParse(key, out int voteId) || voteId > Vote.votes.Count-1 )
+				{
+					Console.WriteLine("Error. Некоректний ввід або число перевищує кількість опитувань");
+					Console.WriteLine("Виберіть опитування. Введіть його номер");
+					continue;
+				}
+
+				Vote.ShowVote(voteId);
+
+				key = "x";
+			} while (key is not null && key.ToLower() != "x" && key.ToLower() != "х");
 		}
 
 		public static void ShowResults()
 		{
 			string key = string.Empty;
-			Console.WriteLine("Виберіть опитування");
-			for (int i = 0; i < Vote.votes.Count; i++)
+			foreach (var vote in Vote.votes)
 			{
-				Vote vote = Vote.votes[i];
-				Console.WriteLine($"{i}.{vote.Title}");
+				Console.WriteLine($"{vote.Title}");
+                foreach (var question in vote.Questions)
+                {
+					Console.WriteLine($"  {question.Title}");
+					foreach(var answer in question.Answers)
+                    {
+                        Console.WriteLine($"    {answer.Title}::{answer.Count}");
+                    }
+				}
 			}
 		}
 	}
