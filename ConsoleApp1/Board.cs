@@ -20,7 +20,7 @@
 
 		}
 
-		public static bool checkFruit(Point point)
+		public static bool CheckFruit(Point point)
         {
 			if (point.X == Fruit.Location.X && point.Y == Fruit.Location.Y)
 			{

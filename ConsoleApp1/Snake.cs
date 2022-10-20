@@ -72,7 +72,7 @@ namespace ConsoleApp1
 					break;
 			}
 
-			if (p.X == 1 || p.X == Board.Size -1 || p.Y == 0 || p.Y == 14 || CheckSelf(p))
+			if (p.X == 1 || p.X == Board.Size -1 || p.Y == 0 || p.Y == Board.Size - 1 || CheckSelf(p))
 			{
 				Console.Clear();
 				Console.WriteLine("You Lose");
@@ -80,7 +80,7 @@ namespace ConsoleApp1
             }
 
 			Body.Add(p);
-			if (!Board.checkFruit(p))
+			if (!Board.CheckFruit(p))
 			{
 				Console.SetCursorPosition(Body[0].X, Body[0].Y);
 				Console.Write(" ");

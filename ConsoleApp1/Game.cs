@@ -5,7 +5,7 @@
 		public Board Board { get; private set; }
 		public Game(int size = 15)
 		{
-			Board = new Board(15);
+			Board = new Board(size);
 		}
 
 		public void StartGame()
