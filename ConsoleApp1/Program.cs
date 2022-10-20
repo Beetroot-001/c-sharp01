@@ -10,6 +10,7 @@ namespace ConsoleApp1
             Snake game = new Snake(20);
             game.GameStart();
 
+            Thread.Sleep(Timeout.Infinite);
         } 
     }
 }
