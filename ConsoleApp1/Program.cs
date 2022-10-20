@@ -50,11 +50,11 @@ namespace ConsoleApp1
 
 
 
-            Dot dot = new Dot();
+            Dot dot = new Dot(20);
 
 
 
-            dot.AutoMove2();
+            dot.GameStart();
 
 
 

@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
 
@@ -11,40 +12,84 @@ namespace ConsoleApp1
 {
     internal class Dot
     {
-
-        private Point dot;
+        private Point fruit;
 
         private List<Point> body = new List<Point>();
-        public Dot()
-        {
-            //dot.X = 0;
-            //dot.Y = 0;
-            //Console.SetCursorPosition(dot.X, dot.Y);           
-            //Console.Write("*");
 
+        int size;
+        public Dot(int size)
+        {
             body = new List<Point>
             {
                 new Point(1,1),
                 new Point(2,1),
                 new Point(3,1),
             };
-
-            
-
+            this.size = size;
         }
 
-        
-        public List<Point> Body => body;
-        public int SnakeSize => body.Count;
-
-
-        public Point CurrentPosition => dot;
-
-
-
-        public void NewPosition(Point point)
+        public void GameStart()
         {
-        
+            AutoMove();
+        }
+
+        public void GameOver()
+        {
+            Console.WriteLine("The game is over");
+        }
+
+
+        public void Render()
+        {
+            ///Board
+            for (int i = 0; i < size; i++)
+            {
+                char a = '"';
+
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                ///left colomn
+                Console.SetCursorPosition(0, i);
+                Console.Write(a);
+
+                ///right colomn
+                Console.SetCursorPosition(size - 1, i);
+                Console.Write(a);
+
+                ///top
+                Console.SetCursorPosition(i, 0);
+                Console.Write(a);
+
+                ///bottom
+                Console.SetCursorPosition(i, size - 1);
+                Console.Write(a);
+
+                Console.ResetColor();
+            }
+        }
+
+        public bool IsBoard(Point point)
+        {
+            if (point.X >= size-1 || point.Y >= size-1 || point.X <1 || point.Y < 1)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public void NewPosition(Point head)
+        {
+            if (body[body.Count -1] == fruit)
+            {
+                body.Insert(0, fruit);
+                GenerateFruit();
+            }
+
+            if (IsSnake(head) || IsBoard(head))
+            {
+
+              
+            }
+
             Point tail = body[0];
 
             for (int i = 0; i < body.Count - 1; i++)
@@ -52,31 +97,56 @@ namespace ConsoleApp1
                 body[i] = body[i+1]; 
             }
 
-            body[body.Count-1] = point;
+            body[body.Count-1] = head;
 
             Console.SetCursorPosition(tail.X, tail.Y);
             Console.Write(" ");
 
+           
             foreach (var item in body)
             {
                 Console.SetCursorPosition(item.X, item.Y);
                 Console.Write("*");
-            }
+            }  
+        }
 
-            
+
+        public bool IsSnake(Point point)
+        {
+            foreach (var item in body)
+            {
+                if (item == point)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
 
 
-
-
-
-
-        public void AutoMove2()
+        public void GenerateFruit()
         {
-            var direction = Direction.right;
- 
+            Random fruitposition = new Random();
+
             while (true)
+            {    
+                fruit = new Point(fruitposition.Next(1, size - 1), fruitposition.Next(1, size - 1));
+                if (!IsSnake(fruit)) break;
+            }                     
+            Console.SetCursorPosition(fruit.X, fruit.Y);
+            Console.Write("@");
+        }
+
+
+        public void AutoMove()
+        {
+            Render();
+            GenerateFruit();
+            var direction = Direction.right;
+
+            bool gameOver = false;
+            while (!gameOver)
             {
                 Moving(direction);
 
@@ -108,6 +178,8 @@ namespace ConsoleApp1
                     }
                 }
             }
+
+
         }
        public enum Direction
         {
@@ -140,25 +212,25 @@ namespace ConsoleApp1
         public void AutoMoveUp()
         {          
             NewPosition(new Point(body[body.Count - 1].X, body[body.Count - 1].Y - 1));
-            Thread.Sleep(500);
+            Thread.Sleep(200);
         }  
         
         public void AutoMoveDown()
         { 
              NewPosition(new Point(body[body.Count - 1].X, body[body.Count - 1].Y + 1));
-             Thread.Sleep(500);          
+             Thread.Sleep(200);          
         }  
   
         public void AutoMoveRight()
         {
             NewPosition(new Point(body[body.Count-1].X + 1, body[body.Count - 1].Y));
-            Thread.Sleep(500);
+            Thread.Sleep(200);
         }   
         
         public void AutoMoveLeft()
         {
             NewPosition(new Point(body[body.Count - 1].X - 1, body[body.Count - 1].Y));
-            Thread.Sleep(500);
+            Thread.Sleep(200);
         }
 
 
