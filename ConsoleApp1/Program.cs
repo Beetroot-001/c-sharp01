@@ -1,9 +1,12 @@
-﻿namespace ConsoleApp1
+﻿using Newtonsoft.Json;
+
+namespace ConsoleApp1
 {
-	internal class Program
+	class Program
 	{
 		static void Main(string[] args)
 		{
+			var persons = JsonConvert.DeserializeObject<IEnumerable<Person>>(File.ReadAllText("data.json"));
 		}
 	}
 }
