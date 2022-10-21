@@ -25,15 +25,15 @@ namespace ConsoleApp1
 
         public List<Receipt> Receipts { get; set; } = new List<Receipt>();
 
-        public abstract Buyer AddBuyer(string phone);
+        public abstract void AddBuyer();
 
         public abstract Buyer GetBuyer(string phone);
 
-        public abstract Product AddProduct(Product product);
+        public abstract void AddProduct();
 
         public abstract Product GetProduct(Product product);
 
-        public abstract Receipt AddReceipt(Receipt receipt);
+        public abstract void AddReceipt(Receipt receipt);
 
     }
 }
