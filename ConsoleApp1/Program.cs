@@ -17,12 +17,6 @@ namespace ConsoleApp1
         }
     }
 
-    interface IRender
-    {
-        void Render();
-    }
-
-
     class GameManager
     {
         private static GameManager _instance;
@@ -37,7 +31,7 @@ namespace ConsoleApp1
 
         private GameManager()
         {
-            _board = new Board(30);
+            _board = new Board();
         }
 
         public void Start()
@@ -59,12 +53,31 @@ namespace ConsoleApp1
         Left
     }
 
-    class Snake : IRender
+    class Snake
     {
         private List<Point> _body;
         private bool _state;
         private Direction _direction;
-        public void Move(object? source, EventArgs e)
+        //private int _snakeLenght => _body.Count();
+        public bool IsAlive => _state;
+        public List<Point> Body => _body;
+
+        public Snake()
+        {
+            _state = true;
+            _direction = Direction.Right;
+            _body = new List<Point>(3);
+            _body.Add(new Point(1, 1));
+            _body.Add(new Point(2, 1));
+            _body.Add(new Point(3, 1));
+        }
+
+        public void Kill()
+        {
+            _state = false;
+        }
+
+        public async void Move(object? source, EventArgs e)
         {
             if (_state)
             {
@@ -92,13 +105,28 @@ namespace ConsoleApp1
                     default:
                         break;
                 }
-                
-                Render();
+                Render(); 
+                CheckBoundsA();
+                ChangeSnakeDirection();
+                await Task.Yield();
             }
-
         }
-        public void ChangeSnakeDirection(ConsoleKey key)
+        public async void CheckBoundsA()
         {
+            if (CheckBounds())
+            {
+                Kill();
+            }
+            await Task.Yield();
+        }
+        public bool CheckBounds()
+        {
+            return _body.Last().X == 0 || _body.Last().X == 14 ||
+                _body.Last().Y == 0 || _body.Last().Y == 14;
+        }
+        public async void ChangeSnakeDirection()
+        {
+            ConsoleKey key = Console.ReadKey().Key;
             _direction = key switch
             {
                 ConsoleKey.UpArrow => Direction.Up,
@@ -107,27 +135,7 @@ namespace ConsoleApp1
                 ConsoleKey.RightArrow => Direction.Right,
                 _ => _direction
             };
-        }
-
-        private int _snakeLenght => _body.Count();
-        public bool IsAlive => _state;
-
-        public List<Point> Body => _body;
-
-        public Snake()
-        {
-            _state = true;
-            _direction = Direction.Right;
-            _body = new List<Point>(3);
-            _body.Add(new Point(1, 1));
-            _body.Add(new Point(2, 1));
-            _body.Add(new Point(3, 1));
-        }
-
-        public bool CheckBounds(int boardSize)
-        {
-            return _body.First().X == 0 || _body.First().X == boardSize ||
-                _body.First().Y == 0 || _body.First().Y == boardSize;
+            await Task.Yield();
         }
 
         public void Render()
@@ -138,7 +146,7 @@ namespace ConsoleApp1
                 Console.SetCursorPosition(point.X, point.Y);
                 Console.Write("*");
             }
-
+            //await Task.Yield();
         }
     }
 
@@ -157,7 +165,7 @@ namespace ConsoleApp1
         }
     }
 
-    class Bonus : IRender
+    class Bonus
     {
         Point position;
 
@@ -172,13 +180,14 @@ namespace ConsoleApp1
         }
     }
 
-    class Board : IRender
+    class Board
     {
         private int _size;
         private System.Timers.Timer _timer;
         private Snake _snake;
         private Bonus _bonus;
 
+        //public Action<ConsoleKey> ChangeDirection;
         public Action<ConsoleKey> ChangeDirection;
 
         public Board(int size = 15)
@@ -187,9 +196,10 @@ namespace ConsoleApp1
             _snake = new Snake();
             _timer = new System.Timers.Timer(1000);
             _timer.Elapsed += _snake.Move;
-            ChangeDirection += _snake.ChangeSnakeDirection;
+            //_timer.Elapsed += CheckBoundsA;
         }
-        public void Render()
+
+        public async void Render()
         {
             _timer.Start();
             Console.ForegroundColor = ConsoleColor.DarkBlue;
@@ -207,8 +217,6 @@ namespace ConsoleApp1
                 Console.SetCursorPosition(_size - 1, i);
                 Console.Write("#");
             }
-            _snake.Render();
-
         }
     }
 }
