@@ -1,23 +1,10 @@
 ﻿namespace ConsoleApp1
 {
-    class Menu
+    static class Menu
 	{
-		public Menu menu = null;
+		static VotingSystem votingSystem = new VotingSystem();
 
-		private Menu()
-		{
-			if (menu == null)
-			{
-				votingSystem = new VotingSystem();
-            }
-		}
-		public static Menu CreateInstance()
-		{
-			return new Menu();
-		}
-
-        VotingSystem votingSystem;
-        public void Start()
+        public static void Start()
 		{
 			Console.WriteLine();
 			Console.WriteLine(" --- MENU --- ");

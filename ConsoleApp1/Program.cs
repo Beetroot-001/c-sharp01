@@ -4,8 +4,7 @@
 	{
 		static void Main(string[] args)
 		{
-			Menu menu = Menu.CreateInstance();
-			menu.Start();
+			Menu.Start();
         }
     }
 
