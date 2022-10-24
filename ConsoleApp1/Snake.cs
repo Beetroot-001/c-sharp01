@@ -11,13 +11,15 @@
     {
         private List<Point> _body;
         private bool _state;
+        private int _boards;
         private Direction _direction;
         public bool IsAlive => _state;
         public Point Head => _body.Last();
 
-        public Snake()
+        public Snake(int board)
         {
             _state = true;
+            _boards = board;
             _direction = Direction.Right;
             _body = new List<Point>(3);
             _body.Add(new Point(1, 1));
@@ -43,8 +45,8 @@
                 CheckMovingDirection();
                 Render();
                 CheckBounds();
+                CheckBodyCollision();
                 ChangeSnakeDirection();
-                ChechBodyCollision();
             }
         }
         public void CheckMovingDirection()
@@ -71,14 +73,14 @@
 
         public void CheckBounds()
         {
-            if (_body.Last().X == 0 || _body.Last().X == 14 ||
-                _body.Last().Y == 0 || _body.Last().Y == 14)
+            if (_body.Last().X == 0 || _body.Last().X == _boards ||
+                _body.Last().Y == 0 || _body.Last().Y == _boards)
             {
                 Kill();
             }
         }
 
-        public void ChechBodyCollision()
+        public void CheckBodyCollision()
         {
             var body = _body.FindAll((part) => part.X == Head.X && part.Y == Head.Y).ToList();
             if (body.Count() > 1)

@@ -11,7 +11,7 @@
         public Board(int size = 15)
         {
             _size = size;
-            _snake = new Snake();
+            _snake = new Snake(size);
             _timer = new System.Timers.Timer(1000);
             _spawnTimer = new System.Timers.Timer(_size * 1100);
             _timer.Elapsed += CheckEat;
