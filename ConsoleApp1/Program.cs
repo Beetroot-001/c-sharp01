@@ -1,9 +1,11 @@
 ﻿
+using System.Timers;
+
 namespace ConsoleApp1
 {
     internal class Program
     {
-        static Timer timer;
+        static System.Timers.Timer timer = new System.Timers.Timer(200);
 
         static int x = 60;
         static int y = 20;
@@ -25,31 +27,34 @@ namespace ConsoleApp1
 
             Console.ReadKey();
 
-            timer= new Timer(Loop, null, 0, speed);
+
+            timer.Elapsed += Loop;
+            timer.Start();
+
 
             while (true)
             {
                 if (Console.KeyAvailable)
                 {
-                    ConsoleKeyInfo consoleKeyInfo = Console.ReadKey();
+                    ConsoleKeyInfo consoleKeyInfo = Console.ReadKey(false);
                     snake.MoveOfSnake(consoleKeyInfo);
                 }
             }
         }
 
-        static void Loop(object obj)
+        static void Loop(object? sender, ElapsedEventArgs e)
         {
             snake.GetNextMove();
 
             if (snake.IsHittingWall())
             {
-                timer.Change(0, Timeout.Infinite);
+                timer.Stop();
                 Console.WriteLine("Game Over");
             }
 
             else if (snake.IsHittingBody())
             {
-                timer.Change(0, Timeout.Infinite);
+                timer.Stop();
                 Console.WriteLine("Game Over");
             }
 
