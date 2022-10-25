@@ -7,73 +7,73 @@ namespace ConsoleApp1
 	{
 		static void Main(string[] args)
 		{
-			Pizza.PizzaBuilder pizzaBuilder = Pizza.PizzaBuilder.CreateBuilder();
+			//Pizza.PizzaBuilder pizzaBuilder = Pizza.PizzaBuilder.CreateBuilder();
 
-			Pizza pizza = pizzaBuilder.AddCheese().SetDiameter(40).Build();
-			Pizza pizzaWithOlives = pizzaBuilder.SetDiameter(40).AddOlives().Build();
+			//Pizza pizza = pizzaBuilder.AddCheese().SetDiameter(40).Build();
+			//Pizza pizzaWithOlives = pizzaBuilder.SetDiameter(40).AddOlives().Build();
 
 
-			var testClass = new TestClass();
-			var testClassNewType = typeof(TestClass);
-			//foreach (var propertyInfo in testClassNewType.GetProperties())
+			//var testClass = new TestClass();
+			//Type testClassNewType = typeof(TestClass);
+
+			////foreach (var propertyInfo in testClassNewType.GetProperties())
+			////{
+			////	var attribute = propertyInfo.GetCustomAttribute<DefaultValueAttribute>();
+			////	var propV = propertyInfo.GetValue(testClass);
+
+			////	if (attribute != null && propV == default)
+			////	{
+			////		propertyInfo.SetValue(testClass, attribute.Value);
+			////	}
+			////}
+
+			//Console.WriteLine();
+
+			//var testClassInstance = new TestClass()
 			//{
-			//	var attribute = propertyInfo.GetCustomAttribute<DefaultValueAttribute>();
-			//	var propV = propertyInfo.GetValue(testClass);
+			//	DateAndTime = DateTime.Now,
+			//	Flag = true,
+			//	// FloatValue = 23.5f,
+			//	Text = "This is text",
+			//	Value = 47
+			//};
 
-			//	if (attribute != null && propV == default)
-			//	{
-			//		propertyInfo.SetValue(testClass, attribute.Value);
-			//	}
+			//Type testClassType = testClassInstance.GetType();
+
+			//foreach (var property in testClassType.GetProperties(BindingFlags.Instance | BindingFlags.NonPublic))
+			//{
+			//	property.SetValue(testClassInstance, 123.34f);
+			//	Console.WriteLine($"Type {property.PropertyType} Name: {property.Name}, Value: {property.GetValue(testClassInstance)}");
 			//}
 
-			Console.WriteLine();
+			//testClassType.GetProperty("Value").SetValue(testClassInstance, 123);
+			//Console.WriteLine(testClassType.GetProperty("Value").GetValue(testClassInstance));
 
-			var testClassInstance = new TestClass()
-			{
-				DateAndTime = DateTime.Now,
-				Flag = true,
-				// FloatValue = 23.5f,
-				Text = "This is text",
-				Value = 47
-			};
+			//int result = (int)testClassType.GetMethod("MyMethod").Invoke(testClassInstance, new object[] { 123 });
 
-			Type testClassType = testClassInstance.GetType();
+			//var typeName = Console.ReadLine();
 
-			foreach (var property in testClassType.GetProperties(BindingFlags.Instance | BindingFlags.NonPublic))
-			{
-				property.SetValue(testClassInstance, 123.34f);
-				Console.WriteLine($"Type {property.PropertyType} Name: {property.Name}, Value: {property.GetValue(testClassInstance)}");
-			}
+			//Console.WriteLine("Type full type's name ");
+			//var objectHandler = Activator.CreateInstance(Assembly.GetExecutingAssembly().GetName().Name, typeName);
+			//var concreteInstance = objectHandler.Unwrap();
 
-			testClassType.GetProperty("Value").SetValue(testClassInstance, 123);
-			Console.WriteLine(testClassType.GetProperty("Value").GetValue(testClassInstance));
+			//Console.WriteLine("Type prop name to modify");
+			//var propName = Console.ReadLine();
+			//var propertyT = concreteInstance.GetType().GetProperty(propName);
+			//Contract.NotNull<ArgumentException>(propertyT, $"There is not such prop {propName}");
 
-			int result = (int)testClassType.GetMethod("MyMethod").Invoke(testClassInstance, new object[] { 123 });
+			//Console.WriteLine("Type prop value");
+			//var propValue = Console.ReadLine();
+			//propertyT.SetValue(concreteInstance, propValue);
 
-			var typeName = Console.ReadLine();
+			//Console.WriteLine(propertyT.GetValue(concreteInstance));
 
-			Console.WriteLine("Type full type's name ");
-			var objectHandler = Activator.CreateInstance(Assembly.GetExecutingAssembly().GetName().Name, typeName);
-			var concreteInstance = objectHandler.Unwrap();
+			//Console.WriteLine();
 
-			Console.WriteLine("Type prop name to modify");
-			var propName = Console.ReadLine();
-			var propertyT = concreteInstance.GetType().GetProperty(propName);
-			Contract.NotNull<ArgumentException>(propertyT, $"There is not such prop {propName}");
-
-			Console.WriteLine("Type prop value");
-			var propValue = Console.ReadLine();
-			propertyT.SetValue(concreteInstance, propValue);
-
-			Console.WriteLine(propertyT.GetValue(concreteInstance));
-
-			Console.WriteLine();
+			sbas_homework_reflection sbas_Homework_Reflection = new sbas_homework_reflection();
+			sbas_Homework_Reflection.Foo();
 		}
 
-		public bool Validate(TestClass testClass)
-		{
-
-		}
 	}
 
 	public static class Contract

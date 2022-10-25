@@ -7,4 +7,10 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Reference Include="Tray">
+      <HintPath>..\..\..\C#\Tray\bin\Debug\net6.0\Tray.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>
