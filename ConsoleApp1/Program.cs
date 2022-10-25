@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System;
 using System.Globalization;
 using System.Linq;
 using System.Net.Sockets;
@@ -6,24 +7,41 @@ using System.Net.Sockets;
 namespace ConsoleApp1
 {
     class Program
-    {
+    {   
         static void Main(string[] args)
         {
             var people = JsonConvert.DeserializeObject<IEnumerable<Person>>(File.ReadAllText("data.json"));
 
-            var personEast = people.Where(x => x.Longitude == people.Select((x) => x.Longitude).Max()).First();
-            var personNorth = people.Where(x => x.Latitude == people.Select((x) => x.Latitude).Max()).First();
-            var personWest = people.Where(x => x.Longitude == people.Select((x) => x.Longitude).Min()).First();
-            var personSouth = people.Where(x => x.Latitude == people.Select((x) => x.Latitude).Min()).First();
+            var personEast = people.Where(x => x.Longitude == people
+            .Select((x) => x.Longitude).Max()).Single();
+            var personNorth = people.Where(x => x.Latitude == people
+            .Select((x) => x.Latitude).Max()).Single();
+            var personWest = people.Where(x => x.Longitude == people
+            .Select((x) => x.Longitude).Min()).Single();
+            var personSouth = people.Where(x => x.Latitude == people
+            .Select((x) => x.Latitude).Min()).Single();
 
             Console.WriteLine($"{personNorth.Name} is located farthest north Position: ({personNorth.Longitude}), ({personNorth.Latitude})");
             Console.WriteLine($"{personSouth.Name} is located farthest south Position: ({personSouth.Longitude}), ({personSouth.Latitude})");
             Console.WriteLine($"{personWest.Name} is located farthest west Position: ({personWest.Longitude}), ({personWest.Latitude})");
             Console.WriteLine($"{personEast.Name} is located farthest east Position: ({personEast.Longitude}), ({personEast.Latitude})");
 
-            var farthest = 
-            //var nearest = 
+            List<Person> personList = people.ToList();
+            int index = 0;
+            var farthest = people.Where((x) =>
+            index != personList.Count()).Select((x) =>
+            Math.Sqrt(Math.Pow(personList[index++].Longitude - x.Longitude, 2) + Math.Pow(personList[index++].Latitude - x.Latitude, 2))).Max();
+            index = 0;
+            var nearest = people.Where((x) =>
+            index != personList.Count()).Select((x) =>
+            Math.Sqrt(Math.Pow(personList[index++].Longitude - x.Longitude, 2) + Math.Pow(personList[index++].Latitude - x.Latitude, 2))).Min();
 
+            Console.WriteLine(farthest);
+            Console.WriteLine(nearest);
+
+
+
+            Console.WriteLine();
 
 
             //var males = people.Count(x => x.Gender == Gender.Male);
@@ -82,16 +100,5 @@ namespace ConsoleApp1
             //Console.WriteLine();
         }
 
-        //Action<int> action = Method;
-
-        //for (int i = 0; i < 10; i++)
-        //{
-        //	action(i);
-        //}
-
-        //public static void Method(int i)
-        //{
-        //	Console.WriteLine(i);
-        //}
     }
 }
