@@ -6,18 +6,20 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp1
 {
-    internal class Engin
+    internal class Engine
     {
-        private string _enginType;
+        public enum EngineType 
+        { 
+            SOMETYPES
+        }
 
-        Engin(string enginType)
+        private EngineType _enginType;
+
+        public Engine(EngineType enginType)
         {
             _enginType = enginType;
         }
 
-        public string EnginType 
-        { 
-            get => _enginType; 
-        }
+        public EngineType EnginType => _enginType;
     }
 }

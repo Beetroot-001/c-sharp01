@@ -13,9 +13,9 @@ namespace ConsoleApp1
         private int _wheelNumMax;
         private Wheel[] _wheels;
         private Frame _frame;
-        private Engin _engin;
+        private Engine _engin;
 
-        Vechicle(string @class, string model, int wheelNumMax, Wheel[] wheels, Frame frame, Engin engin)
+        Vechicle(string @class, string model, int wheelNumMax, Wheel[] wheels, Frame frame, Engine engin)
         {
             _class = @class;
             _model = model;
@@ -56,7 +56,7 @@ namespace ConsoleApp1
             get => _frame;
         }
 
-        public Engin Engin
+        public Engine Engin
         {
             get => _engin;
         }
