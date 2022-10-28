@@ -46,6 +46,24 @@ namespace ConsoleApp1
 
             return (1.0 - ((double)result / (double)Math.Max(source.Length, target.Length)));
         }
+        /// <summary>
+        /// Comparing friend lists
+        /// </summary>
+        /// <param name="x">First list</param>
+        /// <param name="y">Second list</param>
+        /// <returns>True if lists are equal, otherwise false</returns>
+        static bool CompareFriends(Friend[] x, Friend[] y)
+        {
+            if(x.Length != y.Length) return false;
+            for (int i = 0; i < x.Length; i++)
+            {
+                if (x[i].Name != y[i].Name)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
 
         static void Main(string[] args)
         {
@@ -75,9 +93,13 @@ namespace ConsoleApp1
                                   .Select(y => new { similarity = CalculateSimilarity(x.About, y.About), people = (first: x, second: y) })
                                   .OrderByDescending(x => x.similarity).Skip(1).First())
                                   .MaxBy(x => x.similarity);
-            
+
             Console.WriteLine($"{aboutsMax.similarity} {aboutsMax.people.first.Name} {aboutsMax.people.second.Name}");
-           
+
+            var sameFriend = people.SelectMany(x => people
+                                   .Select(y => new { personPair = (first: x, second: y), equals = CompareFriends(x.Friends, y.Friends) && x.Name != y.Name })
+                                   .Where(y => y.equals));
+
             Console.WriteLine();
         }
 
