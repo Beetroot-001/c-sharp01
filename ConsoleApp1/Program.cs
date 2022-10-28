@@ -90,7 +90,7 @@
 		public static void VoteMenu()
 		{
 			string key = string.Empty;
-			Console.WriteLine("Виберіть опитування. Введіть його номер");
+			Console.WriteLine("Виберіть опитування. Введіть його номер. Або введіть х щоб повернутись назад");
             for (int i = 0; i < Vote.votes.Count; i++)
             {
 				Vote vote = Vote.votes[i];
@@ -99,6 +99,11 @@
 			do
 			{
 				key = Console.ReadLine() ?? "";
+				if(key == "x")
+                {
+					continue;
+                }
+
 				if (!int.TryParse(key, out int voteId) || voteId > Vote.votes.Count-1 )
 				{
 					Console.WriteLine("Error. Некоректний ввід або число перевищує кількість опитувань");
@@ -106,15 +111,12 @@
 					continue;
 				}
 
-				Vote.ShowVote(voteId);
-
-				key = "x";
-			} while (key is not null && key.ToLower() != "x" && key.ToLower() != "х");
+				Vote.ShowVote(voteId);				
+			} while (key.ToLower() != "x" && key.ToLower() != "х");
 		}
 
 		public static void ShowResults()
 		{
-			string key = string.Empty;
 			foreach (var vote in Vote.votes)
 			{
 				Console.WriteLine($"{vote.Title}");
