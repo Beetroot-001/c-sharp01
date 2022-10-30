@@ -1,9 +1,15 @@
-﻿namespace ConsoleApp1
+﻿using Newtonsoft.Json;
+using System.Globalization;
+using System.Linq;
+
+namespace ConsoleApp1
 {
-	internal class Program
-	{
-		static void Main(string[] args)
-		{
-		}
-	}
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            sbas_homework_19_linq.Mhedod();
+        }
+    }
 }
+
