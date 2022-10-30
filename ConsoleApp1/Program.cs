@@ -1,15 +1,16 @@
 ﻿using System.Drawing;
+using System.Timers;
 using System.Windows.Input;
 
 namespace ConsoleApp1
 {
 	internal class Program
 	{
-        static  void Main(string[] args)
+        static void Main(string[] args)
 		{
-            Snake game = new Snake(20);
-            game.GameStart();
+            Game game = new Game(20);
+            game.Start();
 
-        } 
+        }
     }
 }
