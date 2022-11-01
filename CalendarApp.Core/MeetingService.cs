@@ -25,9 +25,25 @@ namespace CalendarApp.Core
 
         public Meeting BookMeeting(string room, string title, int startDay, int startHour, int duration, string desc = " ")
         {
-            var roomID = calendarRepository.GetRooms()?
-                                           .Where(x => x.Title == room)
-                                           .Single();
+            try
+            {
+                var roomID = calendarRepository.GetRooms()?
+                                               .Where(x => x.Title == room)
+                                               .Single();
+
+                var meetingsToCheck = calendarRepository.GetMeetingRoom(room);
+
+                if(meetingsToCheck.Any(x => (x.Start.Date.Hour >= startHour
+                                    || x.End.Date.Hour <= startHour + duration)
+                                    && x.Start.Date.Day == startDay))
+                    throw new ArgumentException("The hours are occupied in this room!");
+
+            }
+            catch (ArgumentNullException)
+            {
+                throw new ArgumentNullException("Room with this name was not found!");
+            }
+
 
             var maxDaysInMonth = DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month);
 

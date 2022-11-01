@@ -14,6 +14,9 @@ namespace CalendarApp.Core
 
 		public Room CreateNewRoom(string title)
 		{
+			if (calendarRepository.GetRooms().Where(x => x.Title == title).Any())
+				throw new ArgumentException("Room with this title was already created!");
+
 			var nextRoomId = (calendarRepository.GetLastRoom()?.Id ?? 0) + 1;
 
 			var newRoom = new Room

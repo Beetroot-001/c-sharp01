@@ -51,9 +51,17 @@ namespace ConsoleApp1
                         Console.WriteLine("ReadAndWrite mode required to modify!");
                         break;
                     }
-                    var createdRoom = roomService.CreateNewRoom(addRoomVerb.Title);
-                    Console.WriteLine("Room has been created");
-                    Console.WriteLine(createdRoom);
+                    try
+                    {
+                        var createdRoom = roomService.CreateNewRoom(addRoomVerb.Title);
+                        Console.WriteLine("Room has been created");
+                        Console.WriteLine(createdRoom);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("Something went wrong!");
+                        Console.WriteLine(ex.Message);
+                    }
                     break;
 
                 case BookMeetingVerb bookMeeting:
@@ -62,18 +70,21 @@ namespace ConsoleApp1
                         Console.WriteLine("ReadAndWrite mode required to modify!");
                         break;
                     }
-                    var newMeet = meetingService.BookMeeting(bookMeeting.RoomName, bookMeeting.MeetingTitle, 
+                    try
+                    {
+                        var newMeet = meetingService.BookMeeting(bookMeeting.RoomName, bookMeeting.MeetingTitle,
                         bookMeeting.StartDay, bookMeeting.StartHour, bookMeeting.Duration, bookMeeting.Desc);
-                    Console.WriteLine("Meeting has been booked");
-                    Console.WriteLine(newMeet);
+                        Console.WriteLine("Meeting has been booked");
+                        Console.WriteLine(newMeet);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("Something went wrong");
+                        Console.WriteLine(ex.Message);
+                    }
                     break;
 
                 case RoomBookedMeetingsVerb roomBookedMeetings:
-                    if (roomBookedMeetings.Mode != Mode.ReadAndWrite)
-                    {
-                        Console.WriteLine("ReadAndWrite mode required to modify!");
-                        break;
-                    }
                     var meetingsInRoom = meetingService.GetMeetingsRoom(roomBookedMeetings.RoomName);
 
                     if (!meetingsInRoom.Any())
