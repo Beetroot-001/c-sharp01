@@ -1,8 +1,8 @@
 ﻿namespace CalendarApp.Contracts
 {
 	[Serializable]
-	public class Calendar
-	{
+	public class Calendar 
+	{ 
 		public string Title { get; set; }
 		public ICollection<Room> Rooms { get; set; }
 

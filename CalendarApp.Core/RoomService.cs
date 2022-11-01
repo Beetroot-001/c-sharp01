@@ -5,7 +5,12 @@ namespace CalendarApp.Core
 {
 	public class RoomService
 	{
-		private CalendarRepository calendarRepository = new CalendarRepository();
+		private ICalendarRepository calendarRepository;
+
+		public RoomService(ICalendarRepository calendarRepository)
+		{
+			this.calendarRepository = calendarRepository;
+		}
 
 		public Room CreateNewRoom(string title)
 		{
@@ -20,6 +25,11 @@ namespace CalendarApp.Core
 			calendarRepository.AddRoom(newRoom);
 
 			return newRoom;
+		}
+
+		public IEnumerable<Room> GetRooms()
+		{
+			return calendarRepository.GetRooms();
 		}
 	}
 }
