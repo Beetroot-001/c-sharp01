@@ -23,19 +23,10 @@ namespace ConsoleApp1
         public void Push(T value)
         {
             Element<T> newElement = new Element<T>() { Data = value };
-            if (_head==null)
-            {
-                _head = newElement;
-            }
-            else if (_head.Next == null)
-            {
-                _head.Next = newElement;
-            }
-            else
-            {
-                newElement.Next = _head.Next;
-                _head.Next = newElement;
-            }
+
+            newElement.Next = _head;
+            _head = newElement;
+
             Lenth++;
         }
 
@@ -46,11 +37,6 @@ namespace ConsoleApp1
         /// <exception cref="NullReferenceException"></exception>
         public Element<T> Pop()
         {
-            if (_head.Next == null)
-            {
-                throw new NullReferenceException();
-            }
-
             Element<T> currentElement;
             currentElement = _head;
             _head = currentElement.Next;
@@ -64,19 +50,11 @@ namespace ConsoleApp1
         /// </summary>
         public void Clear()
         {
-            if (_head==null)
+            while (_head != null)
             {
-                Console.WriteLine("Stack is Clear");
+                Pop();
             }
-            else
-            {
-                while (_head.Next != null)
-                {
-                    Pop();
-                }
-                Console.WriteLine("Stack is Clear");
-            }
-
+            Console.WriteLine("Stack is Clear");
         }
 
         /// <summary>
@@ -86,7 +64,7 @@ namespace ConsoleApp1
         /// <exception cref="NullReferenceException"></exception>
         public Element<T> Peek()
         {
-            if (_head.Next==null)
+            if (_head.Next == null)
             {
                 throw new NullReferenceException();
             }
@@ -101,7 +79,7 @@ namespace ConsoleApp1
         /// <exception cref="IndexOutOfRangeException"></exception>
         public Element<T>[] CopyTo(Element<T>[] elements)
         {
-            if (elements.Length<0)
+            if (elements.Length < 0)
             {
                 throw new IndexOutOfRangeException();
             }
