@@ -13,6 +13,6 @@ namespace ConsoleApp1
         public Vote(string title)
         {
             Title = title;
-        }       
+        }
     }
 }
