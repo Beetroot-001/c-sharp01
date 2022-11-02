@@ -82,18 +82,18 @@
 					if (Console.ReadLine() == "так") key = "";
 				}
 			} while (key.ToLower() != "x" && key.ToLower() != "х");
-			
 
-			Vote.votes.Add(vote);
+
+			VoteSystem.AddVote(vote);
 		}
 
 		public static void VoteMenu()
 		{
 			string key = string.Empty;
 			Console.WriteLine("Виберіть опитування. Введіть його номер. Або введіть х щоб повернутись назад");
-            for (int i = 0; i < Vote.votes.Count; i++)
+            for (int i = 0; i < VoteSystem.votes.Count; i++)
             {
-				Vote vote = Vote.votes[i];
+				Vote vote = VoteSystem.votes[i];
 				Console.WriteLine($"{i}.{vote.Title}");
             }
 			do
@@ -104,20 +104,20 @@
 					continue;
                 }
 
-				if (!int.TryParse(key, out int voteId) || voteId > Vote.votes.Count-1 )
+				if (!int.TryParse(key, out int voteId) || voteId > VoteSystem.votes.Count-1 )
 				{
 					Console.WriteLine("Error. Некоректний ввід або число перевищує кількість опитувань");
 					Console.WriteLine("Виберіть опитування. Введіть його номер");
 					continue;
 				}
 
-				Vote.ShowVote(voteId);				
+				VoteSystem.ShowVote(voteId);				
 			} while (key.ToLower() != "x" && key.ToLower() != "х");
 		}
 
 		public static void ShowResults()
 		{
-			foreach (var vote in Vote.votes)
+			foreach (var vote in VoteSystem.votes)
 			{
 				Console.WriteLine($"{vote.Title}");
                 foreach (var question in vote.Questions)
