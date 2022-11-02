@@ -8,91 +8,66 @@ namespace ConsoleApp1
 	{
 		static void Main(string[] args)
 		{
-			//int[] ints = new[] { 1, 23, 45, 6, 7, };
-			//var oddNumbers = ints.Where(x => x % 2 == 1).ToList();
+			var persons = JsonConvert.DeserializeObject<IEnumerable<Person>>(File.ReadAllText("data.json"));
 
-			//var t = new
-			//{
-			//	a = 1,
-			//	b = 2
-			//};
+			//find out who is located farthest north/south/west/east using latitude/longitude data
+			var north = persons.MinBy(x => x.Longitude);
+			var south = persons.MaxBy(x => x.Longitude);
+			var west = persons.MinBy(x => x.Latitude);
+			var east = persons.MaxBy(x => x.Latitude);
 
-			//var squaredNumbers = ints.Select(x => new { Number = x, Square = x * x }).ToList();
+			//find max and min distance between 2 persons
+			var distances = persons.SelectMany(x => persons.Where(x1 => x != x1).Select(y => GetDistance(x, y))).ToList();
+			var max = distances.Max();
+			var min = distances.Min();
 
-			//var anotherInts = new[] { 1, 1, 2, 3, 4, 5, 5 };
-			//var groupedInts = anotherInts.GroupBy(x => x).ToDictionary(x => x.Key, x => x.ToList());
 
-
-			//Console.WriteLine(string.Join(',', oddNumbers));
-			//Console.WriteLine(string.Join(',', squaredNumbers));
-
-			var people = JsonConvert.DeserializeObject<IEnumerable<Person>>(File.ReadAllText("data.json"));
-
-			var males = people.Count(x => x.Gender == Gender.Male);
-			Console.WriteLine($"Males: {males}");
-
-			var females = people.Count(x => x.Gender == Gender.Female);
-			Console.WriteLine($"Females: {females}");
-
-			var grouped = people.GroupBy(x => x.Gender).ToDictionary(x => x.Key, x => x.Count());
-			foreach (var item in grouped)
+			//find 2 persons whos ‘about’ have the most same words
+			var about = persons.Join(persons, p1 => true, p2 => true, (p1, p2) => new
 			{
-				Console.WriteLine(item);
-			}
+				Person1 = p1,
+				Person2 = p2,
+			})
+			.Where(x => x.Person1 != x.Person2)
+			.Select(x =>
+			{
+				var personAboutWords1 = x.Person1.About.Split(' ');
+				var personAboutWords2 = x.Person2.About.Split(' ');
 
-			var youngest = people.Min(x => x.Age);
-			var youngestPerson = people.MinBy(x => x.Age);
-			Console.WriteLine($"Min age: {youngest}");
-
-			var oldest = people.Max(x => x.Age);
-			var oldestPerson = people.MaxBy(x => x.Age);
-			Console.WriteLine($"Max age: {oldest}");
-
-			var averageAge = people.Average(x => {
-				return x.Age;
+				var sameWords = personAboutWords1.Intersect(personAboutWords2);
+				return new
+				{
+					Person1 = x.Person1,
+					Person2 = x.Person2,
+					sameWords = sameWords,
+				};
 			});
-			Console.WriteLine($"Average age: {averageAge}");
 
-			var nearestPerson = people.Select(x => new { Number = Math.Abs(x.Age - averageAge), person = x }).OrderBy(x => x.Number).First().person;
-			Console.WriteLine();
+			//find persons with same friends(compare by friend’s name)
+			var same = persons.Join(persons, p1 => true, p2 => true, (p1, p2) => new
+			{
+				Person1 = p1,
+				Person2 = p2,
+			})
+			.Where(x => x.Person1 != x.Person2)
+			.Select(x =>
+			{
+				var person1 = x.Person1;
+				var person2 = x.Person2;
 
-			var isActiveCount = people.Count(x => x.IsActive);
-			Console.WriteLine($"IsActiveCount : {isActiveCount}");
-
-			CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
-			var averageBalance = people.Average(x => decimal.Parse(x.Balance.Substring(1)));
-			Console.WriteLine($"Avarage balance: {averageBalance}");
-
-			var eyeColorGroups = people
-				.GroupBy(x => x.EyeColor)
-				.ToDictionary(x => x.Key, x => new { Count = x.Count() });
-
-			var peopleWithSameName = people.GroupBy(x => x.Name.Split(' ')[0])
-				.ToDictionary(x => x.Key, x => x);
-
-			var firstRegistered = people.MinBy(x => x.Registered);
-			var lastRegistered = people.MaxBy(x => x.Registered);
-
-			//[ [1,2], [3], [4]]
-			// [1,2,3,4]
-			//
-			var friends = people.Select(x => x.Friends);
-
-			var res = Enumerable.Range(1, 5).Aggregate((current, accum) => current * accum);
-
-			Console.WriteLine();
+				var sameFriends = person1.Friends.Select(x => x.Name).Intersect(person2.Friends.Select(x => x.Name));
+				return new
+				{
+					Person1 = x.Person1,
+					Person2 = x.Person2,
+					sameFriends = sameFriends,
+				};
+			});
 		}
 
-		//Action<int> action = Method;
-
-		//for (int i = 0; i < 10; i++)
-		//{
-		//	action(i);
-		//}
-
-		//public static void Method(int i)
-		//{
-		//	Console.WriteLine(i);
-		//}
+		public static double GetDistance(Person one, Person two)
+		{
+			return Math.Sqrt(Math.Pow((one.Longitude - two.Longitude), 2) + Math.Pow((one.Latitude - two.Latitude), 2));
+		}
 	}
 }
