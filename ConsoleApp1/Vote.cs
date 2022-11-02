@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp1
 {
-    internal class Vote : Base
+    public class Vote : Base
     {   
         public List<Question> Questions { get; set; } = new List<Question>();
 
         public Vote(string title)
         {
             Title = title;
-        }       
+        }
     }
 }
