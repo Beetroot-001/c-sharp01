@@ -9,7 +9,7 @@ namespace ConsoleApp1
 {
     public class Stack<T>
     {
-        private Element<T> _head = new Element<T>();
+        private Element<T> _head;
 
         /// <summary>
         /// Property returns number of elements
@@ -23,7 +23,11 @@ namespace ConsoleApp1
         public void Push(T value)
         {
             Element<T> newElement = new Element<T>() { Data = value };
-            if (_head.Next == null)
+            if (_head==null)
+            {
+                _head = newElement;
+            }
+            else if (_head.Next == null)
             {
                 _head.Next = newElement;
             }
@@ -60,11 +64,19 @@ namespace ConsoleApp1
         /// </summary>
         public void Clear()
         {
-            while (_head.Next != null)
+            if (_head==null)
             {
-                Pop();
+                Console.WriteLine("Stack is Clear");
             }
-            Console.WriteLine("Stack is Clear");
+            else
+            {
+                while (_head.Next != null)
+                {
+                    Pop();
+                }
+                Console.WriteLine("Stack is Clear");
+            }
+
         }
 
         /// <summary>
