@@ -6,4 +6,12 @@
 		{
 		}
 	}
+
+	public class PrimeService
+	{
+		public bool IsPrime(int number)
+		{
+			return number != 1;
+		}
+	}
 }
