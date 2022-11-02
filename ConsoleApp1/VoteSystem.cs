@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp1
 {
-    internal class VoteSystem
+    public class VoteSystem
     {
         public static List<Vote> votes { get; set; } = new List<Vote>()
             {
@@ -75,7 +75,7 @@ namespace ConsoleApp1
                 },
             };
 
-        public static void ShowVote(int voteId)
+        public void ShowVote(int voteId)
         {
             string key = string.Empty;
             Console.WriteLine($"Title: {votes[voteId].Title}");
@@ -105,13 +105,109 @@ namespace ConsoleApp1
                     }
                 } while (!(int.TryParse(key, out answerId) && answerId <= question.Answers.Count - 1));
                 question.Answers[answerId].Count++;
-
             }
         }
 
-        public static void AddVote(Vote vote)
+        public void AddVote(Vote vote)
         {
             votes.Add(vote);
+        }
+
+        public void CreateVote()
+        {
+            string key = string.Empty;
+            Console.WriteLine("Введіть Назву опитування");
+            do
+            {
+                key = Console.ReadLine();
+            }
+            while (string.IsNullOrEmpty(key));
+
+            var vote = new Vote(key);
+
+            do
+            {
+                Console.WriteLine("Ввести Питання.  для завершення введіть х");
+                key = Console.ReadLine();
+                if (string.IsNullOrEmpty(key))
+                {
+                    Console.WriteLine("Error");
+                    continue;
+                }
+                if (key.ToLower() != "x" && key.ToLower() != "х")
+                {
+                    var question = new Question(key);
+
+                    Console.WriteLine("Введіть Варіанти відповідей. для завершення введіть х");
+                    do
+                    {
+                        key = Console.ReadLine();
+                        if (string.IsNullOrEmpty(key))
+                        {
+                            Console.WriteLine("Error");
+                            continue;
+                        }
+                        if (key.ToLower() != "x" && key.ToLower() != "х")
+                        {
+                            var answer = new Answer(key);
+                            question.Answers.Add(answer);
+                        }
+                    }
+                    while (key.ToLower() != "x" && key.ToLower() != "х");
+
+                    vote.Questions.Add(question);
+
+                    Console.WriteLine("Додати ще питання? так/ні");
+                    if (Console.ReadLine() == "так") key = "";
+                }
+            } while (key.ToLower() != "x" && key.ToLower() != "х");
+
+
+            VoteSystem.AddVote(vote);
+        }
+
+        public void VoteMenu()
+        {
+            string key = string.Empty;
+            Console.WriteLine("Виберіть опитування. Введіть його номер. Або введіть х щоб повернутись назад");
+            for (int i = 0; i < VoteSystem.votes.Count; i++)
+            {
+                Vote vote = VoteSystem.votes[i];
+                Console.WriteLine($"{i}.{vote.Title}");
+            }
+            do
+            {
+                key = Console.ReadLine() ?? "";
+                if (key == "x")
+                {
+                    continue;
+                }
+
+                if (!int.TryParse(key, out int voteId) || voteId > VoteSystem.votes.Count - 1)
+                {
+                    Console.WriteLine("Error. Некоректний ввід або число перевищує кількість опитувань");
+                    Console.WriteLine("Виберіть опитування. Введіть його номер");
+                    continue;
+                }
+
+                ShowVote(voteId);
+            } while (key.ToLower() != "x" && key.ToLower() != "х");
+        }
+
+        public void ShowResults()
+        {
+            foreach (var vote in VoteSystem.votes)
+            {
+                Console.WriteLine($"{vote.Title}");
+                foreach (var question in vote.Questions)
+                {
+                    Console.WriteLine($"  {question.Title}");
+                    foreach (var answer in question.Answers)
+                    {
+                        Console.WriteLine($"    {answer.Title}::{answer.Count}");
+                    }
+                }
+            }
         }
     }
 }
