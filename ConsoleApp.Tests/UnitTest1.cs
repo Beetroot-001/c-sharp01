@@ -55,5 +55,22 @@ namespace ConsoleApp.Tests
 
             //assert
         }
+
+        [TestMethod]
+
+        [DataRow("//[***][,]\n1***2***3,4", 10)]
+        public void AreEqual2(string input, int expectedResult)
+        {
+            //arrange
+
+            //act
+            var calcService = new CalcService();
+            int sum = calcService.Add2(input);
+
+            //assert
+            Assert.AreEqual(expectedResult, sum);
+        }
+
+
     }
 }
