@@ -26,7 +26,7 @@ namespace ConsoleApp1
 		{
 			this.votePromptService = votePromptService;
 			this.voteRepository = voteRepository;
-			Votes = null;
+			Votes = new List<Vote>();
 		}
 
 		public void ShowVote(int voteId)
@@ -42,28 +42,34 @@ namespace ConsoleApp1
 					Console.WriteLine($"{i}.{question.Answers[i].Title}");
 				}
 
-				int answerId;
-				do
-				{
-					Console.WriteLine("Введіть номер відповіді");
-					key = Console.ReadLine() ?? "";
+				int answerId = GetAnswerId(question.Answers.Count);
 
-					if (!int.TryParse(key, out answerId))
-					{
-						Console.WriteLine("Некоректний ввід");
-						continue;
-					}
-					if (answerId > question.Answers.Count - 1)
-					{
-						Console.WriteLine("Нема варіанту з таким номером");
-					}
-				} while (!(int.TryParse(key, out answerId) && answerId <= question.Answers.Count - 1));
 				question.Answers[answerId].Count++;
-
 			}
 		}
 
+		public int GetAnswerId( int answersCount)
+        {
+			string key = string.Empty;
+			int answerId;
+			do
+			{
+				Console.WriteLine("Введіть номер відповіді");
+				key = Console.ReadLine() ?? "";
 
+				if (!int.TryParse(key, out answerId))
+				{
+					Console.WriteLine("Некоректний ввід");
+					continue;
+				}
+				if (answerId > answersCount - 1)
+				{
+					Console.WriteLine("Нема варіанту з таким номером");
+				}
+			} while (!(int.TryParse(key, out answerId) && answerId <= answersCount - 1));
+
+			return answerId;
+		}
 
 		public void CreateVote()
 		{
@@ -147,6 +153,7 @@ namespace ConsoleApp1
 
 		public void ShowResults()
 		{
+            if (!Votes.Any()) Console.WriteLine("no Votes to show"); return;
 			foreach (var vote in Votes)
 			{
 				Console.WriteLine($"{vote.Title}");

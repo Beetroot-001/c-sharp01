@@ -8,7 +8,7 @@ namespace ConsoleApp1
 {
     public abstract class Base
     {
-        public string Title { get; set; } = "";
+        public string Title { get; set; } = string.Empty;
         public DateTime Created { get; set; } = DateTime.Now;
     }
 }

@@ -73,35 +73,26 @@
 
 
 			var voteSystem = new VoteSystem(null, null);
+			Dictionary<string, Action> keyMethodsDict = new Dictionary<string, Action>()
+			{
+				{"1", ()=>{ voteSystem.CreateVote(); } },
+				{"2", ()=>{ voteSystem.VoteMenu(); } },
+				{"3", ()=>{ voteSystem.ShowResults(); } },
+				{"5", ()=>{ Environment.Exit(1); } },
+			};
+
 
 			while (true)
 			{
 				DrawMenu();
 				var key = Console.ReadLine();
-				if (!new[] { "1", "2", "3", "5" }.Contains(key?.Trim())) { Console.WriteLine("Error. Try again. press 5 to Exit"); continue; }
-				switch (key)
-				{
-					case "1":
-						{
-							voteSystem.CreateVote();
-						}
-						break;
-					case "2":
-						{
-							voteSystem.VoteMenu();
-						}
-						break;
-					case "3":
-						{
-							voteSystem.ShowResults();
-						}
-						break;
-					default:
-						System.Environment.Exit(1);
-						break;
-				}
+				if (key is not null && !keyMethodsDict.ContainsKey(key?.Trim())) { Console.WriteLine("Error. Try again. press 5 to Exit"); continue; }
+
+				keyMethodsDict[key]();
 			}
 		}
+
+		 
 
 		public static void DrawMenu()
 		{
