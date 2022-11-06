@@ -11,28 +11,32 @@ namespace ConsoleApp1
         static HttpClient client = new HttpClient();
 
         static void Main(string[] args)
-		{
+        {
             var result = GetShiba();
-
-            result.Wait();
 
             string[] result2 = result.Result
                 .Split(new[] { '[', ',', ']', '"', '\\' }, StringSplitOptions.RemoveEmptyEntries);
-            Load(result2);
+            LoadShibaToFileTxt(result2);
 
             Console.WriteLine();
         }
 
         static async Task<string> GetShiba(int count = 1)
         {
-            HttpResponseMessage response = await client.GetAsync
-                ($"http://shibe.online/api/shibes?count={count}&urls=true&httpsUrls=false");
-            Console.WriteLine(response.StatusCode);
-            response.EnsureSuccessStatusCode();
-            return await response.Content.ReadAsStringAsync();
+            try
+            {
+                var response = await client.GetStringAsync
+                    ($"http://shibe.online/api/shibes?count={count}&urls=true&httpsUrls=false");
+                return response;
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("URL was invalid...");
+                return string.Empty;
+            }
         }
 
-        static void Load(string[] toWrite)
+        static void LoadShibaToFileTxt(string[] toWrite)
         {   
             File.AppendAllLines("randomShibaPics.txt",toWrite);
         }
