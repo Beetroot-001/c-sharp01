@@ -6,23 +6,23 @@ namespace ConsoleApp1
 	{
 		static void Main(string[] args)
 		{
-			var info = Assembly.GetAssembly(typeof(Program))?.GetTypes();
+			var info = Assembly.GetExecutingAssembly().GetTypes();
 
-			var classesInfo = info.Where(x => x.IsClass);
+			var overallinfo = info.Where(x => x.IsClass || x.IsValueType);
 			Console.WriteLine("Classes: ");
-			foreach (var assembly in classesInfo)
+			foreach (var assembly in overallinfo)
 			{
 				Console.WriteLine(assembly.Name);
 
 				Console.WriteLine("Properties: ");
-				foreach (var property in assembly.GetProperties())
+				foreach (var property in assembly.GetProperties(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance))
 				{
 					Console.WriteLine(property.Name);
 				}
 				Console.WriteLine();
 
 				Console.WriteLine("Methods: ");
-				foreach (var method in assembly.GetMethods())
+				foreach (var method in assembly.GetMethods(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance))
 				{
 					Console.WriteLine(method.Name);
 					var param = method.GetParameters();
@@ -46,6 +46,18 @@ namespace ConsoleApp1
 		}
 	}
 
+	struct Position
+	{
+		public int x;
+        public int y;
+
+		public Position(int tx, int ty)
+		{
+			x = tx;
+			y = ty;
+		}
+	}
+
 	internal class Fruit
 	{
 		public string Name { get; set; }
@@ -57,17 +69,21 @@ namespace ConsoleApp1
 	}
 
 	internal class Car
-	{
+	{	
+
 		public int ID { get; set; }
 
 		public bool IsAlive { get; set; }
-
-		public int NewID(int newId)
+        private int GetCharA()
+        {
+            return 0;
+        }
+        public int NewID(int newId)
 		{	
 			ID = newId;
 			return IsAlive ? newId : ID;
 		}
-	}
+    }
 
 
 }
