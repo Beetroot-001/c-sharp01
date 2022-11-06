@@ -14,7 +14,7 @@ namespace ConsoleApp1
             _size = size;
             _snake = new Snake(size);
             _timer = new System.Timers.Timer(1000);
-            _timer.Elapsed += CheckEat;
+            _timer.Elapsed += OnFruitEaten;
             _timer.Elapsed += _snake.Move;
             _timer.Elapsed += CheckSnake;
             _timer.Elapsed += CheckCollisions;
@@ -22,7 +22,7 @@ namespace ConsoleApp1
             BonusSpawn(this, null);
         }
 
-        private void CheckEat(object? sender, System.Timers.ElapsedEventArgs e)
+        private void OnFruitEaten(object? sender, System.Timers.ElapsedEventArgs e)
         {   
             if (_bonus != null && _snake.Head.Equals(_bonus.Position))
             {
