@@ -16,7 +16,7 @@
         public override bool Equals(object? obj)
         {
             var point = obj as Point;
-            return point != null ? this._x == point._x && this._y == point._y : false;
+            return point != null ? _x == point._x && _y == point._y : false;
         }
         public override int GetHashCode()
         {

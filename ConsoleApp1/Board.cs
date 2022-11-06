@@ -1,10 +1,11 @@
-﻿namespace ConsoleApp1
+﻿using System.Timers;
+
+namespace ConsoleApp1
 {
     class Board
     {
         private int _size;
         private System.Timers.Timer _timer;
-        private System.Timers.Timer _spawnTimer;
         private Snake _snake;
         private Bonus _bonus;
 
@@ -13,18 +14,20 @@
             _size = size;
             _snake = new Snake(size);
             _timer = new System.Timers.Timer(1000);
-            _spawnTimer = new System.Timers.Timer(_size * 1100);
             _timer.Elapsed += CheckEat;
             _timer.Elapsed += _snake.Move;
             _timer.Elapsed += CheckSnake;
-            _spawnTimer.Elapsed += BonusSpawn;
+            _timer.Elapsed += CheckCollisions;
+
+            BonusSpawn(this, null);
         }
 
         private void CheckEat(object? sender, System.Timers.ElapsedEventArgs e)
-        {
+        {   
             if (_bonus != null && _snake.Head.Equals(_bonus.Position))
             {
                 _snake.GetBigger();
+                BonusSpawn(this, null);
             }
         }
 
@@ -43,10 +46,14 @@
             }
         }
 
+        private void CheckCollisions(object? sender, System.Timers.ElapsedEventArgs e)
+        {
+            CollisionObserver.collisionDetection.Invoke(_snake, _size);
+        }
+
         public void Render()
         {
             _timer.Start();
-            _spawnTimer.Start();
             Console.ForegroundColor = ConsoleColor.DarkBlue;
             for (int i = 0; i < _size; i++)
             {
