@@ -80,25 +80,31 @@ namespace ConsoleApp1
             Console.WriteLine($"{personEast.Name} is located farthest east Position: ({personEast.Longitude}), ({personEast.Latitude})");
 
             var distanceMax = people.Select(x => people
-                                    .Select(y => Distance(xLat: x.Latitude, yLat: y.Latitude, xLong: x.Longitude, yLong: y.Longitude))
+                                    .Select(y => new { person1 = x, person2 = y})
+                                    .Where(x => x.person1 != x.person2)
+                                    .Select( x => Distance(xLat: x.person1.Latitude, yLat: x.person2.Latitude, xLong: x.person1.Longitude, yLong: x.person2.Longitude))
                                     .Max()).Max();
+
             var distanceMin = people.Select(x => people
-                                    .Select(y => Distance(xLat: x.Latitude, yLat: y.Latitude, xLong: x.Longitude, yLong: y.Longitude)).OrderBy(x => x).Skip(1)
+                                    .Select(y => new { person1 = x, person2 = y })
+                                    .Where(x => x.person1 != x.person2)
+                                    .Select(x => Distance(xLat: x.person1.Latitude, yLat: x.person2.Latitude, xLong: x.person1.Longitude, yLong: x.person2.Longitude))
                                     .Min()).Min();
 
             Console.WriteLine($"Maximum distance: {distanceMax}");
             Console.WriteLine($"Minimum distance: {distanceMin}");
 
             var aboutsMax = people.Select(x => people
-                                  .Select(y => new { similarity = CalculateSimilarity(x.About, y.About), people = (first: x, second: y) })
-                                  .OrderByDescending(x => x.similarity).Skip(1).First())
-                                  .MaxBy(x => x.similarity);
+                                  .Select(y => new {people = (first: x, second: y) })
+                                  .Where(y => y.people.first != y.people.second)
+                                  .MaxBy(x => CalculateSimilarity(x.people.first.About, x.people.second.About))).First();
 
-            Console.WriteLine($"{aboutsMax.similarity} {aboutsMax.people.first.Name} {aboutsMax.people.second.Name}");
+            Console.WriteLine($"{aboutsMax.people.first.Name} {aboutsMax.people.second.Name}");
 
             var sameFriend = people.SelectMany(x => people
-                                   .Select(y => new { personPair = (first: x, second: y), equals = CompareFriends(x.Friends, y.Friends) && x.Name != y.Name })
-                                   .Where(y => y.equals));
+                                   .Select(y => new { personPair = (first: x, second: y)})
+                                   .Where(y => y.personPair.first != y.personPair.second)
+                                   .Where(y => CompareFriends(y.personPair.first.Friends, y.personPair.second.Friends)));
 
             Console.WriteLine();
         }
