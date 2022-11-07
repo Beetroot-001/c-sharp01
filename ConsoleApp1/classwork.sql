@@ -28,7 +28,7 @@ SELECT
 	Gender, 
 	[Address]
 FROM dbo.Persons
-WHERE Age IN (16, 17, 18, 19) -- BETWEEN 17 AND 19
+WHERE Age IN (17, 18, 19) -- BETWEEN 17 AND 19
 
 SELECT 
 	Id AS Testid, 
