@@ -1,6 +1,10 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
@@ -16,6 +20,7 @@ namespace ConsoleApp1
         private void AddRoom(Room newRoom)
         {
             rooms.Add(newRoom);
+            WriteToJson(newRoom);
         }
 
         public void ShowRoomList()
@@ -125,6 +130,66 @@ namespace ConsoleApp1
             }
 
         }
+
+
+
+      public void WriteToJson(Room newRoom)
+        {
+            var jsonRoom = Newtonsoft.Json.JsonConvert.SerializeObject(newRoom, Newtonsoft.Json.Formatting.Indented);
+
+            string path = @"calendar.json";
+
+            using (var tw = new StreamWriter(path, true))
+            {
+                tw.WriteLine(jsonRoom.ToString());
+                tw.Close();
+            }
+        }
+
+        public void Modify()
+        {
+           
+
+            string filepath = "calendar.json";
+
+            var obj = JObject.Parse(filepath);
+            
+            //var objects = JsonConvert.DeserializeObject(obj);
+            
+
+        }
+
+
+
+ 
+
+
+        public static void ReplaceJsonValue()
+        {
+            string filepath = @"calendar.json";
+            string result = string.Empty;
+           
+            using (StreamReader r = new StreamReader(filepath))
+            {
+                var json = r.ReadToEnd();
+                var jobj = JObject.Parse(json);
+
+
+              
+
+
+                foreach (var item in jobj.Properties())
+                {
+                    item.Value = item.Value.ToString().Replace("v1", "v2");
+                }
+               
+                
+                result = jobj.ToString();
+                Console.WriteLine(result);
+            }
+            File.WriteAllText(filepath, result);
+        }
+
 
 
     }
