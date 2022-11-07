@@ -1,9 +1,20 @@
-﻿namespace ConsoleApp1
+﻿using System.Threading;
+using System.Timers;
+
+namespace ConsoleApp1
 {
 	internal class Program
 	{
-		static void Main(string[] args)
-		{
-		}
-	}
+        public static void Main()
+        {
+            Board board = new Board(20, 20);
+            //board.RenderAll();
+            board.StartGame();
+        }
+
+        //public void Move(object? sender, ElapsedEventArgs e)
+        //{
+        //    Console.WriteLine("*");
+        //}
+    }
 }
