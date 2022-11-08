@@ -1,0 +1,1 @@
+{"Title":null,"Rooms":[{"Id":1,"Title":"test","Meetings":[]},{"Id":2,"Title":"Tennis","Meetings":[{"Title":"play1","Description":null,"Start":"2022-11-20T14:00:00","End":"2022-11-20T16:00:00"},{"Title":"test2","Description":null,"Start":"2022-11-20T15:00:00","End":"2022-11-20T16:00:00"}]},{"Id":3,"Title":"test2","Meetings":[]}]}
