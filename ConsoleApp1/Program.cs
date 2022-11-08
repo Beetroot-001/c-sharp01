@@ -2,7 +2,7 @@
 {
 	internal class Program
 	{
-		public const string Exceptions = "common.txt";
+		public const string Exceptions = "sql2.txt";
 
 		static void Main(string[] args)
 		{
