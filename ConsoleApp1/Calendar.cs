@@ -16,6 +16,7 @@ namespace ConsoleApp1
     {
         List<Room> rooms = new List<Room>();
 
+        JArray jsonArray = new JArray();
 
         private void AddRoom(Room newRoom)
         {
@@ -135,15 +136,28 @@ namespace ConsoleApp1
 
       public void WriteToJson(Room newRoom)
         {
+
             var jsonRoom = Newtonsoft.Json.JsonConvert.SerializeObject(newRoom, Newtonsoft.Json.Formatting.Indented);
 
-            string path = @"calendar.json";
 
-            using (var tw = new StreamWriter(path, true))
-            {
-                tw.WriteLine(jsonRoom.ToString());
-                tw.Close();
-            }
+            jsonArray.Add(jsonRoom);
+
+            string test = jsonArray.ToString();
+            File.WriteAllText("calendar.json", test);
+
+                
+
+
+
+
+            //var jsonRoom = Newtonsoft.Json.JsonConvert.SerializeObject(newRoom, Newtonsoft.Json.Formatting.Indented);
+            //string path = @"calendar.json";
+
+            //using (var tw = new StreamWriter(path, true))
+            //{
+            //    tw.WriteLine(jsonRoom.ToString());
+            //    tw.Close();
+            //}
         }
 
         public void Modify()
@@ -152,9 +166,11 @@ namespace ConsoleApp1
 
             string filepath = "calendar.json";
 
-            var obj = JObject.Parse(filepath);
+            var json = File.ReadAllText(filepath);
+
+            List <Room> obj = JsonConvert.DeserializeObject<List<Room>>(json);
             
-            //var objects = JsonConvert.DeserializeObject(obj);
+          
             
 
         }
