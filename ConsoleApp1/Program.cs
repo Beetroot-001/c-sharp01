@@ -40,14 +40,16 @@ namespace ConsoleApp1
                         Console.WriteLine(meeting.ToString());
                     }
                     break;
+
                 case AddMeetingVerb addMeetingVerb:
                     if (addMeetingVerb.Mode == Mode.ReadAndWrite)
                     {
-                        var createdMeeting = meetingService.AddMeeting(addRoomVerb.Title);
+                        var createdMeeting = meetingService.AddMeeting(addMeetingVerb.Title, addMeetingVerb.Room, addMeetingVerb.MeetingStart, addMeetingVerb.Duration);
                         Console.WriteLine("Meeting added!");
                     }
                     else Console.WriteLine("ReadOnly mode, change to RW to add!");
                     break;
+
                 case AddRoomVerb addRoomVerb:
                     if (addRoomVerb.Mode == Mode.ReadAndWrite)
                     {
@@ -60,9 +62,23 @@ namespace ConsoleApp1
 
                 case ShowRoomsVerb:
                     var rooms = roomService.ShowRooms();
-                    foreach (var room in rooms)
+                    if (!rooms.Any())
                     {
-                        Console.WriteLine(room.Id + " " + room.Title + " " + room.Meetings);
+                        Console.WriteLine("No rooms yet!");
+                    }
+                    else
+                    {
+                        foreach (var room1 in rooms)
+                        {
+                            Console.WriteLine(room1.Id + " " + room1.Title + " " + room1.Meetings);
+                        }
+                    }
+                    break;
+                case ShowMeetsInRoomVerb showMeetsInRoomVerb:
+                    Room room = roomService.ShowRooms().Single(x=> x.Title == showMeetsInRoomVerb.Title);
+                    foreach (Meeting meeting in room.Meetings)
+                    {
+                        Console.WriteLine(meeting.Title + " " + meeting.Description + " " + meeting.Start + meeting.End);
                     }
                     break;
 
@@ -81,9 +97,21 @@ namespace ConsoleApp1
         public class ShowMeetingsVerb : ModeOption
         {
         }
+
         [Verb("add-meeting", HelpText = "Add meeting to the calendar.")]
         public class AddMeetingVerb : ModeOption
         {
+            [Option("title", Required = true)]
+            public string Title { get; set; }
+
+            [Option("room", Required = true)]
+            public string Room { get; set; }
+
+            [Option("meeting-start", Required = true)]
+            public DateTime MeetingStart { get; set; }
+
+            [Option("meeting-duration", Required = false)]
+            public TimeSpan Duration { get; set; } = new TimeSpan(0, 45, 0);
         }
 
         [Verb("add-room", HelpText = "Create room in the calendar.")]
@@ -96,6 +124,12 @@ namespace ConsoleApp1
         [Verb("view-rooms", HelpText = "View rooms in the calendar.")]
         public class ShowRoomsVerb : ModeOption
         {
+        }
+        [Verb("view-meetings-by-room", HelpText = "View meetings in the room")]
+        public class ShowMeetsInRoomVerb : ModeOption
+        {
+            [Option("title", Required = true)]
+            public string Title { get; set; } 
         }
 
         public enum Mode

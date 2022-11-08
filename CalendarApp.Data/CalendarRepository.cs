@@ -27,6 +27,17 @@ namespace CalendarApp.Data
 
             calendarContext.SaveChanges();
         }
+        public Room BookRoom(string roomName, DateTime dateTime)
+        {
+            Room room = calendarContext.Calendar.Rooms.Single(x => x.Title == roomName);
+            if (room.Meetings.Any(x => x.Start == dateTime))
+            {               
+                throw new Exception("Time is already occupied, choose another room!");
+                return null;
+            }
+            else return room;
+            
+        }
         public ICollection<Room> ViewRooms()
         {
              return calendarContext.Calendar.Rooms;            
