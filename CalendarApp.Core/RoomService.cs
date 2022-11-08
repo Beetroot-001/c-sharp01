@@ -21,5 +21,9 @@ namespace CalendarApp.Core
 
 			return newRoom;
 		}
+		public ICollection<Room> ShowRooms()
+        {
+			return calendarRepository.ViewRooms();
+        }
 	}
 }
