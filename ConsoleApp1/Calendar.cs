@@ -15,15 +15,21 @@ namespace ConsoleApp1
     internal class Calendar
     {
         List<Room> rooms = new List<Room>();
+        private string path = @"calendar.json";
 
-        JArray jsonArray = new JArray();
-
+        /// <summary>
+        /// Add a new room to the lsit of rooms
+        /// </summary>
+        /// <param name="newRoom"></param>
         private void AddRoom(Room newRoom)
         {
             rooms.Add(newRoom);
-            WriteToJson(newRoom);
+            WriteToJson();
         }
 
+        /// <summary>
+        /// Show the lsit of all created rooms
+        /// </summary>
         public void ShowRoomList()
         {
             int counter = 0;
@@ -33,48 +39,77 @@ namespace ConsoleApp1
             }
         }
 
+        /// <summary>
+        /// Show the available/occupied time of the room from te list
+        /// </summary>
+        /// <param name="roomNumber"></param>
         public void ShowRoomStatus(int roomNumber)
         {
             rooms[roomNumber].ShowMeetings();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="roomNumber"></param>
         public void BookRoom(int roomNumber)
         {
-
             if (rooms[roomNumber].BookingProcess())
             {
                 Console.WriteLine("The room is succesfully booked.");
+                WriteToJson();
             }
             else
             {
                 Console.WriteLine("This time is not available");
             }
-
         }
 
+        /// <summary>
+        /// Modify the access to calendar
+        /// </summary>
+        public enum Access
+        {
+            readOnly,
+            fullAccess
+        } 
     
-        private void Menu()
+        /// <summary>
+        /// Display te menu with options
+        /// </summary>
+        /// <param name="access"></param>
+        private void Menu (Access access)
         { 
-            Console.WriteLine("0.Exit calendar");
-            Console.WriteLine("1.Add a new room");
-            Console.WriteLine("2.View rooms list");
-            Console.WriteLine("3.Book meeting");
-            Console.WriteLine("4.See the booked shedule of the room");
+            Console.WriteLine("0.Exit calendar");          
+            Console.WriteLine("1.View rooms list"); 
+            Console.WriteLine("2.See the booked shedule of the room");
+
+            if (access == Access.fullAccess)
+            {
+                Console.WriteLine("3.Add a new room");
+                Console.WriteLine("4.Book meeting");
+            }            
         }
 
-        private void ReturnToMenu()
+        /// <summary>
+        /// Clear console and return to main menu
+        /// </summary>
+        /// <param name="access"></param>
+        private void ReturnToMenu(Access access)
         {
             Console.WriteLine("Press any key to return to main menu");
             Console.ReadKey();
             Console.Clear();
-            CalendarInterface();
+            CalendarInterface(access);
         }
 
-
-       
-        public void CalendarInterface()
+       /// <summary>
+       /// Provide options to manipulate the calendar
+       /// </summary>
+       /// <param name="access"></param>
+        private void CalendarInterface(Access access)
         {
-            Menu();
+            Menu(access);
             var input = Console.ReadKey(true);
 
             switch (input.Key)
@@ -85,39 +120,13 @@ namespace ConsoleApp1
                     return;
 
                 case ConsoleKey.D1:
-                    
-                    Console.WriteLine("Add the name of a new room");
-                    string newRoom = Console.ReadLine();
-                    AddRoom(new Room(newRoom));
-                    Console.WriteLine($"The room {newRoom} is succesfully added.");
-                    ReturnToMenu();
-                    break;
-
-                case ConsoleKey.D2:
 
                     Console.WriteLine("The list of avialable rooms");
                     ShowRoomList();
-                    ReturnToMenu();
+                    ReturnToMenu(access);
                     break;
 
-                case ConsoleKey.D3:
-                    ShowRoomList();
-                    Console.WriteLine("Choose the room to book the time");
-                    var roomChoice = Console.ReadLine();
-                    int.TryParse(roomChoice, out int roomNumber);
-                    
-                    if (roomNumber == 0 || rooms.Count < roomNumber)
-                    {
-                        Console.WriteLine("This room doesn't exist");
-                        ReturnToMenu();
-                        break;
-                    }
-
-                    BookRoom(roomNumber-1);
-                    ReturnToMenu();
-                    break;
-
-                case ConsoleKey.D4:
+                case ConsoleKey.D2:
                     ShowRoomList();
                     Console.WriteLine("Choose the room to check its booking shedule.");
                     var room = Console.ReadLine();
@@ -126,87 +135,110 @@ namespace ConsoleApp1
                     {
                         ShowRoomStatus(roomNum-1);
                     }
-                    ReturnToMenu();
+                    ReturnToMenu(access);
+                    break;
+
+                case ConsoleKey.D3:
+
+                    if (access == Access.readOnly) goto default;
+
+                    Console.WriteLine("Add the name of a new room");
+                    string newRoom = Console.ReadLine();
+                    AddRoom(new Room(newRoom));
+                    Console.WriteLine($"The room {newRoom} is succesfully added.");
+                    WriteToJson();
+                    ReturnToMenu(access);
+                    break;
+
+                case ConsoleKey.D4:
+
+                    if (access == Access.readOnly) goto default;
+
+                    ShowRoomList();
+                    Console.WriteLine("Choose the room to book the time");
+                    var roomChoice = Console.ReadLine();
+                    int.TryParse(roomChoice, out int roomNumber);
+
+                    if (roomNumber == 0 || rooms.Count < roomNumber)
+                    {
+                        Console.WriteLine("This room doesn't exist");
+                        ReturnToMenu(access);
+                        break;
+                    }
+
+                    BookRoom(roomNumber - 1);
+                    ReturnToMenu(access);
+                    break;
+
+                default:
+                    Console.WriteLine("Pls, choose one of the avialable options.");
+                    ReturnToMenu(access);
                     break;
             }
-
         }
 
-
-
-      public void WriteToJson(Room newRoom)
+        /// <summary>
+        /// Write object to Json file
+        /// </summary>
+        public void WriteToJson()
         {
-
-            var jsonRoom = Newtonsoft.Json.JsonConvert.SerializeObject(newRoom, Newtonsoft.Json.Formatting.Indented);
-
-
-            jsonArray.Add(jsonRoom);
-
-            string test = jsonArray.ToString();
-            File.WriteAllText("calendar.json", test);
-
-                
-
-
-
-
-            //var jsonRoom = Newtonsoft.Json.JsonConvert.SerializeObject(newRoom, Newtonsoft.Json.Formatting.Indented);
-            //string path = @"calendar.json";
-
-            //using (var tw = new StreamWriter(path, true))
-            //{
-            //    tw.WriteLine(jsonRoom.ToString());
-            //    tw.Close();
-            //}
+            var jsonRooms = JsonConvert.SerializeObject(rooms, Formatting.Indented);
+            File.WriteAllText(path, jsonRooms);
         }
 
-        public void Modify()
+        /// <summary>
+        /// Read object from json file and add it to the list of rooms
+        /// </summary>
+        public void ReadFromJsonFile()
         {
-           
+            var result = File.ReadAllText(path);
 
-            string filepath = "calendar.json";
+            if (result == String.Empty) return;
+            var objects = JsonConvert.DeserializeObject<List<Room>>(result);
 
-            var json = File.ReadAllText(filepath);
+            rooms.Clear();
 
-            List <Room> obj = JsonConvert.DeserializeObject<List<Room>>(json);
-            
-          
-            
-
-        }
-
-
-
- 
-
-
-        public static void ReplaceJsonValue()
-        {
-            string filepath = @"calendar.json";
-            string result = string.Empty;
-           
-            using (StreamReader r = new StreamReader(filepath))
+            foreach (var item in objects)
             {
-                var json = r.ReadToEnd();
-                var jobj = JObject.Parse(json);
-
-
-              
-
-
-                foreach (var item in jobj.Properties())
-                {
-                    item.Value = item.Value.ToString().Replace("v1", "v2");
-                }
-               
-                
-                result = jobj.ToString();
-                Console.WriteLine(result);
+                rooms.Add(item);
             }
-            File.WriteAllText(filepath, result);
         }
 
+        /// <summary>
+        /// Run calendar and choose the access mode
+        /// </summary>
+        public void RunCalendar()
+        {
+            if (!File.Exists(path))
+            {
+                var file = File.Create(path);
+                file.Close();                
+            }
 
+            ReadFromJsonFile();
 
+            Console.WriteLine("Choose the access mode");
+            Console.WriteLine("0.Exit");
+            Console.WriteLine("1.Read only mode");
+            Console.WriteLine("2.Full access mode ");
+
+            var result = Console.ReadLine();
+            int.TryParse(result, out int accessChoice);
+
+            switch (accessChoice)
+            {
+                case 1:
+                    Console.Clear();
+                    CalendarInterface(Access.readOnly);
+                    break;
+
+                case 2:
+                    Console.Clear();
+                    CalendarInterface(Access.fullAccess);
+                    break;
+                default:
+                    break;
+            }  
+        }
     }
 }

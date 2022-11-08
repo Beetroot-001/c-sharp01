@@ -34,32 +34,30 @@ namespace ConsoleApp1
 
         public string Name => name;
 
-        //[JsonPropertyName("freehours")]
         public Dictionary<TimeSpan, bool> FreeHours => freeHours;
 
-
-
+        /// <summary>
+        /// Display the shedule of all available and occupied hours
+        /// </summary>
         public void ShowMeetings()
         {
-
             for (int i = 0; i < freeHours.Count-1; i++)
             {
-
                    string status = freeHours.ElementAt(i).Value == true ? "available" : "occupied";
                    var color = status == "available" ? Console.ForegroundColor = ConsoleColor.Green : Console.ForegroundColor = ConsoleColor.Red;
 
-                    Console.ForegroundColor = color;
-                
-                    Console.WriteLine($"From {freeHours.ElementAt(i).Key} to {freeHours.ElementAt(i + 1).Key} status: {status}");
-                     Console.ResetColor();
-              
+                   Console.ForegroundColor = color;               
+                   Console.WriteLine($"From {freeHours.ElementAt(i).Key} to {freeHours.ElementAt(i + 1).Key} status: {status}");
+                   Console.ResetColor();
             }
         }
 
-
-
-
-        public bool BookTime2 (TimeSpan time)
+        /// <summary>
+        /// Book time if the mentioned time span is free for booking
+        /// </summary>
+        /// <param name="time"></param>
+        /// <returns> Return true if time is booked, false if time is not available </returns>
+        public bool BookTime (TimeSpan time)
         {
             freeHours.TryGetValue(time, out bool result);
 
@@ -68,11 +66,13 @@ namespace ConsoleApp1
                 freeHours[time] = false;
                 return true;
             }
-
             return false;
         }
 
-
+        /// <summary>
+        /// Choose the time to book 
+        /// </summary>
+        /// <returns>Return true if time is available or false if not</returns>
         public bool BookingProcess()
         {
             Console.WriteLine("The available time for booking");
@@ -85,11 +85,7 @@ namespace ConsoleApp1
           
             TimeSpan time = new TimeSpan(bookingTime, 0, 0);
 
-            return BookTime2(time);
-
+            return BookTime(time);
         }
-
-
-
     }
 }

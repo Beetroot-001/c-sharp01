@@ -8,14 +8,10 @@
 			
 
 
-			Room room101 = new Room("101");
-
 
 			Calendar calendar = new Calendar();
 
-			//calendar.Modify();
-
-			calendar.CalendarInterface();
+			calendar.RunCalendar();
 		
 
 
