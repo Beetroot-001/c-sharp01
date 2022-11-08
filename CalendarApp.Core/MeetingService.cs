@@ -39,7 +39,7 @@ namespace CalendarApp.Core
                     throw new ArgumentException("The hours are occupied in this room!");
 
             }
-            catch (ArgumentNullException)
+            catch(InvalidOperationException)
             {
                 throw new ArgumentNullException("Room with this name was not found!");
             }
