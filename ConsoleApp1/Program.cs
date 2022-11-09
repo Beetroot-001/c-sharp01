@@ -1,4 +1,7 @@
-﻿namespace ConsoleApp1
+﻿using System.Net;
+using System.Net.Sockets;
+
+namespace ConsoleApp1
 {
     internal class Program
     {
