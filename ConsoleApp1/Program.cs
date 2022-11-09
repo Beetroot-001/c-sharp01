@@ -2,7 +2,7 @@
 {
 	internal class Program
 	{
-		public const string Exceptions = "common.txt";
+		public const string Exceptions = "sql1.txt";
 
 		static void Main(string[] args)
 		{
@@ -15,13 +15,13 @@
 				"Serhii Kropotov",
 				"Popov Artem",
 				"Maryna Bohdanova",
-				"Balitskyi Vladyslav",
+				//"Balitskyi Vladyslav",
 				"Andrii Kovalenko",
 				"Ponomarienko Andrii",
 				"Nataliia Tyshchenko",
 				"Rushynets Oleksii",
 				//"Viktoriya Tsaruk",
-				"Bas Serhii",
+				// "Bas Serhii",
 			};
 
 			Console.WriteLine("\tThe game is started!");
