@@ -1,52 +1,48 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ConsoleApp1
+﻿namespace ConsoleApp1
 {
-    internal class Bin
+    internal class Basket
     {
-        IGoods[] goods;
+        private IGoods[] goods;
         public Customer customer;
         public int NumOfGoods = 0;
         public int TotalCost;
-        public Bin(Customer customer, LoginForm login)
+
+        public Basket(Customer customer, LoginForm login)
         {
             CheckIfLogon(customer, login);
         }
+
         public void CheckIfLogon(Customer customer, LoginForm login)
         {
-            if (login.logOn == true)
+            if (login.logOn)
             {
                 this.customer = customer;
             }
             else { Console.WriteLine("Login first!"); login.Login(customer); CheckIfLogon(customer, login); }
         }
+
         public void AddGoods(IGoods goods1, int quantity)
         {
             do
             {
-                if (goods1.quantity < quantity)
+                if (goods1.Quantity < quantity)
                 {
                     Console.WriteLine("Position is unavailable!");
-                    quantity = goods1.quantity;
+                    quantity = goods1.Quantity;
                 }
             }
-            while (goods1.quantity > quantity);
+            while (goods1.Quantity > quantity);
+            for (int i = 0; i < quantity; i++)
             {
-                for (int i = 0; i < quantity; i++)
-                {
-                    NumOfGoods++;
-                    Array.Resize(ref goods, NumOfGoods);
-                    goods[NumOfGoods - 1] = goods1;
-                    goods1.quantity--;
-                    TotalCost += goods1.uahValue;
-                    Console.WriteLine("Position has been added to the bin!");
-                }
+                NumOfGoods++;
+                Array.Resize(ref goods, NumOfGoods);
+                goods[NumOfGoods - 1] = goods1;
+                goods1.Quantity--;
+                TotalCost += goods1.UahValue;
+                Console.WriteLine("Position has been added to the bin!");
             }
         }
+
         public void RemoveGoods(IGoods goods1, int quantity)
         {
             for (int i = 0; i < quantity; i++)
@@ -63,10 +59,10 @@ namespace ConsoleApp1
                     else if (goods1 == goods[goods.Length - 1])
                     {
                         Array.Resize(ref goods, NumOfGoods);
-                    }                    
+                    }
                 }
-            }            
-            TotalCost -= goods1.uahValue * quantity;
+            }
+            TotalCost -= goods1.UahValue * quantity;
         }
 
         public void Checkout()
@@ -83,7 +79,7 @@ namespace ConsoleApp1
                     dict[good] = 1;
                 }
             }
-            Console.WriteLine("Your bin:");            
+            Console.WriteLine("Your bin:");
             if (goods.Length != 0)
             {
                 foreach (var good in dict) { Console.WriteLine(good.Key.Name + " " + good.Value); }

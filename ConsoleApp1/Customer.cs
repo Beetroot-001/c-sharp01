@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ConsoleApp1
+﻿namespace ConsoleApp1
 {
     internal class Customer
     {
@@ -12,7 +6,8 @@ namespace ConsoleApp1
         public string Email { get; set; }
         private string Password { get; set; }
         public bool isRegistered;
-        private decimal moneyBalUah = 5000;        
+        private decimal moneyBalUah = 5000;
+
         public Customer(string name, string email, string password)
         {
             Name = name;
@@ -23,7 +18,7 @@ namespace ConsoleApp1
         public Customer(string name, string email)
         {
             Name = name;
-            Email = email;           
+            Email = email;
         }
 
         public string EnterPassword()

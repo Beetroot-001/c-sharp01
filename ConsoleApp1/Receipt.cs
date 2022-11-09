@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ConsoleApp1
+﻿namespace ConsoleApp1
 {
     internal class Receipt
     {
-        public Receipt(Bin bin)
+        public Receipt(Basket bin)
         {
             bool empty = bin.NumOfGoods != 0 ? true : false;
             if (empty)
@@ -16,9 +10,6 @@ namespace ConsoleApp1
                 bin.customer.Buy(bin.TotalCost);
                 Console.WriteLine("Purchase done!" + "\nRemaining balance: ");
                 bin.customer.GetBalance();
-            }
-            else
-            {                
             }
         }
     }
