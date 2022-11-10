@@ -4,6 +4,8 @@
 	{
 		static void Main(string[] args)
 		{
+			var voter = new ConsoleInterface();
+			voter.StartInterface();
 		}
 	}
 }
