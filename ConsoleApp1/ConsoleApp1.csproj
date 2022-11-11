@@ -20,6 +20,9 @@
     <None Update="sql1.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="sql3.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="sql2.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
