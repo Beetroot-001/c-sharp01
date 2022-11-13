@@ -14,9 +14,9 @@ namespace ConsoleApp1
         public float Price { get; private set; }
         public int Quantity { get; private set; }
 
-        public Product(int sid)
+        public Product(int id)
         {
-            Id = Id;
+            Id = id;
             Title = "";
             Price = 0.0f;
             Quantity = 1;
