@@ -43,7 +43,7 @@ CREATE TABLE Library.Authors
 GO
 CREATE TABLE Library.Books
 (
-      Id INT IDENTITY(1, 1) PRIMARY KEY,
+      Id INT IDENTITY(1, 1),
       Titile VARCHAR(128) NOT NULL,
       Description VARCHAR(MAX) NULL,
 	  Quantity int NOT NULL DEFAULT(1),
@@ -56,7 +56,7 @@ CREATE TABLE Library.Books
 GO
 CREATE TABLE Library.BooksAuthors
 (
-      Id INT IDENTITY(1, 1) PRIMARY KEY,
+      Id INT IDENTITY(1, 1),
       BookId int NOT NULL,
 	  AuthorId int NOT NULL,      
 	  Created DATETIME DEFAULT(GETDATE()) not null,
