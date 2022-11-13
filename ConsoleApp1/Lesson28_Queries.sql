@@ -5,9 +5,9 @@ CREATE TABLE dbo.PhoneBook
       FirstName VARCHAR(64) NOT NULL,
 	  MiddleName VARCHAR(64) NULL,
       LastName VARCHAR(64) NULL,
-	  phone VARCHAR NOT NULL,
-	  created DATETIME DEFAULT(GETDATE()) not null,
-	  updated DATETIME null
+	  Phone VARCHAR NOT NULL,
+	  Created DATETIME DEFAULT(GETDATE()) not null,
+	  Updated DATETIME null
     );
 
 GO
@@ -15,9 +15,9 @@ CREATE TABLE dbo.SchoolSchedule
     (
       Id INT IDENTITY(1, 1) NOT NULL PRIMARY KEY,
       ObjectName VARCHAR(64) NOT NULL,
-      [start] DATETIME not null,
-	  duration datetime not null,
-	  created DATETIME DEFAULT(GETDATE())
+      [Start] DATETIME not null,
+	  Duration datetime not null,
+	  Created DATETIME DEFAULT(GETDATE())
     );
 
 GO
@@ -25,7 +25,7 @@ CREATE TABLE dbo.UsersLoginHistory
 	(
 		Id INT IDENTITY(1, 1) NOT NULL PRIMARY KEY,
 		UserId INT NOT NULL,
-		[login] DATETIME DEFAULT(GETDATE())
+		[Login] DATETIME DEFAULT(GETDATE())
 	);
 
 GO
@@ -47,9 +47,9 @@ GO
 CREATE TABLE Bank.TransactionsData
 	(
 		Id INT IDENTITY(1, 1) NOT NULL PRIMARY KEY,
-		fromAccount int NOT NULL,
-		toAccount int NOT NULL,
-		[value] float NOT NULL,
-		comment varchar null,
-		created DATETIME DEFAULT(GETDATE())
+		FromAccount int NOT NULL,
+		ToAccount int NOT NULL,
+		[Value] float NOT NULL,
+		Comment varchar null,
+		Created DATETIME DEFAULT(GETDATE())
 	);
