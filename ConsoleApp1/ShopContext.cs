@@ -21,7 +21,7 @@ namespace ConsoleApp1
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=localhost;Database=Library;Trusted_Connection=false;");
+            optionsBuilder.UseSqlServer("Server=localhost;Database=Library;Trusted_Connection=true;");
             
         }
 
