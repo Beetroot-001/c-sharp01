@@ -4,6 +4,10 @@
 	{
 		static void Main(string[] args)
 		{
+
+			var myShopContext = new ShopContext();
+
+
 		}
 	}
 }
