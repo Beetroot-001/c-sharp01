@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ua">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyInfo</title>
+</head>
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body{
+    width: 90vw;
+    padding: 1vh 5vw;
+}
+
+header{
+    display: flex;
+    background-color: #aec7be;
+    justify-content: center;
+}
+
+.basic{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.basic .bio{    
+    margin: 0 10px;
+}
+
+.bio ul{
+    list-style: none;
+}
+
+.bio ul li{
+    display: grid; 
+    grid-template-columns: 1fr 1fr; 
+    grid-template-rows: 1fr; 
+    gap: 0px 10px; 
+    grid-template-areas: 
+        ". ."; 
+}
+
+.bio ul li span{
+    font-weight: 600;
+}
+
+.skills{
+    display: flex;
+    flex-wrap: wrap;
+}
+.skills div{
+    border: 1px solid black;
+    border-color: black;
+    padding: 5px;
+    margin: 5px 5px 5px 0px;
+
+    flex: 1 1 23%;
+}
+.skills div:nth-child(2n){
+    flex: 1 1 33%;
+}
+
+.skills div:hover {
+    background-color: silver;
+}
+
+
+</style>
+<body>
+    <header>
+        <span>CV</span>
+    </header>
+    <main>
+        <div class="basic">
+            <img src="https://media-exp1.licdn.com/dms/image/C4D03AQE6MG9zWUWCFA/profile-displayphoto-shrink_200_200/0/1645452568094?e=1674086400&v=beta&t=uH3TjyJva3RuJQyIktoR8qJhiZkXDmlmjVNshSXT6nQ" alt="My photo>">
+            <div class="bio">
+                <ul>
+                    <li>First Name: <span>Serhii</span></li>
+                    <li>Last Name: <span>Kropotov</span></li>
+                    <li>Age: <span>26</span> </li>
+                </ul>
+            </div>
+        </div>        
+        <div class="skills">
+            <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur minima, vitae ducimus accusantium et totam voluptatum praesentium ratione dolore vel architecto voluptate quae atque quaerat necessitatibus odit iste molestias illo.</div>
+            <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur minima, vitae ducimus accusantium et totam voluptatum praesentium ratione dolore vel architecto voluptate quae atque quaerat necessitatibus odit iste molestias illo.</div>
+            <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur minima, vitae ducimus accusantium et totam voluptatum praesentium ratione dolore vel architecto voluptate quae atque quaerat necessitatibus odit iste molestias illo.</div>
+            <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur minima, vitae ducimus accusantium et totam voluptatum praesentium ratione dolore vel architecto voluptate quae atque quaerat necessitatibus odit iste molestias illo.</div>
+            <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur minima, vitae ducimus accusantium et totam voluptatum praesentium ratione dolore vel architecto voluptate quae atque quaerat necessitatibus odit iste molestias illo.</div>
+            <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur minima, vitae ducimus accusantium et totam voluptatum praesentium ratione dolore vel architecto voluptate quae atque quaerat necessitatibus odit iste molestias illo.</div>
+            <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur minima, vitae ducimus accusantium et totam voluptatum praesentium ratione dolore vel architecto voluptate quae atque quaerat necessitatibus odit iste molestias illo.</div>
+            <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur minima, vitae ducimus accusantium et totam voluptatum praesentium ratione dolore vel architecto voluptate quae atque quaerat necessitatibus odit iste molestias illo.</div>
+            <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur minima, vitae ducimus accusantium et totam voluptatum praesentium ratione dolore vel architecto voluptate quae atque quaerat necessitatibus odit iste molestias illo.</div>
+            <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur minima, vitae ducimus accusantium et totam voluptatum praesentium ratione dolore vel architecto voluptate quae atque quaerat necessitatibus odit iste molestias illo.</div>
+        </div>
+    </main>
+    <footer>
+
+    </footer>
+</body>
+<script>
+
+</script>
+</html>
