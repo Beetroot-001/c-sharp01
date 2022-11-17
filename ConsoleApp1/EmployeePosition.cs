@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp1
 {
-    public class Employee : Person
-    {        
-        public EmployeePosition Position { get; set; }
+    public class EmployeePosition
+    {
+        public int Id { get; set; }
+        public string Title { get; set; }
     }
 }

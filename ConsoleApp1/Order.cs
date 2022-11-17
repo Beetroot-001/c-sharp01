@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore.Infrastructure;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,11 +9,18 @@ namespace ConsoleApp1
 {
     public class Order
     {
-        public Employee Employee { get; set; }
+        public int Id { get; set; }
+                
+        public ICollection<Employee> Employee { get; set; }
+
         public Customer Customer { get; set; }
-        public ICollection<Product> Orders { get; set; }
-        public double Total { get => Orders.Sum(x=>x.Cost); }
+
+        public ICollection<Product> Products { get; set; } = new List<Product>();
+       
+        public double Total { get => Products.Sum(x=> x.Cost); }
+
         public DateTime CreatedOn { get; set; }
+        //public Guid CreatedById { get; set; }
         public Employee CreatedBy { get; set; }
     }
 }
