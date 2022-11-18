@@ -1,4 +1,6 @@
-﻿using System.Net.WebSockets;
+﻿
+using Microsoft.EntityFrameworkCore;
+using System.Net.WebSockets;
 
 namespace ConsoleApp1
 {
@@ -7,11 +9,9 @@ namespace ConsoleApp1
 		static void Main(string[] args)
 		{
 			var context = new ShopContext();
+            // query
 
-
-			// query
-
-			context.Orders.Add(new Order
+            context.Orders.Add(new Order
 			{
 				OrderId = new Guid(),
 				Products = new List<Product>()
@@ -57,11 +57,13 @@ namespace ConsoleApp1
 				{
                     CustomerId = new Guid(),
                     FirstName = "G",
-                    LastName = "Holic"
+                    LastName = "Holic",
+					Rating = 5
                 }
             });
 
 			context.SaveChanges();
 		}
-	}
+
+    }
 }

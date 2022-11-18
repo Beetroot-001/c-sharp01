@@ -17,7 +17,7 @@ namespace ConsoleApp1
 
         
 
-        public ShopContext()
+        public ShopContext() : base()
         {
             Database.EnsureCreated();
         }
@@ -31,6 +31,7 @@ namespace ConsoleApp1
             customerModel.Property(x => x.FirstName).IsRequired(true).HasMaxLength(20).IsUnicode();
             customerModel.Property(x => x.LastName).IsRequired(true).HasMaxLength(20).IsUnicode();
             customerModel.HasMany(x => x.OrderId).WithOne(x => x.Customer).HasForeignKey(x => x.CustomerId).IsRequired(false);
+            customerModel.Property(x => x.Rating).HasDefaultValue(5);
 
             var productModel = modelBuilder.Entity<Product>();
             productModel.HasKey(x => x.ProductId);
@@ -45,6 +46,7 @@ namespace ConsoleApp1
             employeeModel.HasMany(x => x.OrderId).WithOne(x => x.Employee).HasForeignKey(x => x.EmployeeId);
             employeeModel.Property(x => x.FirstName).IsRequired(true).HasMaxLength(20).IsUnicode();
             employeeModel.Property(x => x.LastName).IsRequired(true).HasMaxLength(20).IsUnicode();
+            employeeModel.Property(x => x.Rating).HasDefaultValue(3);
 
             var orderModel = modelBuilder.Entity<Order>();
             orderModel.HasKey(x => x.OrderId);
