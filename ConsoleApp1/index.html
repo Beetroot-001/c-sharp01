@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Javascript practice</title>
+  </head>
+  <body>
+    <label for="">Please, enter Item title</label>
+    <input type="text" />
+    <input type="button" value="Add item" id="button" />
+
+    <div class="container">
+      <p>Here is Todo list</p>
+    </div>
+
+    <script>
+      const onClick = () => {
+        const input = document.querySelector("input[type=text]");
+        if (!input.value) {
+          alert("Please, enter not empty value");
+          return;
+        }
+
+        var itemsContainer = document.getElementsByClassName("container")[0];
+
+        var newElement = document.createElement("p");
+        newElement.innerText = input.value;
+
+        var removeItemElement = document.createElement("button");
+        removeItemElement.innerText = "Remove";
+        removeItemElement.onclick = () => {
+          itemsContainer.removeChild(newElement);
+        };
+        newElement.appendChild(removeItemElement);
+        newElement.style.color = "#bbb";
+
+        itemsContainer.appendChild(newElement);
+
+        input.value = "";
+      };
+      var button = document.getElementById("button");
+      button.onclick = onClick;
+
+      //   function a() {
+      //     console.log("Never called funtion");
+      //   }
+
+      //   button.onclick = () => {
+      //     alert("clicked from JS AGAIN");
+      //   };
+
+      //   button.addEventListener("click", () => {
+      //     alert("clicked from JS AGAIN");
+      //   });
+
+      //   button.addEventListener("click", a);
+      //   button.removeEventListener("click", a);
+    </script>
+  </body>
+</html>
