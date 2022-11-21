@@ -9,20 +9,20 @@ namespace ConsoleApp1
     internal class Product
     {
         private string _description;
-        private string Description { 
+        public string Description { 
             get => _description;
             set => _description = value;
         }
 
         private float _price;
-        private float Price
+        public float Price
         {
             get => _price;
             set => _price = value;
         }
 
         private int _quantity;
-        private int Quantity
+        public int Quantity
         {
             get => _quantity;
             set => _quantity = value;
