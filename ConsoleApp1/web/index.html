@@ -5,12 +5,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MyInfo</title>
+    <script src="./script/vue.global.js" ></script>
+    <script src="./script/script.js" ></script>
 </head>
 <style>
 * {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 body{
     width: 90vw;
@@ -70,40 +72,39 @@ header{
 }
 
 
+.addItemToTempText {
+    margin: 10px 0px;
+    background: bisque;
+    border: 1px solid silver;
+    border-radius: 5px;
+    padding: 10px;
+}
+
 </style>
 <body>
     <header>
         <span>CV</span>
     </header>
     <main>
-        <div class="basic">
-            <img src="https://media-exp1.licdn.com/dms/image/C4D03AQE6MG9zWUWCFA/profile-displayphoto-shrink_200_200/0/1645452568094?e=1674086400&v=beta&t=uH3TjyJva3RuJQyIktoR8qJhiZkXDmlmjVNshSXT6nQ" alt="My photo>">
-            <div class="bio">
-                <ul>
-                    <li>First Name: <span>Serhii</span></li>
-                    <li>Last Name: <span>Kropotov</span></li>
-                    <li>Age: <span>26</span> </li>
-                </ul>
+        <div id="app">
+            <div class="basic">
+                <img src="https://media-exp1.licdn.com/dms/image/C4D03AQE6MG9zWUWCFA/profile-displayphoto-shrink_200_200/0/1645452568094?e=1674086400&v=beta&t=uH3TjyJva3RuJQyIktoR8qJhiZkXDmlmjVNshSXT6nQ" alt="My photo>">
+                <div class="bio">
+                    <ul>
+                        <li>First Name: <span>{{FirstName}}</span></li>
+                        <li>Last Name: <span>{{LastName}}</span></li>
+                        <li>Age: <span>{{Age}}</span> </li>
+                    </ul>
+                </div>
+            </div>        
+            <button class="addItemToTempText" @click="addItemToTempText">Add new text</button>
+            <div class="skills">
+                <div v-for="(item, index ) in tempText" :id="index">{{index}}: {{item}}</div>
             </div>
-        </div>        
-        <div class="skills">
-            <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur minima, vitae ducimus accusantium et totam voluptatum praesentium ratione dolore vel architecto voluptate quae atque quaerat necessitatibus odit iste molestias illo.</div>
-            <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur minima, vitae ducimus accusantium et totam voluptatum praesentium ratione dolore vel architecto voluptate quae atque quaerat necessitatibus odit iste molestias illo.</div>
-            <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur minima, vitae ducimus accusantium et totam voluptatum praesentium ratione dolore vel architecto voluptate quae atque quaerat necessitatibus odit iste molestias illo.</div>
-            <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur minima, vitae ducimus accusantium et totam voluptatum praesentium ratione dolore vel architecto voluptate quae atque quaerat necessitatibus odit iste molestias illo.</div>
-            <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur minima, vitae ducimus accusantium et totam voluptatum praesentium ratione dolore vel architecto voluptate quae atque quaerat necessitatibus odit iste molestias illo.</div>
-            <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur minima, vitae ducimus accusantium et totam voluptatum praesentium ratione dolore vel architecto voluptate quae atque quaerat necessitatibus odit iste molestias illo.</div>
-            <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur minima, vitae ducimus accusantium et totam voluptatum praesentium ratione dolore vel architecto voluptate quae atque quaerat necessitatibus odit iste molestias illo.</div>
-            <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur minima, vitae ducimus accusantium et totam voluptatum praesentium ratione dolore vel architecto voluptate quae atque quaerat necessitatibus odit iste molestias illo.</div>
-            <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur minima, vitae ducimus accusantium et totam voluptatum praesentium ratione dolore vel architecto voluptate quae atque quaerat necessitatibus odit iste molestias illo.</div>
-            <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur minima, vitae ducimus accusantium et totam voluptatum praesentium ratione dolore vel architecto voluptate quae atque quaerat necessitatibus odit iste molestias illo.</div>
         </div>
     </main>
     <footer>
 
     </footer>
 </body>
-<script>
-
-</script>
 </html>
