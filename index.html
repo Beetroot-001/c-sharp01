@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Js Forms</title>
+    <style>
+        div {
+            margin: 15px;
+        }
+    </style>
+</head>
+
+<body>
+    <h4>Please fill out this form</h4>
+    <form action="./index.html" method="post">
+        <div>
+            <label for="fullName">Full Name</label>
+            <input type="text" id="fullName" name="fullName" required>
+        </div>
+
+        <div>
+            <label for="age">Age</label>
+            <input type="number" id="age" name="age" min="1" max="99">
+        </div>
+
+        <div>
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email">
+        </div>
+
+        <div>
+            <label for="phone">Phone number</label>
+            <input type="tel" id="phone" name="phoneNumber" pattern="\d+">
+        </div>
+
+        <div>
+            <label for="color">Favorite color</label>
+            <input type="color" id="color" name="color">
+        </div>
+
+        <div>
+            <label for="gender">Gender</label>
+            <select id="gender" name="gender">
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+            </select>
+        </div>
+
+        <div>
+            <input type="button" id="submit" value="Submit">
+        </div>
+    </form>
+
+    <script>
+        function formSubmitionHandler(e) {
+            e.preventDefault();
+
+            const inputs = Array.from(document.querySelectorAll('input,select'));
+
+            const form = {};
+
+            inputs.forEach(el => {
+                // TODO: add validators
+                const inputNameAttr = el.getAttribute('name');
+                if (inputNameAttr) {
+                    form[inputNameAttr] = el.value;
+                }
+            });
+
+            console.log(form);
+
+            const key = 'form';
+
+            const formRecords = localStorage.getItem(key);
+            if (formRecords) {
+                var array = JSON.parse(formRecords);
+
+                if (array instanceof Array) {
+                    array.push(form);
+
+                    localStorage.setItem(key, JSON.stringify(array));
+                }
+                else
+                    localStorage.setItem(key, JSON.stringify([form]));
+            }
+            else {
+                localStorage.setItem(key, JSON.stringify([form]));
+
+            }
+        }
+        document.getElementById('submit').addEventListener('click', formSubmitionHandler);
+    </script>
+</body>
+
+</html>

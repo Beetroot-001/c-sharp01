@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+</head>
+
+<body>
+    <script>
+        const t = _.find([], (x) => x);
+        const string = localStorage.getItem('form');
+
+        if (!string) {
+            const emptyHeader = document.createElement('h5');
+            emptyHeader.innerText = 'There is no records';
+            document.body.appendChild(emptyHeader);
+
+        }
+        else {
+            const array = JSON.parse(string);
+
+            for (const index in array) {
+                const infotag = document.createElement('p');
+                infotag.innerText = `Person: ${array[index].fullName}`;
+                document.body.appendChild(infotag);
+            }
+        }
+
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/underscore@1.13.6/underscore-umd-min.js"></script>
+</body>
+
+</html>
