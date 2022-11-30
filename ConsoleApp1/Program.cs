@@ -7,14 +7,8 @@ namespace ConsoleApp1
 	{
         public static void Main()
         {
-            Board board = new Board(20, 20);
-            //board.RenderAll();
-            board.StartGame();
+            Board.GetBoard(20, 20);
+            Board.StartGame();
         }
-
-        //public void Move(object? sender, ElapsedEventArgs e)
-        //{
-        //    Console.WriteLine("*");
-        //}
     }
 }
