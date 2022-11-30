@@ -1,9 +1,14 @@
-﻿namespace ConsoleApp1
+﻿using System.Threading;
+using System.Timers;
+
+namespace ConsoleApp1
 {
 	internal class Program
 	{
-		static void Main(string[] args)
-		{
-		}
-	}
+        public static void Main()
+        {
+            Board.GetBoard(20, 20);
+            Board.StartGame();
+        }
+    }
 }
