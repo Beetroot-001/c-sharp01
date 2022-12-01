@@ -7,7 +7,21 @@ namespace CalendarApp.Core
 	{
 		private CalendarRepository calendarRepository = new CalendarRepository();
 
-		public IEnumerable<Meeting> GetMeetings()
+        public Meeting CreateNewMeeting(int roomId, string title, DateTime start, TimeSpan duration)
+        {
+            var newMeeting = new Meeting()
+            {
+                Title = title,
+                Start = start,
+                End = start + duration,
+            };
+
+            calendarRepository.AddMeeting(roomId, newMeeting);
+
+            return newMeeting;
+        }
+
+        public IEnumerable<Meeting> GetMeetings()
 		{
 			return calendarRepository.GetMeetings();
 		}

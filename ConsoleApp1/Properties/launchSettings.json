@@ -2,7 +2,7 @@
   "profiles": {
     "ConsoleApp1": {
       "commandName": "Project",
-      "commandLineArgs": "add-room --title 1.1 --mode 2"
+      "commandLineArgs": "show-rooms --show-meetings true --mode 2"
     }
   }
 }

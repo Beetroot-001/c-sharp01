@@ -8,14 +8,14 @@
 
 		public ICollection<Meeting> Meetings { get; set; }
 
-
 		public Room()
 		{
 			Meetings = new List<Meeting>();
 		}
 
-		//public string Number { get; set; }
-		//public string Floor { get; set; }
-		//public string Capacity { get; set; }
+		public override string ToString()
+		{
+			return $"{Id}. {Title}";
+		}
 	}
 }

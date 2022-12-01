@@ -21,5 +21,15 @@ namespace CalendarApp.Core
 
 			return newRoom;
 		}
+
+		public Room GetRoomById(int id)
+		{
+			return calendarRepository.GetRoom(id);
+        }
+
+		public IEnumerable<Room> GetRooms()
+		{
+			return calendarRepository.GetRooms();
+		}
 	}
 }
