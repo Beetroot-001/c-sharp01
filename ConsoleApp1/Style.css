@@ -1,0 +1,516 @@
+html {
+    display: flex;
+}
+
+/* Part 1 */
+
+body {
+    /* Auto layout */
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0px;
+    gap: 48px;
+
+    isolation: isolate;
+    margin: 0px;
+    position: relative;
+    width: 1440px;
+    height: 2185px;
+
+    background: #FFFFFF;
+}
+
+header {
+    background-color: #BBCCBA;
+
+    width: 1440px;
+    height: 100px;
+}
+
+.Logo_header {
+    display: flex;
+    position: absolute;
+    width: 86px;
+    height: 36px;
+    left: 193px;
+    top: 32px;
+
+    font-size: 24px;
+    font-style: italic
+}
+
+.Navigation {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 0px;
+    gap: 36px;
+
+    position: absolute;
+    width: 511px;
+    height: 38px;
+    left: 732px;
+    top: 31px;
+}
+
+.about_me {
+
+    width: 118px;
+    height: 38px;
+
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 156.5%;
+
+    text-align: center;
+
+    color: #052303;
+
+    cursor: pointer;
+}
+
+.accomplishments {
+
+    width: 217px;
+    height: 38px;
+
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 156.5%;
+
+    text-align: center;
+
+    color: #052303;
+
+    cursor: pointer;
+}
+
+.contacts {
+    width: 104px;
+    height: 38px;
+
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 156.5%;
+
+    text-align: center;
+
+    color: #052303;
+
+    cursor: pointer;
+}
+
+
+/* Part 2 */
+
+div {
+
+    position: absolute;
+    width: 1440px;
+    height: 565px;
+    top: 148px;
+}
+
+.lb_about_me {
+    position: absolute;
+    width: 182px;
+    height: 50px;
+    left: 193px;
+    top: 0;
+
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 140%;
+
+    text-align: center;
+
+    color: #052303;
+}
+
+.elips_nav {
+    position: absolute;
+    width: 448px;
+    height: 480px;
+    left: 151px;
+    top: 86px;
+}
+
+.Text_about_me {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0px;
+    gap: 64px;
+    position: absolute;
+    width: 516px;
+    height: 250px;
+    left: 732px;
+    top: 201px;
+}
+
+.Text_about_me_title {
+    width: 310px;
+    height: 86px;
+
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 156.5%;
+
+    letter-spacing: 2px;
+
+    color: #052303;
+}
+
+.Text_about_me_all {
+    width: 516px;
+    height: 100px;
+
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 156%;
+
+    color: #052303;
+}
+
+.Line_first {
+    position: absolute;
+    width: 528px;
+    height: 0px;
+    left: 192px;
+    top: 737px;
+
+    border: 1px solid #052303;
+}
+
+/* Part 3 */
+.Hello_world_section {
+    position: absolute;
+    width: 1440px;
+    height: 420px;
+    top: 761px;
+}
+
+.lb_Hello {
+    position: absolute;
+    width: 343px;
+    height: 200px;
+    left: 100px;
+    top: 110px;
+
+    font-weight: 500;
+    font-size: 128px;
+    line-height: 156%;
+
+    letter-spacing: 2px;
+    color: rgba(5, 35, 3, 0.2);
+    transform: rotate(-90deg);
+}
+
+.lb_World {
+    position: absolute;
+    width: 401px;
+    height: 200px;
+    left: 300px;
+    top: 100px;
+
+    font-weight: 500;
+    font-size: 128px;
+    line-height: 156%;
+
+    letter-spacing: 2px;
+    transform: rotate(-90deg);
+    color: rgba(5, 35, 3, 0.2);
+}
+
+.lb_Hello_World_Code {
+    position: absolute;
+    width: 516px;
+    height: 337px;
+    left: 642px;
+    top: 43px;
+
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 156%;
+
+    color: #FBC385;
+}
+
+.Line_Second {
+    position: absolute;
+    width: 528px;
+    height: 0px;
+    left: 720px;
+    top: 1205px;
+
+    border: 1px solid #052303;
+}
+
+/* Part 4 */
+
+.accomplishments_setions {
+    position: absolute;
+    width: 1440px;
+    height: 420px;
+    top: 1222px;
+}
+
+.lb_accomplishments {
+    position: absolute;
+    width: 337px;
+    height: 50px;
+    left: 192px;
+    top: 0px;
+
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 140%;
+
+    color: #052303;
+}
+
+.lb_first_number {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0px;
+    gap: 22px;
+
+    position: absolute;
+    width: 335px;
+    height: 374px;
+    left: 193px;
+    top: 98px;
+}
+
+.im_number {
+    width: 74px;
+    height: 200px;
+
+    font-weight: 500;
+    font-size: 128px;
+    line-height: 156%;
+
+    letter-spacing: 2px;
+}
+
+.Text_first {
+    width: 335px;
+    height: 152px;
+
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 156.5%;
+
+    text-align: center;
+
+    color: #052303;
+}
+
+.lb_second_number {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0px;
+    gap: 22px;
+
+    position: absolute;
+    width: 336px;
+    height: 380px;
+    left: 552px;
+    top: 98px;
+}
+
+.Text_second {
+    width: 336px;
+    height: 114px;
+
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 156.5%;
+
+    text-align: center;
+
+    color: #052303;
+}
+
+.lb_third_number {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0px;
+    gap: 22px;
+
+    position: absolute;
+    width: 336px;
+    height: 298px;
+    left: 912px;
+    top: 98px;
+}
+
+.im_third_number {
+    width: 74px;
+    height: 200px;
+
+    font-weight: 500;
+    font-size: 128px;
+    line-height: 156%;
+
+    letter-spacing: 2px;
+
+    transform: rotate(-90deg);
+}
+
+.Text_third {
+    width: 336px;
+    height: 76px;
+
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 156.5%;
+
+    text-align: center;
+
+    color: #052303;
+}
+
+.Line_third {
+    position: absolute;
+    width: 528px;
+    height: 0px;
+    left: 192px;
+    top: 1765px;
+
+    border: 1px solid #052303;
+}
+
+.acom_note {
+    width: 336px;
+    height: 22px;
+
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 156.5%;
+
+    letter-spacing: 2px;
+
+    color: #C4C5C4;
+}
+
+/* Part 5 */
+
+.contact_info_section {
+    position: absolute;
+    width: 1440px;
+    height: 148px;
+    top: 1789px;
+}
+
+.lb_contact_info {
+    position: absolute;
+    width: 228px;
+    height: 50px;
+    left: 192px;
+    top: 0px;
+
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 140%;
+
+    color: #052303;
+}
+
+.lb_contact_info_text {
+    position: absolute;
+    width: 516px;
+    height: 25px;
+    left: 186px;
+    top: 98px;
+
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 156%;
+
+    color: #052303;
+}
+
+.lb_contact_info_logo {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 0px;
+    gap: 42px;
+
+    position: absolute;
+    width: 228px;
+    height: 48px;
+    left: 912px;
+    top: 92px;
+}
+
+.im_GitHub {
+    width: 48px;
+    height: 48px;
+
+    cursor: pointer;
+}
+
+.im_LinkedIn {
+    width: 48px;
+    height: 48px;
+
+    cursor: pointer;
+}
+
+.im_Telegram {
+    width: 48px;
+    height: 48px;
+
+    cursor: pointer;
+}
+
+/* Part 6 */
+footer {
+    position: absolute;
+    top: 1985px;
+    width: 1440px;
+    height: 200px;
+
+    background: #193A16;
+}
+
+.Logo_footer {
+    position: absolute;
+    width: 86px;
+    height: 36px;
+    left: 193px;
+    top: 82px;
+
+    cursor: pointer;
+}
+
+.ArrowUp_footer {
+    position: absolute;
+    width: 48px;
+    height: 48px;
+    left: 1249px;
+    top: 76px;
+
+    cursor: pointer;
+}
+
+.footer_txt {
+    position: absolute;
+    width: 127px;
+    height: 22px;
+    left: 656px;
+    top: 136px;
+
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 156.5%;
+
+    color: #FFFFFF;
+}
