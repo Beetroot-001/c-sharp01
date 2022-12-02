@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using MyWebApi.Data;
+using MyWebApi.Filters;
 using MyWebApi.Services;
 
 namespace MyWebApi.Controllers
 {
+	[MyActionFilter]
 	[ApiController]
 	[Route("api/people")]
 	public class PeopleController : ControllerBase
@@ -48,6 +50,7 @@ namespace MyWebApi.Controllers
 			return Ok(updatedPerson);
 		}
 
+		[MyCustomAuthorization]
 		[HttpDelete("{id}")]
 		public async Task<IActionResult> DeletePerson(int id)
 		{
@@ -55,6 +58,5 @@ namespace MyWebApi.Controllers
 
 			return NoContent();
 		}
-
 	}
 }

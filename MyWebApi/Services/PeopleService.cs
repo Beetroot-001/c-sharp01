@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.JsonPatch;
 using MyWebApi.Data;
+using MyWebApi.Exceptions;
 
 namespace MyWebApi.Services
 {
@@ -16,7 +17,7 @@ namespace MyWebApi.Services
 		{
 			if (string.IsNullOrEmpty(person.FirstName) || string.IsNullOrEmpty(person.LastName) || person.Age <= 0)
 			{
-				throw new Exception("Person is not valid");
+				throw new PersonIsInvalidException("Person is not valid");
 			}
 
 			return peopleRepo.Create(person);
@@ -27,7 +28,7 @@ namespace MyWebApi.Services
 			var person = await peopleRepo.GetById(id);
 			if(person == null)
 			{
-				throw new Exception("Person is not found");
+				throw new PersonNotFoundException("Person is not found");
 			}
 
 			await peopleRepo.Delete(person);
@@ -43,7 +44,7 @@ namespace MyWebApi.Services
 			var person = await peopleRepo.GetById(id);
 			if (person == null)
 			{
-				throw new Exception("Person is not found");
+				throw new PersonNotFoundException("Person is not found");
 			}
 
 			return person;
@@ -55,7 +56,7 @@ namespace MyWebApi.Services
 			var person = await peopleRepo.GetById(id);
 			if (person == null)
 			{
-				throw new Exception("Person is not found");
+				throw new PersonNotFoundException("Person is not found");
 			}
 
 			jsonPatch.ApplyTo(person);

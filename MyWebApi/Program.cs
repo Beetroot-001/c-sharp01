@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using MyWebApi.Data;
+using MyWebApi.Filters;
 using MyWebApi.Services;
 
 namespace MyWebApi
@@ -20,7 +21,13 @@ namespace MyWebApi
 			builder.Services.AddTransient<IPeopleRepo, PeopleRepo>();
 			builder.Services.AddTransient<IPeopleService, PeopleService>();
 
-			builder.Services.AddControllers().AddNewtonsoftJson();
+			builder.Services.AddControllers(options =>
+			{
+				options.Filters.Add(typeof(ExceptionFilter));
+
+			}).AddNewtonsoftJson();
+
+			builder.Services.AddSwaggerGen();
 
 			var app = builder.Build();
 
@@ -28,9 +35,27 @@ namespace MyWebApi
 
 			app.UseRouting();
 
-			app.MapControllers();
+			app.UseSwagger();
+			app.UseSwaggerUI();
+
+
+			app.Use((context, next) =>
+			{
+				context.Response.Headers["OLALA"] = "THIS IS MY HEADER";
+
+				return next();
+			});
+
+			app.UseEndpoints(endpoints =>
+			{
+				endpoints.MapControllers();
+			});
+
+			
 
 			app.Run();
+
+			
 		}
 	}
 }
