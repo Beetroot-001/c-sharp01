@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+</head>
+<body>
+    <header>
+        <h1>Conference Online Registration</h1>
+        <label>Please fill in the form below. We`ll contact you as soon possible. </label>
+    </header>
+
+    <nav></nav>
+
+    <form action="Registration" method="get">
+       <p>
+            <div>
+                <label for="First Name">First Name * </label>
+                <input type="text" name="First name" id="First_name" required>
+                       
+                <label for="Second Name">Second Name *</label>
+                <input type="text" name="Second name" id="Second_name" required>
+            </div>
+        </p>
+
+        <p>
+            <div>
+                <label for="Area">Area</label>
+                <div></div>
+                    <select name="selectersArea" id="Area"> 
+                    <option value="Ukraine">Ukraine</option>
+                    <option value="USA">USA</option>
+                    <option value="England">England</option>
+                    <option value="Nortd">Nortd</option>
+                </select>
+         </div>
+        </p>
+
+        <p>
+            <div>
+             <label for="Streat">Streat Adresses</label>
+             <div></div>
+             <input type="text" name="Adresses" id="Adresses"required>
+            </div>
+         </p>
+
+         <p>
+            <div>
+             <label for="Cyti">City</label>
+                <div></div>
+                <input type="text" name="City" id="Cyti">
+                <div></div>
+                <label for="State">State / Province</label>
+                <div></div>
+                <input type="text" name="State" id="State">
+            </div>
+        </p>
+
+        <p>
+            <div>
+             <label for="Postal">Postal / Zip Code</label>
+                <input type="text" name="Postal" id="Postal">
+                <div> </div>
+                <label for="Postal_country">Country</label>
+                <select name="Please_select " id="Postal_country">
+                    <option value="Ukraine">Ukraine</option>
+                   <option value="USA">USA</option>
+                   <option value="England">England</option>
+                    <option value="Nortd">Nortd</option>
+             </select>
+            </div>
+        </p>
+
+        <p>
+            <div>
+                <label for="email">E-mail</label>
+                <input type="email" name="email" id="email">
+                <label for="email">Phone Number</label>
+                <input type="tel" name="Phone Number" id="Phone number" maxlength="10">
+            </div>
+        </p>
+        
+    </form>
+
+    <style>
+        
+        div{
+            margin: 5px;
+        }
+
+        nav{
+           margin: 10px; 
+           border: 1px solid #052303;
+        }
+    </style>
+</body>
+</html>
