@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Оrder form</title>
+</head>
+<body>
+    <form method="Order" action="" id="Оrder_Form">
+
+        <p>Ім'я:<br>
+            <input type="text" name="Lname" size="50" id="lname" required/>
+        </p>
+        
+        <p>E-mail: 
+            <input type="email" name="email" size="50" required/>
+        </p>
+
+        <p>1. Телефон:
+            <input type="tel" name="tel" size="50"/>
+        </p>
+
+        <p>2. Список товарів: <br>
+            <label for="PowerBank">Power Bank</label><br>
+            <label for="Phone">Телефон</label><br>
+            <label for="Cover">Чохол</label><br>
+            <label for="PowerBank">Блок для зарядки</label><br>
+            <label for="PowerBank">Провід для зарядки</label><br>
+        </p>
+
+        <p>3. Виберіть товар та кількість<br>
+            <label for="PowerBank">Power Bank</label> 
+            <input type="text" name="ITPowerBank" />
+            <label for="PowerBank">Кількість</label> 
+            <input type="number" name="ITPowerBank number" /><br>
+            
+            <label for="Phone">Телефон</label> 
+            <input type="text" name="ITPhone" />
+            <label for="Phone">Кількість</label> 
+            <input type="number" name="ITPhone number" /><br>
+
+            <label for="Cover">Чохол</label> 
+            <input type="text" name="ITCover"/>
+            <label for="Cover">Кількість</label> 
+            <input type="number" name="ITCover number"/><br>
+            
+            <label for="Charging unit">Блок для зарядки</label> 
+            <input type="text" name="ITCharging unit"/>
+            <label for="Charging unit">Кількість</label> 
+            <input type="number" name="ITCharging unit number"/><br>
+
+            <label for="Wire for charging ">Провід для зарядки</label> 
+            <input type="text" name="ITWire for charging"/>
+            <label for="Wire for charging ">Кількість</label> 
+            <input type="number" name="ITCWire for charging number"/><br>
+        </p>
+    </form>
+    <style>
+        label{
+            margin: 20px;
+        }
+    </style>
+</body>
+</html>

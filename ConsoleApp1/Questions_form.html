@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Question Form</title>
+</head>
+<body>
+    <form method="post" action="" id="Question_Form">
+
+        <p>Ім'я:<br>
+            <input type="text" name="Lname" size="50" required/>
+        </p>
+        
+        <p>Стать: 
+            <input type="radio" name="Lgender" value="female" required>Жінка
+
+            <input type="radio" name="Lgender" value="male" required>Чоловік
+        </p>
+
+        <p>1. Скільки потрібно часу на вивчиння .Net якщо через 4 місяця ти маєш все знати?
+            <input type="checkbox" name="q01[]" >Один місяць<br>
+            <input type="checkbox" name="q01[]" >Два місяці<br>
+            <input type="checkbox" name="q01[]" >Три місяці<br>
+            <input type="checkbox" name="q01[]" >Все життя<br>
+            <input type="checkbox" name="q01[]" >Година - Дві<br>
+            <input type="checkbox" name="q01[]" value="Others">Чотири місяці<br>
+        </p>
+
+        <p>2. Чи в достатній мірі ви вивчили ази .Net? <br>
+            <input type="radio" name="q02" value="Yes" onclick="display(this)" required>Так
+            <input type="radio" name="q02" value="No" onclick="display(this)" required>Ні
+        </p>
+
+        
+            <p>3. Вистачає часу виконувати всі домашні завдання? <br>
+                <input type="radio" name="q03" value="Yes">Так
+                <input type="radio" name="q03" value="No">Ні
+            </p>
+
+            <p>4. Яка тема була найвжча для вивчення? <br>
+                <input type="checkbox" name="q04" >Вступ до .Net<br>
+                <input type="checkbox" name="q04" >ООП<br>
+                <input type="checkbox" name="q04" >Вступ до SQL<br>
+                <input type="checkbox" name="q04" >Вступ до Html,CSS,JS<br>
+            </p>
+    </form>
+</body>
+</html>
