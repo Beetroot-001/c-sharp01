@@ -2,14 +2,17 @@
 
 namespace MyWebApi.Data
 {
-	public class PeopleRepo : IPeopleRepo
+	public class PeopleRepo : IPeopleRepo, IDisposable
 	{
 		private readonly ApplicationDbContext dbContext;
+		private bool disposedValue;
 
 		public PeopleRepo(ApplicationDbContext applicationDbContext)
 		{
 			this.dbContext = applicationDbContext;
 		}
+
+		public int Prop { get; set; }
 
 		public async Task<Person> Create(Person person)
 		{
@@ -42,6 +45,15 @@ namespace MyWebApi.Data
 		public Task SaveChanges()
 		{
 			return dbContext.SaveChangesAsync();
+		}
+
+		public void Dispose()
+		{
+			if (!disposedValue)
+			{
+				this.dbContext.Dispose();
+				disposedValue = true;
+			}
 		}
 	}
 }

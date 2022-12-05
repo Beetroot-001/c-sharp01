@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.Extensions.Options;
 
 namespace MyWebApi.Filters
 {
 	public class MyActionFilter : Attribute, IActionFilter
 	{
+
 		public void OnActionExecuted(ActionExecutedContext context)
 		{
 			Console.WriteLine($"[MY LOG] Action executing {context.ActionDescriptor.DisplayName}");

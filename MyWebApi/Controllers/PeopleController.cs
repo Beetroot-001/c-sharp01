@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using MyWebApi.Data;
 using MyWebApi.Filters;
 using MyWebApi.Services;
+using System.Reflection;
 
 namespace MyWebApi.Controllers
 {
@@ -13,9 +14,11 @@ namespace MyWebApi.Controllers
 	{
 		private readonly IPeopleService peopleService;
 
-		public PeopleController(IPeopleService peopleService)
+		public PeopleController(IPeopleService peopleService, IPeopleRepo peopleRepo)
 		{
 			this.peopleService = peopleService;
+
+			++peopleRepo.Prop;
 		}
 
 		[HttpGet]
@@ -50,7 +53,7 @@ namespace MyWebApi.Controllers
 			return Ok(updatedPerson);
 		}
 
-		[MyCustomAuthorization]
+		[TypeFilter(typeof(MyCustomAuthorization))]
 		[HttpDelete("{id}")]
 		public async Task<IActionResult> DeletePerson(int id)
 		{

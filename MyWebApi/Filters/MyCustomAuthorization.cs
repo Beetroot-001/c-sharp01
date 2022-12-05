@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.Extensions.Options;
 using System.Net;
 
 namespace MyWebApi.Filters
@@ -7,6 +8,13 @@ namespace MyWebApi.Filters
 	public class MyCustomAuthorization : Attribute, IAuthorizationFilter
 	{
 		private const string authDataHeaderKey = "AuthData";
+
+		private readonly AdminAuthData options;
+		public MyCustomAuthorization(IOptions<AdminAuthData> options)
+		{
+			this.options = options.Value;
+		}
+
 		public void OnAuthorization(AuthorizationFilterContext context)
 		{
 			try
@@ -17,10 +25,7 @@ namespace MyWebApi.Filters
 				var password = authData[0].Split(',')[1];
 
 
-				const string adminLogin = "admin";
-				const string adminPassword = "admin";
-
-				if (!string.Equals(adminLogin, userName) || !string.Equals(adminPassword, password))
+				if (!string.Equals(options.UserName, userName) || !string.Equals(options.Password, password))
 				{
 					context.HttpContext.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
 

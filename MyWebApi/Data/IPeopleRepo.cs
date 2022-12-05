@@ -1,6 +1,6 @@
 ﻿namespace MyWebApi.Data
 {
-	public interface IPeopleRepo
+	public interface IPeopleRepo : IDisposable
 	{
 		Task<IEnumerable<Person>> GetAll();
 
@@ -11,5 +11,7 @@
 		Task Delete(Person person);
 
 		Task SaveChanges();
+
+		int Prop { get; set; }
 	}
 }

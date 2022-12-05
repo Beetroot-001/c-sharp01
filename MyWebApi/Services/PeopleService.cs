@@ -4,13 +4,16 @@ using MyWebApi.Exceptions;
 
 namespace MyWebApi.Services
 {
-	public class PeopleService : IPeopleService
+	public class PeopleService : IPeopleService, IDisposable
 	{
 		private readonly IPeopleRepo peopleRepo;
+		private bool disposedValue;
 
 		public PeopleService(IPeopleRepo peopleRepo)
 		{
 			this.peopleRepo = peopleRepo;
+
+			++peopleRepo.Prop;
 		}
 
 		public Task<Person> Create(Person person)
@@ -64,6 +67,15 @@ namespace MyWebApi.Services
 			await peopleRepo.SaveChanges();
 
 			return person;
+		}
+
+		public void Dispose()
+		{
+			if (!disposedValue)
+			{
+				this.peopleRepo.Dispose();
+				disposedValue = true;
+			}
 		}
 	}
 }
