@@ -1,0 +1,6 @@
+CREATE TABLE BankAccounts
+(
+	AccountCode VARCHAR(100) PRIMARY KEY,
+	OwnerName VARCHAR(200) NOT NULL,
+	Balance FLOAT NOT NULL,
+)

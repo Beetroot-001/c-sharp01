@@ -1,0 +1,9 @@
+CREATE TABLE Schedule
+(
+	ID INT IDENTITY(1, 1) PRIMARY KEY,
+	LessonSubject VARCHAR(100) NOT NULL,
+	Teacher VARCHAR(100) NOT NULL,
+	ClassRoomNum INT NOT NULL,
+	DayOfTheWeek VARCHAR(100) NOT NULL,
+	LessonNumder INT NOT NULL,
+)
