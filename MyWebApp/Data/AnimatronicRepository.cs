@@ -32,12 +32,12 @@ namespace MyWebApp.Data
             return await _animatronicContext.Animatronics.FirstAsync(x => x.ID == id);
         }
 
-        public Task SaveChanges()
+        public async Task SaveChanges()
         {
-            throw new NotImplementedException();
+            await _animatronicContext.SaveChangesAsync();
         }
 
-        public Task Update(Animatronic animatronic)
+        public Task Update(int? id, Animatronic animatronic)
         {
             throw new NotImplementedException();
         }

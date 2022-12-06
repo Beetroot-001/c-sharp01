@@ -1,3 +1,7 @@
+using Microsoft.EntityFrameworkCore;
+using MyWebApp.Data;
+using MyWebApp.Services;
+
 namespace MyWebApp
 {
     public class Program
@@ -7,6 +11,13 @@ namespace MyWebApp
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+            builder.Services.AddDbContext<ApiContext>(options =>
+            {
+                options.UseSqlServer(builder.Configuration.GetConnectionString("Default"));
+            });
+
+            builder.Services.AddTransient<IAnimatronicRepository, AnimatronicRepository>();
+            builder.Services.AddTransient<IAnimatronicService, AnimatronicService>();
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -30,6 +41,7 @@ namespace MyWebApp
 
             app.UseAuthorization();
 
+            app.UseRouting();
 
             app.MapControllers();
 

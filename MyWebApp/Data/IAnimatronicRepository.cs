@@ -3,10 +3,10 @@
     public interface IAnimatronicRepository 
     {
         Task<IEnumerable<Animatronic>> GetAllAnimatronics();
-        Task<Animatronic> GetById(int? id);
-        Task Create(Animatronic animatronic);
-        Task Update(Animatronic animatronic);
-        Task Delete(Animatronic animatronic);
+        Task<Animatronic> GetById(int? id); // read
+        Task Create(Animatronic animatronic); // create
+        Task Delete(Animatronic animatronic); // delete
+        Task Update(int? id, Animatronic animatronic); // update (not a smart way)
         Task SaveChanges();
     }
 }

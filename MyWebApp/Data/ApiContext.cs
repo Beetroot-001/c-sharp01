@@ -6,6 +6,11 @@ namespace MyWebApp.Data
     {
         public DbSet<Animatronic> Animatronics {get; set;}
 
+        public ApiContext(DbContextOptions<ApiContext> dbContextOptions) : base(dbContextOptions)
+        {
+           Database.EnsureCreated();
+        }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
