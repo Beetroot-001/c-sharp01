@@ -10,11 +10,11 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp1
 {
-    public class ShopContext : DbContext
+    public class ShopContextDBFirst : DbContext
     {
         public DbSet<Order> Orders { get; set; }
 
-        public ShopContext()
+        public ShopContextDBFirst()
         {
             Database.EnsureDeleted();
             Database.EnsureCreated();
@@ -30,7 +30,7 @@ namespace ConsoleApp1
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
+        {            
             optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=Shop;Trusted_Connection=True;");
         }
     }
