@@ -7,17 +7,19 @@ namespace MyWebApi.Services
 	public class PeopleService : IPeopleService, IDisposable
 	{
 		private readonly IPeopleRepo peopleRepo;
+		private readonly ILogger<PeopleService> logger;
 		private bool disposedValue;
 
-		public PeopleService(IPeopleRepo peopleRepo)
+		public PeopleService(IPeopleRepo peopleRepo, ILogger<PeopleService> logger)
 		{
 			this.peopleRepo = peopleRepo;
-
+			this.logger = logger;
 			++peopleRepo.Prop;
 		}
 
 		public Task<Person> Create(Person person)
 		{
+			logger.LogInformation("Creating entity");
 			if (string.IsNullOrEmpty(person.FirstName) || string.IsNullOrEmpty(person.LastName) || person.Age <= 0)
 			{
 				throw new PersonIsInvalidException("Person is not valid");

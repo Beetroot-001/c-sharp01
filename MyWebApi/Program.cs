@@ -3,7 +3,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MyWebApi.Data;
 using MyWebApi.Filters;
+using MyWebApi.HealthChecks;
 using MyWebApi.Services;
+using Serilog;
 
 namespace MyWebApi
 {
@@ -13,6 +15,9 @@ namespace MyWebApi
 		{
 			var builder = WebApplication.CreateBuilder(args);
 
+			builder.Host.UseSerilog((ctx, lc) => lc
+					.WriteTo.Console()
+					.ReadFrom.Configuration(ctx.Configuration));
 
 			if (builder.Environment.IsDevelopment())
 			{
@@ -21,6 +26,9 @@ namespace MyWebApi
 
 			builder.Services.AddSingleton<ApplicationDbContext>(x =>
 			{
+				var context = x.GetRequiredService<ApplicationDbContext>();
+				context.Database.Migrate();
+
 				var connectionString = builder.Configuration.GetConnectionString("Default");
 				var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
 				optionsBuilder.UseSqlServer(connectionString);
@@ -46,9 +54,14 @@ namespace MyWebApi
 
 			builder.Services.AddSwaggerGen();
 
+			builder.Services.AddHealthChecks().AddCheck<SqlServerHealthCheck>("sql server");
+
 			var app = builder.Build();
 
 			// Configure the HTTP request pipeline.
+
+			app.UseSerilogRequestLogging();
+
 			app.UseRouting();
 
 			app.UseSwagger();
@@ -60,6 +73,8 @@ namespace MyWebApi
 
 				return next();
 			});
+
+			app.UseHealthChecks("/health");
 
 			app.UseEndpoints(endpoints =>
 			{

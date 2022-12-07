@@ -7,7 +7,7 @@ using System.Reflection;
 
 namespace MyWebApi.Controllers
 {
-	[MyActionFilter]
+	[TypeFilter(typeof(MyActionFilter))]
 	[ApiController]
 	[Route("api/people")]
 	public class PeopleController : ControllerBase

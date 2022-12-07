@@ -1,0 +1,11 @@
+2022-12-07 20:28:02.480 +02:00 [INF] Now listening on: http://localhost:5000
+2022-12-07 20:28:02.649 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2022-12-07 20:28:02.651 +02:00 [INF] Hosting environment: Prod
+2022-12-07 20:28:02.652 +02:00 [INF] Content root path: C:\Users\Anatolii.Levchenko\source\repos\c-sharp01\MyWebApi\
+2022-12-07 20:28:20.127 +02:00 [INF] [MY LOG] Action executed MyWebApi.Controllers.PeopleController.GetById (MyWebApi)
+2022-12-07 20:28:24.620 +02:00 [INF] [MY LOG] Action executing MyWebApi.Controllers.PeopleController.GetById (MyWebApi)
+2022-12-07 20:28:25.101 +02:00 [ERR] HTTP GET /api/people/1 responded 500 in 5657.1574 ms
+2022-12-07 20:30:48.957 +02:00 [INF] Now listening on: http://localhost:5000
+2022-12-07 20:30:49.091 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2022-12-07 20:30:49.093 +02:00 [INF] Hosting environment: Prod
+2022-12-07 20:30:49.094 +02:00 [INF] Content root path: C:\Users\Anatolii.Levchenko\source\repos\c-sharp01\MyWebApi\

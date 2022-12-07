@@ -9,7 +9,7 @@ namespace MyWebApi.Data
 		public ApplicationDbContext(DbContextOptions<ApplicationDbContext> dbContextOptions)
 			: base(dbContextOptions)
 		{
-			Database.EnsureCreated();
+			Database.Migrate();
 		}
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
