@@ -1,13 +1,10 @@
 ﻿@model IEnumerable<Shop_Products_Site.Models.Product> // говоорить що моделью є клас такийто
 
 @{
-    ViewData["Title"] = "Index"; // ключ["Title"] значення"Index" говорить що тайтл це індекс він вик в лайаут сторінці і встановить титулку
-    Layout = "~/Views/Shared/_Layout.cshtml"; // лайаут
+    ViewData["Title"] = "Index"; 
+    Layout = "~/Views/Shared/_Layout.cshtml"; 
 }
 
-@{//говорить про те що далі йтиме С# Код
-
-}
 
 <h1>Index</h1>
 
@@ -60,9 +57,9 @@
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                    @Html.ActionLink("Edit", "Edit", new { id=item.ProductId }) |
+                @Html.ActionLink("Details", "Details", new { id=item.ProductId }) |
+                    @Html.ActionLink("Delete", "Delete", new { id=item.ProductId })
             </td>
         </tr>
 }

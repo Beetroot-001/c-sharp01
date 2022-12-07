@@ -1,3 +1,5 @@
+using Shop_Products_Site.Controllers;
+
 namespace Shop_Products_Site
 {
     public class Program
@@ -24,7 +26,7 @@ namespace Shop_Products_Site
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+                pattern: "{controller=Products}/{action=Index}/{id?}");
 
             app.Run();
         }

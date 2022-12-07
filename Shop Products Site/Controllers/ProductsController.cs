@@ -5,17 +5,16 @@ using Shop_Products_Site.Models;
 
 namespace Shop_Products_Site.Controllers
 {
-    [Route("products")]
     public class ProductsController : Controller
     {
-        private readonly ProductsContext _productContext = new ProductsContext();
+        private readonly ProductsContext _productsContext = new ProductsContext();
 
         // GET: ProductsController
         public ActionResult Index()
         {
-            var products = _productContext.Products.ToList();
+            var products = _productsContext.Products.ToList();
 
-            return View(products); // запихаємо всі наші продукти в вюшку
+            return View(products); 
         }
 
         [HttpGet("Create")]
@@ -24,24 +23,46 @@ namespace Shop_Products_Site.Controllers
             return View();
         }
 
-        [HttpGet("Create")]//далі в HTML братиметься там де метод щоб вибрати правильний метод
-        public ActionResult AddNewProduct([FromForm] Product product)//[]явно показуємо звідки брати
+        [HttpGet("Create")]
+        public ActionResult AddNewProduct([FromForm] Product product)
         {
             if(ModelState.IsValid)
             {
                 // перевірка на валідацію
             }
 
-            _productContext.Products.Add(product);
+            _productsContext.Products.Add(product);
 
-            _productContext.SaveChanges();
+            _productsContext.SaveChanges();
 
-            return RedirectToAction("Index");// створили і переходимо на першу сторінку
+            return RedirectToAction("Index");
         }
 
-        public ActionResult Delete12()
+        [HttpGet("[id]/delete")]
+        public IActionResult Delete([FromRoute] int id)
         {
-            return View();
+            var product = _productsContext.Products.Find(id);
+
+            return View("Delete12", product);
+        }
+
+        [HttpPost("[id]/delete")]
+        public ActionResult DeleteProduct([FromRoute] int id)
+        {
+            var product = _productsContext.Products.Find(id);
+
+            if (product==null)
+            {
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                _productsContext.Products.Remove(product);
+
+                _productsContext.SaveChanges();
+            }
+
+            return RedirectToAction("Delete");
         }
     }
 }
