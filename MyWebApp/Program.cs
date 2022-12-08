@@ -1,10 +1,11 @@
 using Microsoft.EntityFrameworkCore;
 using MyWebApp.Data;
+using MyWebApp.Filters;
 using MyWebApp.Services;
 
 namespace MyWebApp
 {
-    public class Program
+    public partial class Program
     {
         public static void Main(string[] args)
         {
@@ -19,7 +20,9 @@ namespace MyWebApp
             builder.Services.AddTransient<IAnimatronicRepository, AnimatronicRepository>();
             builder.Services.AddTransient<IAnimatronicService, AnimatronicService>();
 
-            builder.Services.AddControllers();
+            builder.Services.AddControllers((options) => {
+                options.Filters.Add<SpringtrapExceptionFilter>();
+            });
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();

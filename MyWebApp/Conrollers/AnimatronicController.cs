@@ -25,28 +25,21 @@ namespace MyWebApp.Conrollers
             return Ok(animatronics);
         }
         [HttpPost]
-        //[SpringtrapExceptionFilter]
-        public async Task<IActionResult> CreateAnimatronic([FromBody]Animatronic animatronic)
+        [SpringtrapExceptionFilter]
+        public async Task<IActionResult> CreateAnimatronic([FromBody] Animatronic animatronic)
         {
-            try
-            {
-                await _serviceAccessor.Create(animatronic);
-                return Created("", animatronic);
-            }
-            catch (SpringtrapException ex)
-            {   
-                return NoContent();
-            }
+            await _serviceAccessor.Create(animatronic);
+            return Created("", animatronic);
         }
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetAnimatronicById([FromQuery]int id)
+        public async Task<IActionResult> GetAnimatronicById([FromQuery] int id)
         {
             var animatronic = await _serviceAccessor.GetById(id);
             return Ok(animatronic);
         }
         [HttpPost("{id}")]
-        public async Task<IActionResult> DeleteAnimatronic([FromQuery]int id)
-        {       
+        public async Task<IActionResult> DeleteAnimatronic([FromQuery] int id)
+        {
             await _serviceAccessor.Delete(id);
             return NoContent();
         }
