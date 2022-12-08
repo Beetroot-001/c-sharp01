@@ -1,5 +1,4 @@
-﻿using Azure;
-using Microsoft.AspNetCore.JsonPatch;
+﻿using Microsoft.AspNetCore.JsonPatch;
 using Product_API.Data;
 
 namespace Product_API.Servises
