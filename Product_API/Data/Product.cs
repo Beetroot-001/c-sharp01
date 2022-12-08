@@ -29,7 +29,7 @@ namespace Product_API.Data
         [MaxLength(100)]
         public string Description { get; set; }
 
-        public ICollection Feedback { get; set; }
+       // public ICollection<Feedback> feedbacks { get; set; }
 
     }
 }
