@@ -16,18 +16,7 @@ namespace ConsoleApp1
 
         public ShopContextDBFirst()
         {
-            Database.EnsureDeleted();
-            Database.EnsureCreated();
         }
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            var shopModel = modelBuilder.Entity<Order>();
-            shopModel.HasKey(x => x.Id);
-            shopModel.HasMany(x => x.Employee).WithMany(x => x.OrdersCompleted);
-            shopModel.HasOne(x => x.CreatedBy).WithMany(x => x.OrdersCompleted);
-        }
-
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {            

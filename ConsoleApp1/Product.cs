@@ -10,9 +10,9 @@ namespace ConsoleApp1
     {
         public int Id { get; set; }
         public string Title { get; set; }
-        public string Description { get; set; }
+        public string? Description { get; set; }
         public double Cost { get; set; }
-        public DateTime CreatedOn { get; set; }
+        public DateTime CreatedOn { get; set; } = DateTime.Now;
         public Employee CreatedBy { get; set; }
     }
 }

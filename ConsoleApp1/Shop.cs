@@ -11,5 +11,6 @@ namespace ConsoleApp1
         public ICollection<Employee> employees;
         public ICollection<Customer> customers;
         public ICollection<Order> orders;
+        public string aa;
     }
 }

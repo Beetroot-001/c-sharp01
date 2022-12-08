@@ -8,6 +8,7 @@ namespace ConsoleApp1
 {
     public class Customer : Person
     {
-
+        public Customer(string FirstName): base(FirstName) 
+        { }
     }
 }

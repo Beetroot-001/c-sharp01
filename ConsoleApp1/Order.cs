@@ -20,7 +20,7 @@ namespace ConsoleApp1
         public double Total { get => Products.Sum(x=> x.Cost); }
 
         public DateTime CreatedOn { get; set; }
-        //public Guid CreatedById { get; set; }
+
         public Employee CreatedBy { get; set; }
     }
 }
