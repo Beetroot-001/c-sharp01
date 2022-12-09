@@ -1,0 +1,19 @@
+header {
+    text-align: center;
+    height: 50px;
+}
+
+body {
+    background-color:gray
+}
+
+.info {
+    float: left;
+    width: 200px;
+}
+
+.photo img{
+    display: flex;
+    border-style:solid;
+    border-color:white;
+}
