@@ -9,7 +9,8 @@ namespace MyWebApi.Data
 		public ApplicationDbContext(DbContextOptions<ApplicationDbContext> dbContextOptions)
 			: base(dbContextOptions)
 		{
-			Database.Migrate();
+			Database.EnsureDeleted();
+			Database.EnsureCreated();
 		}
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -19,6 +20,10 @@ namespace MyWebApi.Data
 			modelBuilder.Entity<Person>().Property(x => x.LastName).IsRequired().HasMaxLength(50).IsUnicode();
 
 			modelBuilder.Entity<Person>().Property(x => x.Age).IsRequired();
+
+
+			modelBuilder.Entity<Person>().HasMany(x => x.Friends).WithMany(x => x.Friends);
+			modelBuilder.Entity<Person>().HasOne(x => x.Status).WithMany().HasForeignKey(x => x.StatusId);
 		}
 	}
 }

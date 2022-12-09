@@ -1,0 +1,30 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <p>Here is data about products</p>
+
+    <script>
+      fetch("http://localhost:5121/api/products").then((result) => {
+        console.log(result);
+      });
+
+      fetch("http://localhost:5121/api/products", {
+        body: JSON.stringify({
+          name: "",
+          quantity: 1,
+        }),
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }).then((result) => {
+        console.log(result);
+      });
+    </script>
+  </body>
+</html>
