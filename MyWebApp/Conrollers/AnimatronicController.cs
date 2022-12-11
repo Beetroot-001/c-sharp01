@@ -28,6 +28,10 @@ namespace MyWebApp.Conrollers
         [SpringtrapExceptionFilter]
         public async Task<IActionResult> CreateAnimatronic([FromBody] Animatronic animatronic)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
             await _serviceAccessor.Create(animatronic);
             return Created("", animatronic);
         }

@@ -1,4 +1,5 @@
 using Microsoft.Build.Framework;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using MyWebApp.Data;
 using MyWebApp.Exceptions;
 using MyWebApp.Services;
@@ -15,11 +16,9 @@ namespace UnitTestingDemo.Tests
             _animatronicList = new List<Animatronic>();
         }
         public async Task<Animatronic> Create(Animatronic animatronic)
-        {
+        {   
             if (animatronic.Name == "Springtrap")
                 throw new SpringtrapException("He is dangerous take precautions to safely dispose him");
-            if (animatronic.StagePrescription.Length < 5)
-                throw new InvalidDataException("The stage prescriptions is invalid");
             _animatronicList.Add(animatronic);
             await Task.Delay(1);
             return animatronic;

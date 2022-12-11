@@ -16,8 +16,6 @@ namespace MyWebApp.Services
         {
             if (animatronic.Name == "Springtrap")
                 throw new SpringtrapException("He is dangerous take precautions to safely dispose him");
-            if (animatronic.StagePrescription.Length < 5)
-                throw new InvalidDataException("The stage prescriptions is invalid");
             await _contextAccessor.Create(animatronic);
             return animatronic;
         }
