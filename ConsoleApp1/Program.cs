@@ -6,8 +6,8 @@ namespace ConsoleApp1
 	{
 		static void Main(string[] args)
 		{
-			var context = new ShopContextCodeFirst();
-			//var context = new ShopContextDBFirst();
+			//var context = new ShopContextCodeFirst();
+			var context = new ShopContextDBFirst();
 
             for (int i = 0; i < 3; i++)
 			{
