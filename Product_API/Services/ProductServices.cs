@@ -2,6 +2,7 @@
 using Product_API.Data;
 using Product_API.Servises;
 using Microsoft.AspNetCore.JsonPatch;
+using Product_API.Exceptoins;
 
 namespace Product_API.Services
 {
@@ -18,7 +19,7 @@ namespace Product_API.Services
         {
             if (string.IsNullOrEmpty(product.Taytle)||string.IsNullOrEmpty(product.Producer)||product.Priсe==null||product.Quantity==null)
             {
-                throw new Exception("Product is not valid");
+                throw new ProductIsnotValidExceptoin("Product is not valid");
             }
             
             return productsRepo.Create(product);
@@ -26,11 +27,11 @@ namespace Product_API.Services
 
         public async Task Delete([FromRoute]int id)
         {
-            var products = await productsRepo.GetById(id);// тут треба await якщо ми його реаліз в репо
+            var products = await productsRepo.GetById(id);
 
             if (products==null)
             {
-                throw new Exception("The product does not exist");
+                throw new ProductNotFoundException("The product does not exist");
             }
             await productsRepo.Delete(products);
         }
@@ -47,11 +48,11 @@ namespace Product_API.Services
 
         public async Task<Product> GetById([FromRoute] int id)
         {
-            var products = await productsRepo.GetById(id);// тут треба await якщо ми його реаліз в репо
+            var products = await productsRepo.GetById(id);
 
             if (products == null)
             {
-                throw new Exception("The product does not exist");
+                throw new ProductNotFoundException("The product does not exist");
             }
 
             return products;
@@ -59,18 +60,18 @@ namespace Product_API.Services
 
         public async Task<Product> Update([FromRoute] int id, JsonPatchDocument<Product> jsonPatch)
         {
-            var products = await productsRepo.GetById(id);// тут треба await якщо ми його реаліз в репо
+            var products = await productsRepo.GetById(id);
 
             if (products == null)
             {
-                throw new Exception("The product does not exist");
+                throw new ProductNotFoundException("The product does not exist");
             }
 
-            jsonPatch.ApplyTo(products); // накатує зміни що прийшли на конкретний екземпляр
+            jsonPatch.ApplyTo(products);
 
-            await productsRepo.SaveChanges(); // зберігаю змінну
+            await productsRepo.SaveChanges(); 
 
-            return products;// куди винисти код що повторюється(пошук і перевірку)?? в окремий клас чи метод в цьому класі
+            return products;
         }
     }
 }

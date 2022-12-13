@@ -3,8 +3,12 @@ using Microsoft.EntityFrameworkCore;
 using Product_API.Context;
 using Product_API.Controller;
 using Product_API.Data;
+using Product_API.Filters;
+using Product_API.MyHealthChecks;
 using Product_API.Services;
 using Product_API.Servises;
+using Product_API.Validation;
+using Microsoft.AspNetCore.JsonPatch;
 
 namespace Product_API
 {
@@ -18,23 +22,34 @@ namespace Product_API
             builder.Services.AddDbContext<ProductsContext>(options =>
             {
                 var conectionString = builder.Configuration.GetConnectionString("Default");
+
                 options.UseSqlServer(conectionString);
-                //options.UseInMemoryDatabase("MyDb");
-            });// Лямбда що конфігурує контекст.
-            //Якщо ми вказували то в контексті навіщо ще раз? чи метод OnConfiguring в контексті топосуті те саме?
 
-            builder.Services.AddTransient<IProductsRepo, ProductRepo>();// тут я вказую інтерфейс і конкретний клас який його реалізує? і тоді цей клас підбереться в контроллері?? це треба для того щоб у всіх контролеррах був один і той самий екземпляр? а якщо додати декілька таких записів з різною реалізацією який вибире?
-            builder.Services.AddTransient<IProductServices, ProductServices>();// і ми створювали інтерфейси для цього додавання?
 
-            builder.Services.AddControllers();// додаємо контроллери
+            });
 
-           var app = builder.Build();
+            builder.Services.AddTransient<ProductValidation>();
+
+            builder.Services.AddTransient<MyCustomAuthorization>();
+            builder.Services.AddHealthChecks().AddCheck<CheckSQLServer>("Sql server");
+
+            builder.Services.Configure<AdminAuthData>(builder.Configuration.GetSection("AdminAuthData")); 
+            builder.Services.AddTransient<IProductsRepo, ProductRepo>();
+            builder.Services.AddTransient<IProductServices, ProductServices>();
+            builder.Services.AddControllers(options =>
+            {
+                options.Filters.Add(typeof(ExceptionFilter));
+            });
+
+            var app = builder.Build();
 
             // Configure the HTTP request pipeline. Що за чим буде виконуватися. Як оброблятиметься запит
 
-            app.UseRouting();//щоб таблиця роутів збудувалася. Що таке роут, таблиця роутів?
+            app.MapHealthChecks("/health");
 
-            app.MapControllers(); // Щоб змапилися контроллери, що це значить і навіщо?
+            app.UseRouting();
+
+            app.MapControllers(); 
 
             app.Run();
         }

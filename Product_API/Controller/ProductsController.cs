@@ -1,12 +1,13 @@
 ﻿using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Product_API.Data;
+using Product_API.Filters;
 using Product_API.Servises;
 
 namespace Product_API.Controller
 {
-    [ApiController]//Додає додаткову валідацію даних, вказує бандінг і тд
-    [Route("api/[controller]")]// замість того щоб писати префікс класу можна написати [controller] який автоматично його поставить, убереже наприклад як переіменувати цей контроллер
+    [ApiController]
+    [Route("api/[controller]")]
 
     public class ProductsController:ControllerBase
     {
@@ -17,6 +18,7 @@ namespace Product_API.Controller
             this.productServices = productServices;
         }
 
+        [TypeFilter(typeof(MyActionFiltr))]
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -38,17 +40,17 @@ namespace Product_API.Controller
         {
             var newProduct = await productServices.Create(product);
 
-            return Created("", newProduct);//Першим параметром передається шлях до новоствореного ресурсу
+            return Created("", newProduct);
         }
 
         [HttpDelete("{id}")]
+        //[TypeFilter(typeof(MyCustomAuthorization))] // ЧОМУСЬ НЕ ДАЄ ЗАЙТИ В КОНТРОЛЕР
         public async Task<IActionResult> DeleteById([FromRoute] int id)
         {
             await productServices.Delete(id);
 
             return NoContent();
         }
-
 
         [HttpPatch("{id}")]
         public async Task<IActionResult> UpdateById([FromRoute] int id,JsonPatchDocument<Product> jsonPatchDocument)

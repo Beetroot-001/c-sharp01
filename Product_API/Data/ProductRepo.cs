@@ -34,7 +34,7 @@ namespace Product_API.Data
 
         public async Task<IEnumerable<Product>> GetAll()
         {
-            var products = await productsContext.Products.AsNoTracking().ToListAsync();// AsNoTracking - щоб не зберігалося в контексті. А не треба було б тоді всьому то додати? 
+            var products = await productsContext.Products.AsNoTracking().ToListAsync();
 
             return products;
         }
