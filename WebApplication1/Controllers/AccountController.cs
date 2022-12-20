@@ -1,5 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 
 namespace WebApplication1.Controllers
 {
@@ -37,9 +41,18 @@ namespace WebApplication1.Controllers
 				return Unauthorized();
 			}
 
-			HttpContext.User.Claims.
-			
-			return 
+			//HttpContext.User.Claims.
+			var claims = new Claim[]{
+				new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
+			};
+
+			ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims);
+
+			var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("abcd"));
+			var cred = new SigningCredentials(key, SecurityAlgorithms.Sha256);
+			var token = new JwtSecurityToken("http://localhost:3000", "http://localhost:3000", claims:claims, expires:DateTime.Now.AddMinutes(15), signingCredentials:cred);
+
+			return Ok(new JwtSecurityTokenHandler().WriteToken(token));
 		}
 	}
 
