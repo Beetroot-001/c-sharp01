@@ -41,7 +41,7 @@ namespace MyWebApp.Conrollers
             var animatronic = await _serviceAccessor.GetById(id);
             return Ok(animatronic);
         }
-        [HttpPost("{id}")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAnimatronic([FromQuery] int id)
         {
             await _serviceAccessor.Delete(id);

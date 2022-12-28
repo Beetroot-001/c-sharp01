@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using MyWebApp.Conrollers;
 using MyWebApp.Data;
 using MyWebApp.Exceptions;
@@ -9,19 +10,52 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Xunit.Sdk;
 using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
 namespace UnitTestingDemo.Tests
 {
-    public class AnimatronicServiceTest
+    public class AnimatronicControllerTest
     {
         private readonly AnimatronicController _controller;
-        private readonly IAnimatronicService _service;
-
-        public AnimatronicServiceTest()
+        private Mock<IAnimatronicService> _serviceMock;
+        
+        public AnimatronicController GetController()
         {
-            _service = new FakeAnimatronicService();
-            _controller = new AnimatronicController(_service);
+            return new AnimatronicController(_serviceMock.Object);
+        }
+
+        [Fact]
+        public async Task GetAll_VerifyReturnType()
+        {
+            // arrange
+            _serviceMock = new Mock<IAnimatronicService>();
+            IEnumerable<Animatronic> testCollection = new List<Animatronic> { new Animatronic() };
+            _serviceMock.Setup(x => x.GetAll()).Returns(Task.FromResult(testCollection));
+            var controller = GetController();
+            // act
+            var result = await controller.GetAll();
+            // assert
+            
+            Assert.IsTrue(result is OkObjectResult);
+            Assert.AreEqual(testCollection, (result as OkObjectResult).Value);
+        }
+        [Fact]
+        public async Task GetById_Animatronic_VerifyId()
+        {   
+            // arrange
+            _serviceMock = new Mock<IAnimatronicService>();
+            Animatronic testAnimatronic = new Animatronic() {
+                ID = 10
+            };
+            _serviceMock.Setup(x => x.GetById(It.IsAny<int>())).Returns(Task.FromResult(testAnimatronic));
+            var controller = GetController();
+            // act
+            var result = await controller.GetAnimatronicById(10);
+
+            // assert
+            _serviceMock.Verify(x => x.GetById(It.IsAny<int>()), Times.Once());
+
         }
 
         [Fact]

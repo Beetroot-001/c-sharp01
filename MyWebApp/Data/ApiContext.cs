@@ -9,6 +9,7 @@ namespace MyWebApp.Data
         public ApiContext(DbContextOptions<ApiContext> dbContextOptions) : base(dbContextOptions)
         {
            Database.EnsureCreated();
+            
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
